@@ -1,4 +1,4 @@
-class NodeManager:
+class DataNode:
   def __init__(self, name, source):
     '''
       Constructor for the DataNode.

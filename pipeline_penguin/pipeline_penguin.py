@@ -1,3 +1,4 @@
+from .NodeManager import NodeManager
 class pipeline_penguin:
   def __init__(self):
     '''
