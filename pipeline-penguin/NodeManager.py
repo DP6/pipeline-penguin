@@ -5,23 +5,37 @@ class NodeManager:
     '''
     self.nodes = {}
 
-  def create_node(self):
+  def create_node(self, name, DataNode):
     '''
       Initiate a DataNode with the inputed data.
       Returns a DataNode.
     '''
     pass
 
-  def remove_node(self):
+  def get_node(self, name):
     '''
-      Receive a DataNode then remove it from the nodes dictionary.
+      Get a DataNode that already exists.
+      Returns a DataNode.
+    '''
+    pass
+
+  def list_nodes(self):
+    '''
+      Prints every DataNode name on the nodes dictionary.
+      Returns None.
+    '''
+    pass
+
+  def remove_node(self, name):
+    '''
+      Remove a DataNode from the nodes dictionary, then turn it into None.
       Returns None.
     '''
     pass
   
-  def duplicate_node(self):
+  def copy_node(self, node, name):
     '''
-      Receive a DataNode then deep copied it, altering the name to include "_1" at the end and inserting it to the nodes dictionary.
-      Returns the new DataNode.
+      Deep copies a DataNode with a new name.
+      Returns a DataNode.
     '''
     pass
