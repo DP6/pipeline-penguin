@@ -1,6 +1,6 @@
 import pipeline_penguin
 from pipeline_penguin import pipeline_penguin
-from pipeline_penguin.NodeManager import NodeManager
+from pipeline_penguin.node_manager import NodeManager
 
 class TestPipelinePenguin:
   def test_instance_type(self):
