@@ -1,7 +1,9 @@
-from .NodeManager import NodeManager
-class pipeline_penguin:
-  def __init__(self):
-    '''
-      Constructor for the pipeline_penguin.
-    '''
-    self.nodes = NodeManager()
+from .node_manager import NodeManager
+
+
+class PipelinePenguin:
+    def __init__(self):
+        """
+        Constructor for the PipelinePenguin.
+        """
+        self.nodes = NodeManager()
