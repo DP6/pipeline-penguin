@@ -1,1 +1,1 @@
-from .pipeline_penguin import pipeline_penguin
+from .pipeline_penguin import PipelinePenguin
