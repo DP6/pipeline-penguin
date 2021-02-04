@@ -25,7 +25,7 @@ def bigquery_missing_args():
     }
 
 
-class TestNodeManager:
+class TestCreateNode:
 
     def test_if_creates_bigquery_node_with_node_manager_with_right_args(self, bigquery_args):
         node_manager = NodeManager()
@@ -44,4 +44,27 @@ class TestNodeManager:
 
         expected_message = "__init__() missing 2 required positional arguments: 'project_id' and 'dataset_id'"
         assert str(b.value) == expected_message
+
+
+class TestGetNode:
+
+    def test_if_get_correct_node(self, bigquery_args):
+        node_manager = NodeManager()
+        first_data_node = node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        second_data_node = node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+
+        node = node_manager.get_node(name="Pipeline Z - Table K")
+
+        assert node == second_data_node
+
+    def test_if_returns_none_if_data_node_was_not_found(self, bigquery_args):
+        node_manager = NodeManager()
+        first_data_node = node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        second_data_node = node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+
+        node = node_manager.get_node(name="Pipeline Random")
+
+        assert node is None
+
+
 
