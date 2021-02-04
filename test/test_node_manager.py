@@ -84,4 +84,41 @@ class TestListNodes:
         assert nodes == expected
 
 
+class TestRemoveNode:
+
+    def test_if_remove_node_if_name_was_found(self, bigquery_args):
+        node_manager = NodeManager()
+        node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+
+        nodes = node_manager.list_nodes()
+        expected_before_remove = ["Pipeline X - Table Y", "Pipeline Z - Table K"]
+
+        assert nodes == expected_before_remove
+
+        node_manager.remove_node(name="Pipeline Z - Table K")
+
+        nodes = node_manager.list_nodes()
+        expected_after_remove = ["Pipeline X - Table Y"]
+
+        assert nodes == expected_after_remove
+
+    def test_if_remove_node_action_let_nodes_in_the_same_way_if_name_was_not_found(self, bigquery_args):
+        node_manager = NodeManager()
+        node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+
+        nodes = node_manager.list_nodes()
+        expected_before_remove = ["Pipeline X - Table Y", "Pipeline Z - Table K"]
+
+        assert nodes == expected_before_remove
+
+        node_manager.remove_node(name="Pipeline Random")
+
+        nodes = node_manager.list_nodes()
+        assert nodes == expected_before_remove
+
+
+
+
 
