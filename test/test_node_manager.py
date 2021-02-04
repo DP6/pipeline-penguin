@@ -50,7 +50,7 @@ class TestGetNode:
 
     def test_if_get_correct_node(self, bigquery_args):
         node_manager = NodeManager()
-        first_data_node = node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
         second_data_node = node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
 
         node = node_manager.get_node(name="Pipeline Z - Table K")
@@ -59,12 +59,29 @@ class TestGetNode:
 
     def test_if_returns_none_if_data_node_was_not_found(self, bigquery_args):
         node_manager = NodeManager()
-        first_data_node = node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
-        second_data_node = node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
 
         node = node_manager.get_node(name="Pipeline Random")
 
         assert node is None
+
+
+class TestListNodes:
+
+    # TODO it is difficult to test a function that do not returns anything
+    #  actual call: returns a list with all nodes + print
+
+    def test_if_list_all_nodes_created(self, bigquery_args):
+        node_manager = NodeManager()
+        node_manager.create_bigquery_node(name="Pipeline X - Table Y", args=bigquery_args)
+        node_manager.create_bigquery_node(name="Pipeline Z - Table K", args=bigquery_args)
+
+        nodes = node_manager.list_nodes()
+
+        expected = ["Pipeline X - Table Y", "Pipeline Z - Table K"]
+
+        assert nodes == expected
 
 
 

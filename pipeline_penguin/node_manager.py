@@ -42,12 +42,16 @@ class NodeManager:
         """
         return self.nodes.get(name)
 
-    def list_nodes(self):
+    def list_nodes(self) -> list[Type[DataNode]]:
+        # TODO discuss about the responsibility of only print
         """
         Prints every DataNode name on the nodes dictionary.
-        Returns None.
+        Returns list of DataNode.
         """
-        pass
+        for key in self.nodes.keys():
+            print(key)
+
+        return list(self.nodes.keys())
 
     def remove_node(self, name):
         """
