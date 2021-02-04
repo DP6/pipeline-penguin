@@ -53,12 +53,14 @@ class NodeManager:
 
         return list(self.nodes.keys())
 
-    def remove_node(self, name):
+    def remove_node(self, name: str) -> None:
         """
         Remove a DataNode from the nodes dictionary, then turn it into None.
         Returns None.
         """
-        pass
+
+        if name in self.nodes:
+            del self.nodes[name]
 
     def copy_node(self, node, name):
         """
