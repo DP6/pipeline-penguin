@@ -194,3 +194,58 @@ class TestRemoveNode:
 
         nodes = node_manager.list_nodes()
         assert nodes == expected_before_remove
+
+
+class TestCopyNode:
+    def test_if_copy_node_create_a_new_node(self, bigquery_args):
+        node_manager = NodeManager()
+        node_manager.create_node(
+            name="Pipeline X - Table Y",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+        node_manager.create_node(
+            name="Pipeline Z - Table K",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+
+        nodes = node_manager.list_nodes()
+        expected_before_copy = ["Pipeline X - Table Y", "Pipeline Z - Table K"]
+
+        assert nodes == expected_before_copy
+
+        new_node = node_manager.copy_node(
+            node="Pipeline Z - Table K", name="Pipeline New - Table New"
+        )
+
+        nodes = node_manager.list_nodes()
+        expected_after_copy = [
+            "Pipeline X - Table Y",
+            "Pipeline Z - Table K",
+            "Pipeline New - Table New",
+        ]
+
+        assert nodes == expected_after_copy
+
+    def test_if_new_copy_node_is_a_different_data_node_object_if_the_same_attributes(
+        self, bigquery_args
+    ):
+        node_manager = NodeManager()
+        node_manager.create_node(
+            name="Pipeline X - Table Y",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+        node = node_manager.create_node(
+            name="Pipeline Z - Table K",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+
+        new_node = node_manager.copy_node(
+            node="Pipeline Z - Table K", name="Pipeline New - Table New"
+        )
+
+        assert node != new_node
+        assert dict(node.__dict__.items()) == dict(new_node.__dict__.items())
