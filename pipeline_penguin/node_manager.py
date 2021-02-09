@@ -1,3 +1,4 @@
+import copy
 import inspect
 from typing import Type, Optional
 
@@ -23,16 +24,10 @@ class NodeManager:
         """
         self.__nodes = {}
 
-    def create_node(self, name: str, node_type: Type[DataNode], args: dict):
+    def create_node(self, name: str, node_type: Type[DataNode], args: dict) -> DataNode:
         """
-
         Initiate a DataNode with the inputted data.
         Returns a DataNode.
-
-        :param name: str
-        :param node_type:
-        :param args: dict
-        :rtype: Type DataNode
         """
         try:
             if inspect.isclass(node_type) and issubclass(node_type, DataNode):
@@ -71,9 +66,12 @@ class NodeManager:
         if name in self.__nodes:
             del self.__nodes[name]
 
-    def copy_node(self, node, name):
+    def copy_node(self, node: str, name: str) -> DataNode:
         """
         Deep copies a DataNode with a new name.
         Returns a DataNode.
         """
-        pass
+        copied_node = copy.deepcopy(self.__nodes.get(node))
+        self.__nodes.update({name: copied_node})
+
+        return copied_node
