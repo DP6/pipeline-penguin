@@ -2,7 +2,6 @@ import inspect
 from typing import Type, Optional
 
 from .data_node import DataNode
-from .data_node_bigquery import DataNodeBigQuery
 from .exceptions import NodeManagerMissingCorrectArgs, NodeTypeNotFound
 
 
@@ -10,8 +9,9 @@ class NodeManager:
     def __init__(self):
         """
         Constructor for the NodeManager.
+        Attributes are all privates.
         """
-        self.nodes = {}
+        self.__nodes = {}
 
     def create_node(self, name: str, node_type: Type[DataNode], args: dict):
         """
@@ -32,7 +32,7 @@ class NodeManager:
         except TypeError as e:
             raise NodeManagerMissingCorrectArgs(str(e))
 
-        self.nodes.update({name: node})
+        self.__nodes.update({name: node})
         return node
 
     def get_node(self, name: str) -> Optional[Type[DataNode]]:
@@ -40,17 +40,17 @@ class NodeManager:
         Get a DataNode that already exists.
         Returns a DataNode.
         """
-        return self.nodes.get(name)
+        return self.__nodes.get(name)
 
     def list_nodes(self) -> list[Type[DataNode]]:
         """
         Prints every DataNode name on the nodes dictionary.
         Returns list of DataNode.
         """
-        for key in self.nodes.keys():
+        for key in self.__nodes.keys():
             print(key)
 
-        return list(self.nodes.keys())
+        return list(self.__nodes.keys())
 
     def remove_node(self, name: str) -> None:
         """
@@ -58,8 +58,8 @@ class NodeManager:
         Returns None.
         """
 
-        if name in self.nodes:
-            del self.nodes[name]
+        if name in self.__nodes:
+            del self.__nodes[name]
 
     def copy_node(self, node, name):
         """
