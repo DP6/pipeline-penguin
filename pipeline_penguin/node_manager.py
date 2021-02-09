@@ -6,6 +6,16 @@ from .exceptions import NodeManagerMissingCorrectArgs, NodeTypeNotFound
 
 
 class NodeManager:
+    _instance = None
+
+    def __new__(cls):
+        """
+        NodeManager use Singleton Design Pattern
+        """
+        if not cls._instance:
+            cls._instance = super(NodeManager, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self):
         """
         Constructor for the NodeManager.

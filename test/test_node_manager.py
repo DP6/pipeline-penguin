@@ -80,6 +80,12 @@ class TestCreateNode:
         with pytest.raises(AttributeError):
             node_manager.nodes.update({"Direct Node": DataNodeBigQuery})
 
+    def test_if_node_manager_is_instantiated_only_one_time(self):
+        node_manager_instance_1 = NodeManager()
+        node_manager_instance_2 = NodeManager()
+
+        assert node_manager_instance_1 == node_manager_instance_2
+
 
 class TestGetNode:
     def test_if_get_correct_node(self, bigquery_args):
