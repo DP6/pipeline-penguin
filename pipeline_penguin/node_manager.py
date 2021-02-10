@@ -1,9 +1,13 @@
 import copy
 import inspect
-from typing import Type, Optional
+from typing import Type, Optional, Union
 
 from .data_node import DataNode
-from .exceptions import NodeManagerMissingCorrectArgs, NodeTypeNotFound
+from .exceptions import (
+    NodeManagerMissingCorrectArgs,
+    NodeTypeNotFound,
+    NodeReferenceWrongType,
+)
 
 
 class NodeManager:
@@ -24,13 +28,21 @@ class NodeManager:
         """
         self.__nodes = {}
 
+    @staticmethod
+    def _is_data_node_class(node_type) -> bool:
+        return inspect.isclass(node_type) and issubclass(node_type, DataNode)
+
+    @staticmethod
+    def _is_data_node_instance(node_type) -> bool:
+        return isinstance(node_type, DataNode)
+
     def create_node(self, name: str, node_type: Type[DataNode], args: dict) -> DataNode:
         """
         Initiate a DataNode with the inputted data.
         Returns a DataNode.
         """
         try:
-            if inspect.isclass(node_type) and issubclass(node_type, DataNode):
+            if self._is_data_node_class(node_type):
                 args.update({"name": name})
                 node = node_type(**args)
             else:
@@ -67,13 +79,23 @@ class NodeManager:
         if name in self.__nodes:
             del self.__nodes[name]
 
-    def copy_node(self, node: str, name: str) -> DataNode:
+    def copy_node(self, node: Union[str, DataNode], name: str) -> Optional[DataNode]:
         """
         Deep copies a DataNode with a new name.
-        Returns a DataNode.
+        Returns a DataNode, with the name was not found return None.
         """
-        copied_node = copy.deepcopy(self.__nodes.get(node))
-        copied_node.name = name
-        self.__nodes.update({name: copied_node})
 
-        return copied_node
+        if self._is_data_node_instance(node):
+            copied_node = copy.deepcopy(node)
+        elif type(node) == str:
+            copied_node = copy.deepcopy(self.__nodes.get(node))
+        else:
+            raise NodeReferenceWrongType(
+                "String or DataNode instance should be passed in node type"
+            )
+
+        if copied_node:
+            copied_node.name = name
+            self.__nodes.update({name: copied_node})
+
+            return copied_node
