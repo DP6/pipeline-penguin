@@ -9,7 +9,6 @@ from pipeline_penguin.node_manager import NodeManager
 @pytest.fixture()
 def bigquery_args():
     yield {
-        "name": "bq_test",
         "project_id": "teste",
         "dataset_id": "dataset_test",
         "table_id": "table",
@@ -20,7 +19,6 @@ def bigquery_args():
 @pytest.fixture()
 def bigquery_missing_args():
     yield {
-        "name": "bq_test",
         "table_id": "table",
         "service_account_json": "service_account.json",
     }
@@ -75,6 +73,7 @@ class TestCreateNode:
     ):
         node_manager = NodeManager()
 
+        bigquery_args.update({"name": "Direct Node"})
         node = DataNodeBigQuery(**bigquery_args)
 
         with pytest.raises(AttributeError):

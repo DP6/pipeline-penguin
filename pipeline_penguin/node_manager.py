@@ -31,6 +31,7 @@ class NodeManager:
         """
         try:
             if inspect.isclass(node_type) and issubclass(node_type, DataNode):
+                args.update({"name": name})
                 node = node_type(**args)
             else:
                 raise NodeTypeNotFound("DataNode should be of type NodeType")
