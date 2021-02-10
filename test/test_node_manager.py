@@ -2,7 +2,11 @@ import pytest
 
 from pipeline_penguin import NodeType
 from pipeline_penguin.data_node_bigquery import DataNodeBigQuery
-from pipeline_penguin.exceptions import NodeManagerMissingCorrectArgs, NodeTypeNotFound
+from pipeline_penguin.exceptions import (
+    NodeManagerMissingCorrectArgs,
+    NodeTypeNotFound,
+    NodeReferenceWrongType,
+)
 from pipeline_penguin.node_manager import NodeManager
 
 
@@ -255,3 +259,50 @@ class TestCopyNode:
         del new_node_arguments["name"]
 
         assert node_arguments == new_node_arguments
+
+    def test_if_returns_none_if_the_name_of_new_copy_node_was_not_found(
+        self, bigquery_args
+    ):
+        node_manager = NodeManager()
+        new_node = node_manager.copy_node(
+            node="Node do not exist", name="Pipeline New - Table New"
+        )
+
+        assert new_node is None
+
+    def test_if_copy_new_node_correctly_using_instance_of_a_node(self, bigquery_args):
+        node_manager = NodeManager()
+
+        node = node_manager.create_node(
+            name="Pipeline Z - Table K",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+
+        new_node = node_manager.copy_node(node=node, name="Pipeline New - Table New")
+
+        assert node != new_node
+
+        node_arguments = dict(node.__dict__.items())
+        new_node_arguments = dict(new_node.__dict__.items())
+
+        del node_arguments["name"]
+        del new_node_arguments["name"]
+
+        assert node_arguments == new_node_arguments
+
+    def test_if_raises_an_exception_if_node_passed_is_not_string_nor_node_instance(
+        self, bigquery_args
+    ):
+        node_manager = NodeManager()
+
+        node = node_manager.create_node(
+            name="Pipeline Z - Table K",
+            node_type=NodeType.BIG_QUERY,
+            args=bigquery_args,
+        )
+
+        with pytest.raises(NodeReferenceWrongType):
+            new_node = node_manager.copy_node(
+                node=17272, name="Pipeline New - Table New"
+            )

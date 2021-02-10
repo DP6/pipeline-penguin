@@ -12,3 +12,11 @@ class NodeTypeNotFound(KeyError):
     """
 
     pass
+
+
+class NodeReferenceWrongType(Exception):
+    """
+    Raised when node reference used to deep copy is the wrong type
+    """
+
+    pass
