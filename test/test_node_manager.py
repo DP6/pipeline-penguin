@@ -68,7 +68,7 @@ class TestCreateNode:
         expected_message = "'DataNode should be of type NodeType'"
         assert str(b.value) == expected_message
 
-    def test_it_raises_attribute_error_when_try_to_use_nodes_dict_directly(
+    def test_if_raises_attribute_error_when_try_to_use_nodes_dict_directly(
         self, bigquery_args
     ):
         node_manager = NodeManager()
