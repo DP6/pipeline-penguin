@@ -227,7 +227,7 @@ class TestCopyNode:
 
         assert nodes == expected_after_copy
 
-    def test_if_new_copy_node_is_a_different_data_node_object_with_the_same_attributes(
+    def test_if_new_copy_node_is_a_different_data_node_object_and_name_but_with_the_same_others_attributes(
         self, bigquery_args
     ):
         node_manager = NodeManager()
@@ -247,4 +247,11 @@ class TestCopyNode:
         )
 
         assert node != new_node
-        assert dict(node.__dict__.items()) == dict(new_node.__dict__.items())
+
+        node_arguments = dict(node.__dict__.items())
+        new_node_arguments = dict(new_node.__dict__.items())
+
+        del node_arguments["name"]
+        del new_node_arguments["name"]
+
+        assert node_arguments == new_node_arguments

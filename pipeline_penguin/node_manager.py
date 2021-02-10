@@ -73,6 +73,7 @@ class NodeManager:
         Returns a DataNode.
         """
         copied_node = copy.deepcopy(self.__nodes.get(node))
+        copied_node.name = name
         self.__nodes.update({name: copied_node})
 
         return copied_node
