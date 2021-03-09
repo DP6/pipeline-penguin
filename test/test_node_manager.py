@@ -41,7 +41,7 @@ class TestCreateNode:
 
         assert isinstance(data_node, DataNodeBigQuery)
 
-        bigquery_args.update({"source": "BigQuery"})
+        bigquery_args.update({"source": "BigQuery", "premises": {}})
         assert dict(data_node.__dict__.items()) == bigquery_args
 
     def test_if_raises_exception_with_node_manager_is_called_without_right_args(
