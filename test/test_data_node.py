@@ -4,6 +4,7 @@ import pytest
 
 from pipeline_penguin import NodeType
 from pipeline_penguin.data_node import DataNode
+from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.node_manager import NodeManager
 
 
@@ -42,6 +43,7 @@ def premise_check():
                 pass
 
         return CheckIfNullCreator
+
     yield check_null
 
 
@@ -64,7 +66,7 @@ def another_premise_check():
     yield another_fake_check
 
 
-class TestDataNode:
+class TestDataNodeInsertPremise:
     def test_if_premise_is_inserted_successfully(self, data_node, premise_check):
         premise_name = "Null Checker on Column X"
 
@@ -87,3 +89,41 @@ class TestDataNode:
             name=premise_name, premise_factory=another_premise_check("X.x")
         )
         assert data_node.premises[premise_name].column == "X.x"
+
+
+class TestDataNodeRemovePremise:
+    def test_if_remove_string_premise(self, data_node, premise_check):
+        premise_name = "Null Checker on Column X"
+
+        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+
+        assert premise_name in data_node.premises
+        assert isinstance(data_node.premises[premise_name], DataPremise)
+
+        data_node.remove_premise(premise=premise_name)
+        assert premise_name not in data_node.premises
+
+    # FIXME
+    def test_if_remove_instance_of_data_premise_class(self, data_node, premise_check):
+        premise_name = "Null Checker on Column X"
+
+        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+
+        assert premise_name in data_node.premises
+        assert isinstance(data_node.premises[premise_name], DataPremise)
+
+        data_node.remove_premise(premise=premise_check("X"))
+        assert premise_name not in data_node.premises
+
+    def test_if_raises_exception_if_wrong_type_is_passed_in_promise_param(
+        self, data_node, premise_check
+    ):
+        premise_name = "Null Checker on Column X"
+
+        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+
+        assert premise_name in data_node.premises
+        assert isinstance(data_node.premises[premise_name], DataPremise)
+
+        with pytest.raises(WrongTypeReference):
+            data_node.remove_premise(premise=000)
