@@ -6,7 +6,7 @@ from .data_node import DataNode
 from .exceptions import (
     NodeManagerMissingCorrectArgs,
     NodeTypeNotFound,
-    NodeReferenceWrongType,
+    WrongTypeReference,
 )
 
 
@@ -90,7 +90,7 @@ class NodeManager:
         elif type(node) == str:
             copied_node = copy.deepcopy(self.__nodes.get(node))
         else:
-            raise NodeReferenceWrongType(
+            raise WrongTypeReference(
                 "String or DataNode instance should be passed in node type"
             )
 

@@ -14,9 +14,9 @@ class NodeTypeNotFound(KeyError):
     pass
 
 
-class NodeReferenceWrongType(Exception):
+class WrongTypeReference(Exception):
     """
-    Raised when node reference used to deep copy is the wrong type
+    Raised when reference is the wrong type
     """
 
     pass

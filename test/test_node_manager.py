@@ -5,7 +5,7 @@ from pipeline_penguin.data_node_bigquery import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     NodeTypeNotFound,
-    NodeReferenceWrongType,
+    WrongTypeReference,
 )
 from pipeline_penguin.node_manager import NodeManager
 
@@ -302,7 +302,7 @@ class TestCopyNode:
             args=bigquery_args,
         )
 
-        with pytest.raises(NodeReferenceWrongType):
+        with pytest.raises(WrongTypeReference):
             new_node = node_manager.copy_node(
                 node=17272, name="Pipeline New - Table New"
             )
