@@ -29,7 +29,11 @@ class NodeManager:
 
     @staticmethod
     def _is_data_node_class(node_type) -> bool:
-        return inspect.isclass(node_type) and issubclass(node_type, DataNode)
+        return (
+            node_type != DataNode
+            and inspect.isclass(node_type)
+            and issubclass(node_type, DataNode)
+        )
 
     @staticmethod
     def _is_data_node_instance(node_type) -> bool:
