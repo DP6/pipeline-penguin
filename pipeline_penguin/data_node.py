@@ -1,6 +1,5 @@
-from typing import Callable, Dict, Type, Union
+from typing import Callable, Dict, Type
 
-from pipeline_penguin.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
 
 
@@ -17,11 +16,7 @@ class DataNode:
         self.source = source
         self.premises: Dict[str, Type[PremiseFactory]] = {}
 
-    @staticmethod
-    def _is_data_premise_instance(premise) -> bool:
-        return isinstance(premise, DataPremise)
-
-    def insert_premise(self, name: str, premise_factory: PremiseFactory):
+    def insert_premise(self, name: str, premise_factory: PremiseFactory) -> None:
         """
         Receives the name of premise and an DataPremise class.
         Must insert the DataPremise instance on the premises dictionary using name as key.
@@ -30,22 +25,15 @@ class DataNode:
         premise = premise_factory(node=self, name=name)
         self.premises.update({name: premise})
 
-        return premise
-
-    def remove_premise(self, premise: Union[str, Type[DataPremise]]):
+    def remove_premise(self, name: str) -> None:
         """
-        Receives an String or an DataPremise instance.
+        Receives the name of premise.
         Must remove the DataPremise instance on the premises dictionary.
-        Returns None
         """
 
-        if self._is_data_premise_instance(premise):
-            for key in list(self.premises):
-                if self._is_data_premise_instance(self.premises[key]):
-                    del self.premises[key]
-        elif isinstance(premise, str):
-            del self.premises[premise]
-        else:
+        if not isinstance(name, str):
             raise WrongTypeReference(
-                "String or DataPremise instance should be passed in premise argument"
+                "Name of premise should be passed as string argument"
             )
+
+        del self.premises[name]
