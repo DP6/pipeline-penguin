@@ -30,13 +30,12 @@ def data_node():
 def premise_check():
     def check_null(column_name: str):
         class CheckIfNullCreator(DataPremise):
-            def __init__(self, node: Type[DataNode], name: str):
+            def __init__(self, name: str):
                 super().__init__(
                     name=name,
                     type="SQL",
                     column=column_name,
                 )
-                self.node = node
                 self.name = name
                 self.column = column_name
                 self.query = ""
@@ -46,24 +45,30 @@ def premise_check():
     yield check_null
 
 
-def another_fake_check(column_name: str):
-    class CheckFakeCreator(DataPremise):
-        def __init__(self, node: Type[DataNode], name: str):
-            super().__init__(
-                name=name,
-                type="SQL",
-                column=column_name,
-            )
-            self.node = node
-            self.name = name
-            self.column = column_name
-            self.query = ""
+@pytest.fixture()
+def another_premise_check():
+    def another_fake_check(column_name: str):
+        class CheckFakeCreator(DataPremise):
+            def __init__(self, name: str):
+                super().__init__(
+                    name=name,
+                    type="SQL",
+                    column=column_name,
+                )
+                self.name = name
+                self.column = column_name
+                self.query = ""
 
-    return CheckFakeCreator
+        return CheckFakeCreator
+
+    yield another_fake_check
 
 
 @pytest.fixture()
-def another_premise_check():
+def wrong_premise_check():
+    def another_fake_check(column_name: str):
+        return DataPremise
+
     yield another_fake_check
 
 
@@ -75,6 +80,21 @@ class TestDataNodeInsertPremise:
 
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
+
+    def test_if_raises_exception_when_premise_param_is_not_data_premise_subclass(
+        self, data_node, wrong_premise_check
+    ):
+        premise_name = "Null Checker on Column Y"
+
+        with pytest.raises(WrongTypeReference):
+            data_node.insert_premise(
+                name=premise_name, premise_factory=wrong_premise_check("Y")
+            )
+
+        premise_name = "Null Checker on Column Q"
+
+        with pytest.raises(WrongTypeReference):
+            data_node.insert_premise(name=premise_name, premise_factory="wrong_type")
 
     def test_if_overwrite_premise_if_it_is_already_inserted(
         self, data_node, premise_check, another_premise_check
