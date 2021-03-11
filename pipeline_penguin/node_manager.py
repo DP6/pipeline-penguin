@@ -87,7 +87,7 @@ class NodeManager:
 
         if self._is_data_node_instance(node):
             copied_node = copy.deepcopy(node)
-        elif type(node) == str:
+        elif isinstance(node, str):
             copied_node = copy.deepcopy(self.__nodes.get(node))
         else:
             raise WrongTypeReference(
