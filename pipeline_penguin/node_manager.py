@@ -1,6 +1,6 @@
 import copy
 import inspect
-from typing import Type, Optional, Union
+from typing import Type, Optional, Union, Any
 
 from .data_node import DataNode
 from .exceptions import (
@@ -28,7 +28,7 @@ class NodeManager:
         self.__nodes = {}
 
     @staticmethod
-    def _is_data_node_class(node_type) -> bool:
+    def _is_data_node_class(node_type: Any) -> bool:
         return (
             node_type != DataNode
             and inspect.isclass(node_type)
