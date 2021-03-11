@@ -86,15 +86,20 @@ class TestDataNodeInsertPremise:
     ):
         premise_name = "Null Checker on Column Y"
 
-        with pytest.raises(WrongTypeReference):
+        with pytest.raises(WrongTypeReference) as msg:
             data_node.insert_premise(
                 name=premise_name, premise_factory=wrong_premise_check("Y")
             )
 
+        expected_message = "premise_factory param should be subclass of DataPremise"
+        assert str(msg.value) == expected_message
+
         premise_name = "Null Checker on Column Q"
 
-        with pytest.raises(WrongTypeReference):
+        with pytest.raises(WrongTypeReference) as msg:
             data_node.insert_premise(name=premise_name, premise_factory="wrong_type")
+
+        assert str(msg.value) == expected_message
 
     def test_if_overwrite_premise_if_it_is_already_inserted(
         self, data_node, premise_check, another_premise_check
@@ -134,5 +139,8 @@ class TestDataNodeRemovePremise:
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
 
-        with pytest.raises(WrongTypeReference):
+        with pytest.raises(WrongTypeReference) as msg:
             data_node.remove_premise(name=000)
+
+        expected_message = "Name of premise should be passed as string argument"
+        assert str(msg.value) == expected_message
