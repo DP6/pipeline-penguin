@@ -6,11 +6,7 @@ from pipeline_penguin.data_premise_sql import DataPremiseSQL
 
 @pytest.fixture()
 def data_premise_arguments():
-    yield {
-        "name": "name_test",
-        "type": "type_test",
-        "column": "column_test"
-    }
+    yield {"name": "name_test", "type": "type_test", "column": "column_test"}
 
 
 @pytest.fixture()
@@ -19,7 +15,7 @@ def data_premise_sql_arguments():
         "name": "name_test",
         "type": "type_test",
         "column": "column_test",
-        "query": "SELECT * FROM `table`"
+        "query": "SELECT * FROM `table`",
     }
 
 
