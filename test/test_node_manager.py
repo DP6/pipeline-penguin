@@ -4,7 +4,6 @@ from pipeline_penguin import NodeType
 from pipeline_penguin.data_node_bigquery import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
-    NodeTypeNotFound,
     WrongTypeReference,
 )
 from pipeline_penguin.node_manager import NodeManager
@@ -62,14 +61,14 @@ class TestCreateNode:
     def test_if_raises_exception_with_node_type_was_not_correct(self, bigquery_args):
         node_manager = NodeManager()
 
-        with pytest.raises(NodeTypeNotFound) as b:
+        with pytest.raises(WrongTypeReference) as b:
             node_manager.create_node(
                 name="Pipeline X - Table Y",
                 node_type="wrong_type",
                 args=bigquery_args,
             )
 
-        expected_message = "'DataNode should be of type NodeType'"
+        expected_message = "DataNode should be of type NodeType"
         assert str(b.value) == expected_message
 
     def test_if_raises_attribute_error_when_try_to_use_nodes_dict_directly(

@@ -5,7 +5,6 @@ from typing import Type, Optional, Union
 from .data_node import DataNode
 from .exceptions import (
     NodeManagerMissingCorrectArgs,
-    NodeTypeNotFound,
     WrongTypeReference,
 )
 
@@ -46,7 +45,7 @@ class NodeManager:
                 args.update({"name": name})
                 node = node_type(**args)
             else:
-                raise NodeTypeNotFound("DataNode should be of type NodeType")
+                raise WrongTypeReference("DataNode should be of type NodeType")
         except TypeError as e:
             raise NodeManagerMissingCorrectArgs(str(e))
 

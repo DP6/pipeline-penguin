@@ -6,14 +6,6 @@ class NodeManagerMissingCorrectArgs(TypeError):
     pass
 
 
-class NodeTypeNotFound(KeyError):
-    """
-    Raised when node type was not found
-    """
-
-    pass
-
-
 class WrongTypeReference(Exception):
     """
     Raised when reference is the wrong type
