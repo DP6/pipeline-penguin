@@ -101,20 +101,7 @@ class TestDataNodeRemovePremise:
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
 
-        data_node.remove_premise(premise=premise_name)
-        assert premise_name not in data_node.premises
-
-    def test_if_remove_instance_of_data_premise_class(self, data_node, premise_check):
-        premise_name = "Null Checker on Column X"
-
-        premise_instance = data_node.insert_premise(
-            name=premise_name, premise_factory=premise_check("X")
-        )
-
-        assert premise_name in data_node.premises
-        assert isinstance(data_node.premises[premise_name], DataPremise)
-
-        data_node.remove_premise(premise=premise_instance)
+        data_node.remove_premise(name=premise_name)
         assert premise_name not in data_node.premises
 
     def test_if_raises_exception_if_wrong_type_is_passed_in_promise_param(
@@ -128,4 +115,4 @@ class TestDataNodeRemovePremise:
         assert isinstance(data_node.premises[premise_name], DataPremise)
 
         with pytest.raises(WrongTypeReference):
-            data_node.remove_premise(premise=000)
+            data_node.remove_premise(name=000)
