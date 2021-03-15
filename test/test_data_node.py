@@ -1,10 +1,8 @@
-from typing import Type
-
 import pytest
 
 from pipeline_penguin import NodeType
-from pipeline_penguin.data_node import DataNode
 from pipeline_penguin.data_premise import DataPremise
+from pipeline_penguin.data_premise_sql import DataPremiseSQL
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.node_manager import NodeManager
 
@@ -29,16 +27,9 @@ def data_node():
 @pytest.fixture()
 def premise_check():
     def check_null(column_name: str):
-        class CheckIfNullCreator(DataPremise):
+        class CheckIfNullCreator(DataPremiseSQL):
             def __init__(self, name: str):
-                super().__init__(
-                    name=name,
-                    type="SQL",
-                    column=column_name,
-                )
-                self.name = name
-                self.column = column_name
-                self.query = ""
+                super().__init__(name=name, type="SQL", column=column_name, query="")
 
         return CheckIfNullCreator
 
@@ -48,16 +39,9 @@ def premise_check():
 @pytest.fixture()
 def another_premise_check():
     def another_fake_check(column_name: str):
-        class CheckFakeCreator(DataPremise):
+        class CheckFakeCreator(DataPremiseSQL):
             def __init__(self, name: str):
-                super().__init__(
-                    name=name,
-                    type="SQL",
-                    column=column_name,
-                )
-                self.name = name
-                self.column = column_name
-                self.query = ""
+                super().__init__(name=name, type="SQL", column=column_name, query="")
 
         return CheckFakeCreator
 
