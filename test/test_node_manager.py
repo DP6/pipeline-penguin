@@ -1,11 +1,11 @@
 import pytest
 
 from pipeline_penguin import NodeType
+from pipeline_penguin.data_node import DataNode
 from pipeline_penguin.data_node_bigquery import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
-    NodeTypeNotFound,
-    NodeReferenceWrongType,
+    WrongTypeReference,
 )
 from pipeline_penguin.node_manager import NodeManager
 
@@ -41,7 +41,7 @@ class TestCreateNode:
 
         assert isinstance(data_node, DataNodeBigQuery)
 
-        bigquery_args.update({"source": "BigQuery"})
+        bigquery_args.update({"source": "BigQuery", "premises": {}})
         assert dict(data_node.__dict__.items()) == bigquery_args
 
     def test_if_raises_exception_with_node_manager_is_called_without_right_args(
@@ -62,14 +62,23 @@ class TestCreateNode:
     def test_if_raises_exception_with_node_type_was_not_correct(self, bigquery_args):
         node_manager = NodeManager()
 
-        with pytest.raises(NodeTypeNotFound) as b:
+        with pytest.raises(WrongTypeReference) as b:
             node_manager.create_node(
                 name="Pipeline X - Table Y",
                 node_type="wrong_type",
                 args=bigquery_args,
             )
 
-        expected_message = "'DataNode should be of type NodeType'"
+        expected_message = "DataNode should be of type NodeType"
+        assert str(b.value) == expected_message
+
+        with pytest.raises(WrongTypeReference) as b:
+            node_manager.create_node(
+                name="Pipeline K - Table R",
+                node_type=DataNode,
+                args=bigquery_args,
+            )
+
         assert str(b.value) == expected_message
 
     def test_if_raises_attribute_error_when_try_to_use_nodes_dict_directly(
@@ -302,7 +311,7 @@ class TestCopyNode:
             args=bigquery_args,
         )
 
-        with pytest.raises(NodeReferenceWrongType):
+        with pytest.raises(WrongTypeReference):
             new_node = node_manager.copy_node(
                 node=17272, name="Pipeline New - Table New"
             )

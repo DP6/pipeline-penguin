@@ -1,12 +1,11 @@
 import copy
 import inspect
-from typing import Type, Optional, Union
+from typing import Type, Optional, Union, Any
 
 from .data_node import DataNode
 from .exceptions import (
     NodeManagerMissingCorrectArgs,
-    NodeTypeNotFound,
-    NodeReferenceWrongType,
+    WrongTypeReference,
 )
 
 
@@ -29,8 +28,12 @@ class NodeManager:
         self.__nodes = {}
 
     @staticmethod
-    def _is_data_node_class(node_type) -> bool:
-        return inspect.isclass(node_type) and issubclass(node_type, DataNode)
+    def _is_data_node_class(node_type: Any) -> bool:
+        return (
+            node_type != DataNode
+            and inspect.isclass(node_type)
+            and issubclass(node_type, DataNode)
+        )
 
     @staticmethod
     def _is_data_node_instance(node_type) -> bool:
@@ -46,7 +49,7 @@ class NodeManager:
                 args.update({"name": name})
                 node = node_type(**args)
             else:
-                raise NodeTypeNotFound("DataNode should be of type NodeType")
+                raise WrongTypeReference("DataNode should be of type NodeType")
         except TypeError as e:
             raise NodeManagerMissingCorrectArgs(str(e))
 
@@ -87,10 +90,10 @@ class NodeManager:
 
         if self._is_data_node_instance(node):
             copied_node = copy.deepcopy(node)
-        elif type(node) == str:
+        elif isinstance(node, str):
             copied_node = copy.deepcopy(self.__nodes.get(node))
         else:
-            raise NodeReferenceWrongType(
+            raise WrongTypeReference(
                 "String or DataNode instance should be passed in node type"
             )
 
