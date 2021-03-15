@@ -1,3 +1,4 @@
+from pipeline_penguin import NodeType
 from pipeline_penguin.data_node import DataNode
 from pipeline_penguin.data_node_bigquery import DataNodeBigQuery
 

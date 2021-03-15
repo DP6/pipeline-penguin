@@ -6,17 +6,9 @@ class NodeManagerMissingCorrectArgs(TypeError):
     pass
 
 
-class NodeTypeNotFound(KeyError):
+class WrongTypeReference(Exception):
     """
-    Raised when node type was not found
-    """
-
-    pass
-
-
-class NodeReferenceWrongType(Exception):
-    """
-    Raised when node reference used to deep copy is the wrong type
+    Raised when reference is the wrong type
     """
 
     pass
