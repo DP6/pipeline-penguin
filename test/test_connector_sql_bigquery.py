@@ -19,20 +19,20 @@ def mock_isfile(monkeypatch):
 
 class TestConnectorSQLBigQuery:
 
-    def test_instance_superclass_type(self, mock_isfile):
-        assert isinstance(
-            ConnectorSQLBigQuery(
-                credentials_path="true_file.json",
-                max_rows=50),
-            ConnectorSQL,
-        )
-
     def test_instance_class_type(self, mock_isfile):
         assert isinstance(
             ConnectorSQLBigQuery(
                 credentials_path="true_file.json",
                 max_rows=50),
             ConnectorSQLBigQuery,
+        )
+
+    def test_instance_superclass_type(self, mock_isfile):
+        assert isinstance(
+            ConnectorSQLBigQuery(
+                credentials_path="true_file.json",
+                max_rows=50),
+            ConnectorSQL,
         )
 
     def test_connector_type(self, mock_isfile):
