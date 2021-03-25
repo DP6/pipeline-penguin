@@ -14,7 +14,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         super().__init__()
         self.source = "BigQuery"
 
-        if not(path.isfile(credentials_path)):
+        if not (path.isfile(credentials_path)):
             raise FileNotFoundError(f"{credentials_path} does not exist")
 
         self.credentials_path = credentials_path
@@ -30,13 +30,8 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         # Using default max_rows
         max_rows = max_rows if max_rows else self.max_rows
 
-        credentials = Credentials.from_service_account_file(
-            self.credentials_path)
+        credentials = Credentials.from_service_account_file(self.credentials_path)
 
-        df = pd.read_gbq(
-            query=query,
-            credentials=credentials,
-            max_results=max_rows
-        )
+        df = pd.read_gbq(query=query, credentials=credentials, max_results=max_rows)
 
         return df

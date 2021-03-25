@@ -3,7 +3,6 @@ from pipeline_penguin.connector_sql import ConnectorSQL
 
 
 class TestConnectorSQL:
-
     def test_instance_class_type(self):
         assert isinstance(ConnectorSQL(), ConnectorSQL)
 
