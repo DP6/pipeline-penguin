@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pandas = "*"
+pandas-gbq = "*"
 
 [dev-packages]
 pytest = "==6.2.2"
