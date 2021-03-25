@@ -1,12 +1,12 @@
-from pipeline_penguin.connector import Connector
-from pipeline_penguin.connector_sql import ConnectorSQL
-from pipeline_penguin.connector_sql_bigquery import ConnectorSQLBigQuery
+import pytest
 
 from google.oauth2.service_account import Credentials
 from os import path
 import pandas as pd
 
-import pytest
+from pipeline_penguin.connector import Connector
+from pipeline_penguin.connector_sql import ConnectorSQL
+from pipeline_penguin.connector_sql_bigquery import ConnectorSQLBigQuery
 
 
 @pytest.fixture

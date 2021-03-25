@@ -1,3 +1,5 @@
+"""This module provides the abstract ConnectorSQL constructor."""
+
 from .connector import Connector
 
 
@@ -9,7 +11,9 @@ class ConnectorSQL(Connector):
     """
 
     def __init__(self):
+        """Initialize the ConnectorSQL constructor."""
         super().__init__("SQL")
 
     def run(self, query):
+        """Stub method to be overwritten."""
         pass

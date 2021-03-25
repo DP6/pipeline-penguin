@@ -1,6 +1,9 @@
+"""This module provides the ConnectorSQLBigQuery constructor."""
+
+from os import path
+
 import pandas as pd
 from google.oauth2.service_account import Credentials
-from os import path
 
 from .connector_sql import ConnectorSQL
 
@@ -19,7 +22,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
     """
 
     def __init__(self, credentials_path: str, max_results: int = 1000):
-        """ Initializes the connector."""
+        """Initialize the connector."""
         super().__init__()
         self.source = "BigQuery"
 
@@ -30,7 +33,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         self.max_results = max_results
 
     def run(self, query: str, max_results: int = None):
-        """Retrieves the results of the provided query.
+        """Retrieve the results of the provided query.
 
         Args:
             query: SQL code in BigQuery's standard foramt. Ref: https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
@@ -38,7 +41,6 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         Returns:
             A pandas DataFrame object with the results of the provided query up to the maximum number of rows allowed.
         """
-
         # Using default max_results
         max_results = max_results if max_results else self.max_results
 
