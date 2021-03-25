@@ -18,57 +18,43 @@ def mock_isfile(monkeypatch):
 
 
 class TestConnectorSQLBigQuery:
-
     def test_instance_class_type(self, mock_isfile):
         assert isinstance(
-            ConnectorSQLBigQuery(
-                credentials_path="true_file.json",
-                max_rows=50),
+            ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50),
             ConnectorSQLBigQuery,
         )
 
     def test_instance_superclass_type(self, mock_isfile):
         assert isinstance(
-            ConnectorSQLBigQuery(
-                credentials_path="true_file.json",
-                max_rows=50),
+            ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50),
             ConnectorSQL,
         )
 
     def test_connector_type(self, mock_isfile):
-        conn = ConnectorSQLBigQuery(
-            credentials_path="true_file.json",
-            max_rows=50)
+        conn = ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50)
         assert conn.type == "SQL"
 
     def test_connector_source(self, mock_isfile):
-        conn = ConnectorSQLBigQuery(
-            credentials_path="true_file.json",
-            max_rows=50)
+        conn = ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50)
         assert conn.source == "BigQuery"
 
     def test_invalid_filename(self, monkeypatch, mock_isfile):
         with pytest.raises(FileNotFoundError):
-            conn = ConnectorSQLBigQuery(
-                credentials_path="fake_file.json",
-                max_rows=50)
+            conn = ConnectorSQLBigQuery(credentials_path="fake_file.json", max_rows=50)
 
     def test_connection_run_returns_dataframe(self, monkeypatch, mock_isfile):
-
         def mock_from_service_account_file(credentials_path):
             return
 
         def mock_pandas_read_gbq(query, credentials, max_results):
             return pd.DataFrame([i for i in range(50)])
 
-        monkeypatch.setattr(Credentials, "from_service_account_file",
-                            mock_from_service_account_file)
-        monkeypatch.setattr(pd, "read_gbq",
-                            mock_pandas_read_gbq)
+        monkeypatch.setattr(
+            Credentials, "from_service_account_file", mock_from_service_account_file
+        )
+        monkeypatch.setattr(pd, "read_gbq", mock_pandas_read_gbq)
 
-        conn = ConnectorSQLBigQuery(
-            credentials_path="true_file.json",
-            max_rows=50)
+        conn = ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50)
 
         result = conn.run("SELECT * FROM `project.dataset.table`", 50)
 
