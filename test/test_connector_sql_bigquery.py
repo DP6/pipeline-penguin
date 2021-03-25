@@ -77,7 +77,7 @@ class TestConnectorSQLBigQueryRunExecution:
     def test_override_default_dataframe_size(
         self, mock_isfile, mock_from_service_account_file, mock_pandas_read_gbq
     ):
-        conn = ConnectorSQLBigQuery(credentials_path="true_file.json", max_rows=50)
+        conn = ConnectorSQLBigQuery(credentials_path="true_file.json", max_results=50)
         result = conn.run("SELECT * FROM `project.dataset.table`")
         assert result.size == 50
 
@@ -85,5 +85,5 @@ class TestConnectorSQLBigQueryRunExecution:
         self, mock_isfile, mock_from_service_account_file, mock_pandas_read_gbq
     ):
         conn = ConnectorSQLBigQuery(credentials_path="true_file.json")
-        result = conn.run("SELECT * FROM `project.dataset.table`", max_rows=50)
+        result = conn.run("SELECT * FROM `project.dataset.table`", max_results=50)
         assert result.size == 50

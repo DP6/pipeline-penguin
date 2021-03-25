@@ -1,8 +1,11 @@
 class Connector:
+    """Constructor for the connector_sql.
+
+    Attributes:
+        type: Base connector type
+    """
+
     def __init__(self, type: str):
-        """
-        Constructor for the connector.
-        """
         self.type = type
 
     def run(self):
