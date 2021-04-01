@@ -1,4 +1,6 @@
-from .data_node_bigquery import DataNodeBigQuery
+"""pipeline_penguin/__init__.py"""
+
+from .data_nodes.data_node_bigquery import DataNodeBigQuery
 from .pipeline_penguin import PipelinePenguin
 
 

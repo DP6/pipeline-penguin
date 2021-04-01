@@ -1,4 +1,4 @@
-from .node_manager import NodeManager
+from .data_nodes.node_manager import NodeManager
 
 
 class PipelinePenguin:

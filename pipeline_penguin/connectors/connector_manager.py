@@ -1,3 +1,8 @@
+""""""
+
+from pipeline_penguin.core.connectors import Connector
+
+
 class ConnectorManager:
     def __new__(cls):
         """
