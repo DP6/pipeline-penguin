@@ -1,7 +1,7 @@
 import pytest
 
-from pipeline_penguin.data_premise import DataPremise
-from pipeline_penguin.data_premise_sql import DataPremiseSQL
+from pipeline_penguin.core.data_premises import DataPremise
+from pipeline_penguin.data_premises.sql import DataPremiseSQL
 
 
 @pytest.fixture()
