@@ -1,4 +1,4 @@
-from .data_node import DataNode
+from pipeline_penguin.core.data_nodes import DataNode
 
 
 class DataNodeBigQuery(DataNode):
