@@ -1,4 +1,4 @@
-from pipeline_penguin.core.data_premises import DataPremise
+from .data_premise import DataPremise
 
 
 class DataPremiseSQL(DataPremise):

@@ -1,4 +1,4 @@
-from .data_premise_sql import DataPremiseSQL
+from pipeline_penguin.core.data_premise_sql import DataPremiseSQL
 
 
 class DataPremiseSQLCheckNull(DataPremiseSQL):

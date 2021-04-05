@@ -2,7 +2,7 @@ import copy
 import inspect
 from typing import Type, Optional, Union, Any
 
-from pipeline_penguin.core.data_nodes import DataNode
+from pipeline_penguin.core.data_node import DataNode
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     WrongTypeReference,
