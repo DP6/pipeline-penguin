@@ -1,5 +1,5 @@
 from pipeline_penguin import PipelinePenguin
-from pipeline_penguin.data_nodes.node_manager import NodeManager
+from pipeline_penguin.data_node.node_manager import NodeManager
 
 
 class TestPipelinePenguin:

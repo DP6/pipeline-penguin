@@ -1,6 +1,6 @@
 from pipeline_penguin import NodeType
-from pipeline_penguin.core.data_nodes import DataNode
-from pipeline_penguin.data_nodes import DataNodeBigQuery
+from pipeline_penguin.core.data_node import DataNode
+from pipeline_penguin.data_node import DataNodeBigQuery
 
 
 class TestDataNodeBigQuery:

@@ -1,4 +1,4 @@
-from pipeline_penguin.core.connectors import Connector
+from pipeline_penguin.core.connector import Connector
 
 
 class TestConnector:
