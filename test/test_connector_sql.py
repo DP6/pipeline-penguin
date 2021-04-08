@@ -1,5 +1,4 @@
-from pipeline_penguin.connector import Connector
-from pipeline_penguin.connector_sql import ConnectorSQL
+from pipeline_penguin.core.connector import Connector, ConnectorSQL
 
 
 class TestConnectorSQL:
