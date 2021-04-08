@@ -2,8 +2,8 @@ import copy
 import inspect
 from typing import Type, Optional, Union, Any
 
-from .data_node import DataNode
-from .exceptions import (
+from pipeline_penguin.core.data_node import DataNode
+from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     WrongTypeReference,
 )

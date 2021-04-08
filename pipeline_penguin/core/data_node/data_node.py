@@ -1,7 +1,7 @@
 import inspect
 from typing import Callable, Dict, Type, Any
 
-from pipeline_penguin.data_premise import DataPremise
+from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
 
 

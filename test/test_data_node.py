@@ -1,10 +1,9 @@
 import pytest
 
 from pipeline_penguin import NodeType
-from pipeline_penguin.data_premise import DataPremise
-from pipeline_penguin.data_premise_sql import DataPremiseSQL
+from pipeline_penguin.core.data_premise import DataPremise, DataPremiseSQL
 from pipeline_penguin.exceptions import WrongTypeReference
-from pipeline_penguin.node_manager import NodeManager
+from pipeline_penguin.data_node import NodeManager
 
 
 @pytest.fixture()

@@ -1,5 +1,6 @@
 """This module provides the abstract ConnectorSQL constructor."""
 
+# from ..connector import Connector
 from .connector import Connector
 
 

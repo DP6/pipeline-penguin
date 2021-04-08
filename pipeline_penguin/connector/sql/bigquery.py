@@ -5,7 +5,7 @@ from os import path
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
-from .connector_sql import ConnectorSQL
+from pipeline_penguin.core.connector.sql import ConnectorSQL
 
 
 class ConnectorSQLBigQuery(ConnectorSQL):
