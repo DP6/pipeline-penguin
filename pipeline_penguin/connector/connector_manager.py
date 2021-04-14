@@ -1,9 +1,14 @@
 """"""
-
+import inspect
+from typing import Type, Any
 from pipeline_penguin.core.connector import Connector
+from pipeline_penguin.exceptions import WrongTypeReference, ConnectorManagerMissingCorrectArgs
+
 
 
 class ConnectorManager:
+    _instance = None
+
     def __new__(cls):
         """
         ConnectorManager use Singleton Design Pattern.
@@ -19,30 +24,55 @@ class ConnectorManager:
         """
         self.__default_connectors = {}
 
-    def create_connector(self, type: str, source: str, args: dict):
+    @staticmethod
+    def _is_connector_subclass(connector_type: Any) -> bool:
         """
-        Instantiate the properly Connector considering the type and source.
-        Returns the Connector instance.
+        Verify with class passed is child of Connector class
         """
-        pass
+        return (
+            connector_type != Connector
+            and inspect.isclass(connector_type)
+            and issubclass(connector_type, Connector)
+        )
 
-    def define_default(self, connector: Connector):
-        """
-        Define the Connector received as parameter as default for its type and source attributes.
-        Returns None.
-        """
-        pass
+    def _get_dict_key(self, **kwargs):
+        try:
+            if 'connector' in kwargs and self._is_connector_subclass(kwargs['connector'].__class__):
+                connector = kwargs['connector']
+                return connector.type + connector.source
+            elif 'connector_type' in kwargs and self._is_connector_subclass(kwargs['connector_type']):
+                connector_type = kwargs['connector_type']
+                return connector_type.type + connector_type.source
+            elif 'type' in kwargs and isinstance(kwargs['type'], str) and 'source' in kwargs and isinstance(kwargs['source'], str):
+                return kwargs['type'] + kwargs['source']
+            else:
+                raise ConnectorManagerMissingCorrectArgs("Invalid arguments")
+        except TypeError as e:
+            raise ConnectorManagerMissingCorrectArgs(str(e))
 
-    def get_default(self, type: str, source: str):
+    def define_default(self, connector: Connector) -> None:
         """
-        Getter for the default Connector for the type and source parameters.
-        Returns the default Connector or None if there is no default setted.
         """
-        pass
+        try:
+            if self._is_connector_subclass(connector.__class__):
+                self.__default_connectors.update({self._get_dict_key(connector = connector): connector})
+            else:
+                raise WrongTypeReference("Connector should be of type Connector")
+        except TypeError as e:
+            raise ConnectorManagerMissingCorrectArgs(str(e))
 
-    def remove_default(self, type: str, source: str):
+        return None
+
+    def get_default(self, **kwargs):
         """
-        Remove the default Connector for the type and source parameters.
-        Returns the removed Connector or None if there is no default setted.
         """
-        pass
+        return self.__default_connectors.get(self._get_dict_key(**kwargs))
+
+    def remove_default(self, **kwargs):
+        """
+        """
+        dict_key = self._get_dict_key(**kwargs)
+        if dict_key in self.__default_connectors:
+            removed_connector = self.__default_connectors[dict_key]
+            del self.__default_connectors[dict_key]
+            return removed_connector

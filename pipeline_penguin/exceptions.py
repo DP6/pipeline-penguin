@@ -5,6 +5,12 @@ class NodeManagerMissingCorrectArgs(TypeError):
 
     pass
 
+class ConnectorManagerMissingCorrectArgs(TypeError):
+    """
+    Raised when there are missing arguments in ConnectorManager create_connector
+    """
+
+    pass
 
 class WrongTypeReference(Exception):
     """

@@ -1,4 +1,5 @@
 from .data_node import NodeManager
+from .connector import ConnectorManager
 
 
 class PipelinePenguin:
@@ -7,3 +8,4 @@ class PipelinePenguin:
         Constructor for the PipelinePenguin.
         """
         self.nodes = NodeManager()
+        self.connectors = ConnectorManager()
