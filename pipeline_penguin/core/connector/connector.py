@@ -8,9 +8,9 @@ class Connector:
         type: Base connector type
     """
 
-    def __init__(self, type: str):
+    def __init__(self):
         """Initialize the Connector constructor."""
-        self.type = type
+        pass
 
     def run(self):
         """Stub method to be overwritten."""
