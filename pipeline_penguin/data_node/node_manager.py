@@ -2,7 +2,7 @@
 
 import copy
 import inspect
-from typing import Type, Optional, Union, Any
+from typing import Type, Optional, Union, Any, List
 
 from pipeline_penguin.core.data_node import DataNode
 from pipeline_penguin.exceptions import (
@@ -71,7 +71,7 @@ class NodeManager:
         """
         return self.__nodes.get(name)
 
-    def list_nodes(self) -> list[Type[DataNode]]:
+    def list_nodes(self) -> List[Type[DataNode]]:
         """List all existing data nodes."""
         for key in self.__nodes.keys():
             print(key)
