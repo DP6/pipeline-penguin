@@ -11,7 +11,7 @@ class DataNode:
     """Base DataNode class.
 
     Args:
-        name: Name for this datanode
+        name: Reference name of this DataNode
         source: Type of data source
     Attributes:
         premises: Dictionary holding every data_premise inserted
@@ -28,7 +28,11 @@ class DataNode:
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
-        """Return whether the given premise factory is a subclass of DataPremise or not."""
+        """Return whether the given premise factory is a subclass of DataPremise or not.
+
+        Args:
+            premise_factory: Any object to be validated.
+        """
         return (
             premise_factory != DataPremise
             and inspect.isclass(premise_factory)
@@ -36,7 +40,7 @@ class DataNode:
         )
 
     def insert_premise(
-        self, name: str, premise_factory: DataPremise, *args, **kwargs
+        self, name: str, premise_factory: Type[DataPremise], *args, **kwargs
     ) -> None:
         """Insert a premise on the DataNode.
 

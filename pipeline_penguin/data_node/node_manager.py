@@ -23,12 +23,12 @@ class NodeManager:
         return cls._instance
 
     def __init__(self):
-        """Initialize the manager."""
+        """Initialization. The private __nodes attribute contains every DataNode created by the manager."""
         self.__nodes = {}
 
     @staticmethod
     def _is_data_node_class(node_factory: Any) -> bool:
-        """Return whether the given class is a DataNode subclass or not.
+        """Validation for DataNode constructor type.
 
         Args:
             node_factory: Constructor for a DataNode object
@@ -42,7 +42,7 @@ class NodeManager:
     def create_node(
         self, name: str, node_factory: Type[DataNode], *args, **kwargs
     ) -> DataNode:
-        """Instantiate a DataNode with the proveided arguments.
+        """Instantiate a new DataNode in the internal data structure.
 
         Args:
             name: Name of the DataNode
@@ -50,7 +50,7 @@ class NodeManager:
             *args, **kwargs: Arguments used on the DataNode's initialization.
         Raises:
             WrongTypeReference: If the provided constructor is not a subclass of DataNode
-            NodeManagerMissingCorrectArgs: When the node was not able to be initialized with the provided arguments
+            NodeManagerMissingCorrectArgs: When the node was not able to initialize the provided arguments
         """
         try:
             if self._is_data_node_class(node_factory):
@@ -64,10 +64,10 @@ class NodeManager:
         return node
 
     def get_node(self, name: str) -> Optional[Type[DataNode]]:
-        """Retrieve a previously created DataNode by its name.
+        """Retrival of DataNodes by name.
 
         Args:
-            name: name of the data node to retrieve
+            name: Name of the DataNode to retrieve
         """
         return self.__nodes.get(name)
 
@@ -79,7 +79,11 @@ class NodeManager:
         return list(self.__nodes.keys())
 
     def remove_node(self, name: str) -> None:
-        """Remove a previously added DataNode."""
+        """Remove a previously added DataNode.
+
+        Args:
+            name: Name of the DataNode to be removed.
+        """
         if name in self.__nodes:
             del self.__nodes[name]
 
@@ -88,7 +92,7 @@ class NodeManager:
 
         Args:
             node: Primary DataNode
-            name: Name of the DataNode copy
+            name: Name for the DataNode copy
         """
         if isinstance(node, DataNode):
             copied_node = copy.deepcopy(node)
