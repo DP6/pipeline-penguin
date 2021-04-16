@@ -1,6 +1,6 @@
 import pytest
 
-from pipeline_penguin import NodeType
+
 from pipeline_penguin.core.data_node import DataNode
 from pipeline_penguin.data_node import NodeManager
 from pipeline_penguin.data_node.sql import DataNodeBigQuery
@@ -35,7 +35,7 @@ class TestCreateNode:
         node_manager = NodeManager()
         data_node = node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -52,7 +52,7 @@ class TestCreateNode:
         with pytest.raises(NodeManagerMissingCorrectArgs) as b:
             node_manager.create_node(
                 name="Pipeline X - Table Y",
-                node_type=NodeType.BIG_QUERY,
+                node_type=DataNodeBigQuery,
                 args=bigquery_missing_args,
             )
 
@@ -104,12 +104,12 @@ class TestGetNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         second_data_node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -121,12 +121,12 @@ class TestGetNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -140,12 +140,12 @@ class TestListNodes:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -161,12 +161,12 @@ class TestRemoveNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -188,12 +188,12 @@ class TestRemoveNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -213,12 +213,12 @@ class TestCopyNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -246,12 +246,12 @@ class TestCopyNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -284,7 +284,7 @@ class TestCopyNode:
 
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 
@@ -307,7 +307,7 @@ class TestCopyNode:
 
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
+            node_type=DataNodeBigQuery,
             args=bigquery_args,
         )
 

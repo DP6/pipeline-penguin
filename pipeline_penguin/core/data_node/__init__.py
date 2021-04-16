@@ -3,6 +3,5 @@
 from .data_node import DataNode
 
 
-
 class NodeType:
     BIG_QUERY = "BigQuery"

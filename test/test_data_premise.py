@@ -1,6 +1,7 @@
 import pytest
 
-from pipeline_penguin.core.data_premise import DataPremise, DataPremiseSQL
+from pipeline_penguin.core.data_premise import DataPremise
+from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 
 
 @pytest.fixture()
@@ -12,7 +13,6 @@ def data_premise_arguments():
 def data_premise_sql_arguments():
     yield {
         "name": "name_test",
-        "type": "type_test",
         "column": "column_test",
         "query": "SELECT * FROM `table`",
     }

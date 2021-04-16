@@ -1,4 +1,3 @@
-from pipeline_penguin import NodeType
 from pipeline_penguin.core.data_node import DataNode
 from pipeline_penguin.data_node import DataNodeBigQuery
 
@@ -15,6 +14,3 @@ class TestDataNodeBigQuery:
             ),
             DataNode,
         )
-
-    def test_node_type_reference(self):
-        assert DataNodeBigQuery == NodeType.BIG_QUERY
