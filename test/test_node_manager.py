@@ -1,7 +1,6 @@
 import pytest
 
-from pipeline_penguin import NodeType
-from pipeline_penguin.core.data_node import DataNode
+from pipeline_penguin.core.data_node import DataNode, NodeType
 from pipeline_penguin.data_node import NodeManager
 from pipeline_penguin.data_node.sql import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
@@ -35,14 +34,21 @@ class TestCreateNode:
         node_manager = NodeManager()
         data_node = node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         assert isinstance(data_node, DataNodeBigQuery)
 
         bigquery_args.update({"source": "BigQuery", "premises": {}})
-        assert dict(data_node.__dict__.items()) == bigquery_args
+        assert {
+            "project_id": data_node.project_id,
+            "dataset_id": data_node.dataset_id,
+            "table_id": data_node.table_id,
+            "service_account_json": data_node.service_account_json,
+            "source": NodeType.BIG_QUERY,
+            "premises": {},
+        } == bigquery_args
 
     def test_if_raises_exception_with_node_manager_is_called_without_right_args(
         self, bigquery_missing_args
@@ -52,8 +58,8 @@ class TestCreateNode:
         with pytest.raises(NodeManagerMissingCorrectArgs) as b:
             node_manager.create_node(
                 name="Pipeline X - Table Y",
-                node_type=NodeType.BIG_QUERY,
-                args=bigquery_missing_args,
+                node_factory=DataNodeBigQuery,
+                **bigquery_missing_args,
             )
 
         expected_message = "__init__() missing 2 required positional arguments: 'project_id' and 'dataset_id'"
@@ -65,8 +71,8 @@ class TestCreateNode:
         with pytest.raises(WrongTypeReference) as b:
             node_manager.create_node(
                 name="Pipeline X - Table Y",
-                node_type="wrong_type",
-                args=bigquery_args,
+                node_factory="wrong_type",
+                **bigquery_args,
             )
 
         expected_message = "DataNode should be of type NodeType"
@@ -75,8 +81,8 @@ class TestCreateNode:
         with pytest.raises(WrongTypeReference) as b:
             node_manager.create_node(
                 name="Pipeline K - Table R",
-                node_type=DataNode,
-                args=bigquery_args,
+                node_factory=DataNode,
+                **bigquery_args,
             )
 
         assert str(b.value) == expected_message
@@ -104,13 +110,13 @@ class TestGetNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         second_data_node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         node = node_manager.get_node(name="Pipeline Z - Table K")
@@ -121,13 +127,13 @@ class TestGetNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         node = node_manager.get_node(name="Pipeline Random")
@@ -140,13 +146,13 @@ class TestListNodes:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         nodes = node_manager.list_nodes()
@@ -161,13 +167,13 @@ class TestRemoveNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         nodes = node_manager.list_nodes()
@@ -188,13 +194,13 @@ class TestRemoveNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         nodes = node_manager.list_nodes()
@@ -213,13 +219,13 @@ class TestCopyNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         nodes = node_manager.list_nodes()
@@ -246,13 +252,13 @@ class TestCopyNode:
         node_manager = NodeManager()
         node_manager.create_node(
             name="Pipeline X - Table Y",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         new_node = node_manager.copy_node(
@@ -284,8 +290,8 @@ class TestCopyNode:
 
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         new_node = node_manager.copy_node(node=node, name="Pipeline New - Table New")
@@ -307,8 +313,8 @@ class TestCopyNode:
 
         node = node_manager.create_node(
             name="Pipeline Z - Table K",
-            node_type=NodeType.BIG_QUERY,
-            args=bigquery_args,
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
         )
 
         with pytest.raises(WrongTypeReference):
