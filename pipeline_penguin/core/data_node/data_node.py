@@ -1,9 +1,9 @@
 """This module provides the abstract DataNode constructor."""
-
+from __future__ import annotations
 import inspect
 from typing import Callable, Dict, Type, Any, List
 
-import pipeline_penguin.core.data_premise
+from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.core.connector.connector import Connector
 
@@ -25,7 +25,7 @@ class DataNode:
         """Initialize the Data Node."""
         self.name = name
         self.source = source
-        self.premises: Dict[str, Type[DataPremise]] = {}
+        self.premises: Dict[str, Type["DataPremise"]] = {}
         self.supported_premise_types = []
         self.connectors = {}
 
@@ -60,7 +60,7 @@ class DataNode:
                 "premise_factory param should be subclass of DataPremise"
             )
 
-        premise = premise_factory(name, *args, **kwargs)
+        premise = premise_factory(name, self, *args, **kwargs)
 
         if not premise.type in self.supported_premise_types:
             raise WrongTypeReference(

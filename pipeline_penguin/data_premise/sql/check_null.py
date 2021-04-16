@@ -22,19 +22,16 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         """Initialize the DataPremise after building the validation query."""
 
         query_template = (
-            f"SELECT count(*) FROM `{project}.{dataset}.{table}` WHERE {column} is null"
+            "SELECT count(*) FROM `{project}.{dataset}.{table}` WHERE {column} is null"
         )
+        query_args = {
+            "project": data_node.project_id,
+            "dataset": data_node.dataset_id,
+            "table": data_node.table_id,
+            "column": column,
+        }
 
-        query = query_template.format(
-            {
-                "project": data_node.project_id,
-                "dataset": project.data_node,
-                "table": data_node.table_id,
-                "column": column,
-            }
-        )
-
-        super().__init__(name, data_node, query)
+        super().__init__(name, data_node, query_template.format(**query_args))
 
     def validate(self) -> bool:
         """Run the validation function.

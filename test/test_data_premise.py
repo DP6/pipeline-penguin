@@ -2,18 +2,23 @@ import pytest
 
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
+from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 @pytest.fixture()
 def data_premise_arguments():
-    yield {"name": "name_test", "type": "type_test", "column": "column_test"}
+    yield {
+        "name": "name_test",
+        "data_node": DataNode("node_test", "TEST_SOURCE"),
+        "type": "type_test",
+    }
 
 
 @pytest.fixture()
 def data_premise_sql_arguments():
     yield {
         "name": "name_test",
-        "column": "column_test",
+        "data_node": DataNode("node_test", "TEST_SOURCE"),
         "query": "SELECT * FROM `table`",
     }
 
