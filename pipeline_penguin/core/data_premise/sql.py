@@ -1,3 +1,4 @@
+"""This module provides the abstract DataPremiseSQL constructor."""
 import pipeline_penguin.core.data_premise
 from . import DataPremise, PremiseType
 

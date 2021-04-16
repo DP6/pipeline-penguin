@@ -1,9 +1,10 @@
 import pytest
 
-from pipeline_penguin import NodeType
-from pipeline_penguin.core.data_premise import DataPremise, DataPremiseSQL
+from pipeline_penguin.core.data_premise import DataPremise
+from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.data_node import NodeManager
+from pipeline_penguin.data_node.sql import DataNodeBigQuery
 
 
 @pytest.fixture()
@@ -18,7 +19,7 @@ def data_node():
     node_manager = NodeManager()
     yield node_manager.create_node(
         name="Pipeline X - Table Y",
-        node_type=NodeType.BIG_QUERY,
+        node_type=DataNodeBigQuery,
         args=bigquery_args,
     )
 
@@ -28,7 +29,7 @@ def premise_check():
     def check_null(column_name: str):
         class CheckIfNullCreator(DataPremiseSQL):
             def __init__(self, name: str):
-                super().__init__(name=name, type="SQL", column=column_name, query="")
+                super().__init__(name=name, column=column_name, query="")
 
         return CheckIfNullCreator
 
@@ -40,7 +41,7 @@ def another_premise_check():
     def another_fake_check(column_name: str):
         class CheckFakeCreator(DataPremiseSQL):
             def __init__(self, name: str):
-                super().__init__(name=name, type="SQL", column=column_name, query="")
+                super().__init__(name=name, column=column_name, query="")
 
         return CheckFakeCreator
 
