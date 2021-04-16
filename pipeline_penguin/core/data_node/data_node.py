@@ -3,8 +3,9 @@
 import inspect
 from typing import Callable, Dict, Type, Any, List
 
-from pipeline_penguin.core.data_premise import DataPremise
+import pipeline_penguin.core.data_premise
 from pipeline_penguin.exceptions import WrongTypeReference
+from pipeline_penguin.core.connector.connector import Connector
 
 
 class DataNode:
@@ -17,6 +18,7 @@ class DataNode:
         premises: Dictionary holding every data_premise inserted
         supported_premise_types: Array of premise types allowed to be
             inserted on the data_node
+        connectors: Custom data Connectors to be used while extracting data for this Node.
     """
 
     def __init__(self, name: str, source: str):
@@ -25,6 +27,7 @@ class DataNode:
         self.source = source
         self.premises: Dict[str, Type[DataPremise]] = {}
         self.supported_premise_types = []
+        self.connectors = {}
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
@@ -73,3 +76,33 @@ class DataNode:
             name: name of the premise to be removed
         """
         del self.premises[name]
+
+    def get_connector(self, premise_type: str) -> Connector:
+        """Abstract method for retrieving the Connector to be used while querying data for
+        this DataNode.
+        Calls for a Default connector if there's no Connector of the given type inside
+        the **self.connectors** dictionary.
+
+        Args:
+            premise_type (str): Type of Premise for identifying the Connector.
+
+        Returns:
+            Connector: Connector retrieved.
+        """
+        pass
+
+    def run_premises(self) -> Dict:
+        """Run every DataPremise validation for this DataNode, printing the results and saving them
+        on a Dictionary.
+
+        Returns:
+            Dict: Conolidation of all validations executed.
+        """
+        results = {}
+
+        for name, premise in self.premises.items():
+            passed = premise.validate()
+            results[name] = passed
+            print(f"{name}: {'passed' if passed else 'failed'}")
+
+        return results
