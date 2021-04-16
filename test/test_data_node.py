@@ -1,9 +1,12 @@
 import pytest
 
-from pipeline_penguin import NodeType
-from pipeline_penguin.core.data_premise import DataPremise, DataPremiseSQL
+from pipeline_penguin.core.data_node import NodeType
+from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.data_node import NodeManager
+from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
+from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
+from pipeline_penguin.core.data_premise.data_premise import DataPremise
 
 
 @pytest.fixture()
@@ -18,17 +21,17 @@ def data_node():
     node_manager = NodeManager()
     yield node_manager.create_node(
         name="Pipeline X - Table Y",
-        node_type=NodeType.BIG_QUERY,
-        args=bigquery_args,
+        node_factory=DataNodeBigQuery,
+        **bigquery_args,
     )
 
 
 @pytest.fixture()
 def premise_check():
-    def check_null(column_name: str):
+    def check_null():
         class CheckIfNullCreator(DataPremiseSQL):
-            def __init__(self, name: str):
-                super().__init__(name=name, type="SQL", column=column_name, query="")
+            def __init__(self, name, column, query=""):
+                super().__init__(name=name, column=column, query="")
 
         return CheckIfNullCreator
 
@@ -37,10 +40,10 @@ def premise_check():
 
 @pytest.fixture()
 def another_premise_check():
-    def another_fake_check(column_name: str):
+    def another_fake_check():
         class CheckFakeCreator(DataPremiseSQL):
-            def __init__(self, name: str):
-                super().__init__(name=name, type="SQL", column=column_name, query="")
+            def __init__(self, name, column, query=""):
+                super().__init__(name=name, column=column, query="")
 
         return CheckFakeCreator
 
@@ -49,7 +52,7 @@ def another_premise_check():
 
 @pytest.fixture()
 def wrong_premise_check():
-    def another_fake_check(column_name: str):
+    def another_fake_check():
         return DataPremise
 
     yield another_fake_check
@@ -58,8 +61,7 @@ def wrong_premise_check():
 class TestDataNodeInsertPremise:
     def test_if_premise_is_inserted_successfully(self, data_node, premise_check):
         premise_name = "Null Checker on Column X"
-
-        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+        data_node.insert_premise(premise_name, premise_check(), column="X")
 
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
@@ -71,7 +73,7 @@ class TestDataNodeInsertPremise:
 
         with pytest.raises(WrongTypeReference) as msg:
             data_node.insert_premise(
-                name=premise_name, premise_factory=wrong_premise_check("Y")
+                name=premise_name, premise_factory=wrong_premise_check()
             )
 
         expected_message = "premise_factory param should be subclass of DataPremise"
@@ -89,13 +91,15 @@ class TestDataNodeInsertPremise:
     ):
         premise_name = "Null Checker on Column X"
 
-        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+        data_node.insert_premise(
+            name=premise_name, premise_factory=premise_check(), column="X"
+        )
 
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
 
         data_node.insert_premise(
-            name=premise_name, premise_factory=another_premise_check("X.x")
+            name=premise_name, premise_factory=another_premise_check(), column="X.x"
         )
         assert data_node.premises[premise_name].column == "X.x"
 
@@ -104,26 +108,12 @@ class TestDataNodeRemovePremise:
     def test_if_remove_string_premise(self, data_node, premise_check):
         premise_name = "Null Checker on Column X"
 
-        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
+        data_node.insert_premise(
+            name=premise_name, premise_factory=premise_check(), column="X"
+        )
 
         assert premise_name in data_node.premises
         assert isinstance(data_node.premises[premise_name], DataPremise)
 
         data_node.remove_premise(name=premise_name)
         assert premise_name not in data_node.premises
-
-    def test_if_raises_exception_if_wrong_type_is_passed_in_promise_param(
-        self, data_node, premise_check
-    ):
-        premise_name = "Null Checker on Column X"
-
-        data_node.insert_premise(name=premise_name, premise_factory=premise_check("X"))
-
-        assert premise_name in data_node.premises
-        assert isinstance(data_node.premises[premise_name], DataPremise)
-
-        with pytest.raises(WrongTypeReference) as msg:
-            data_node.remove_premise(name=000)
-
-        expected_message = "Name of premise should be passed as string argument"
-        assert str(msg.value) == expected_message
