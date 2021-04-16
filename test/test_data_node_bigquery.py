@@ -7,7 +7,7 @@ from pipeline_penguin.exceptions import WrongTypeReference
 
 
 class MockPremise(DataPremise):
-    def __init__(self, name, column):
+    def __init__(self, name, data_node, column):
         super().__init__(name, "MOCK", column)
 
 

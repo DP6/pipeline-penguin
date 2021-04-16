@@ -17,5 +17,5 @@ class DataPremiseSQL(DataPremise):
 
     def __init__(self, name: str, data_node: DataNode, query: str):
         """Initialize the DataPremiseSQL object."""
-        super().__init__(name, PremiseType.SQL, data_node)
+        super().__init__(name, data_node, PremiseType.SQL)
         self.query = query

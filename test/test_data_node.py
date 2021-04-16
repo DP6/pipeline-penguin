@@ -7,10 +7,11 @@ from pipeline_penguin.data_node import NodeManager
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
 from pipeline_penguin.core.data_premise.data_premise import DataPremise
+from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 @pytest.fixture()
-def data_node():
+def mock_data_node():
     bigquery_args = {
         "project_id": "teste",
         "dataset_id": "dataset_test",
@@ -30,8 +31,8 @@ def data_node():
 def premise_check():
     def check_null():
         class CheckIfNullCreator(DataPremiseSQL):
-            def __init__(self, name, column, query=""):
-                super().__init__(name=name, column=column, query="")
+            def __init__(self, name, data_node: DataNode, column: str, query: str = ""):
+                super().__init__(name, data_node, query)
 
         return CheckIfNullCreator
 
@@ -42,8 +43,8 @@ def premise_check():
 def another_premise_check():
     def another_fake_check():
         class CheckFakeCreator(DataPremiseSQL):
-            def __init__(self, name, column, query=""):
-                super().__init__(name=name, column=column, query="")
+            def __init__(self, name, data_node: DataNode, column: str, query: str = ""):
+                super().__init__(name, data_node, query)
 
         return CheckFakeCreator
 
@@ -59,20 +60,20 @@ def wrong_premise_check():
 
 
 class TestDataNodeInsertPremise:
-    def test_if_premise_is_inserted_successfully(self, data_node, premise_check):
+    def test_if_premise_is_inserted_successfully(self, mock_data_node, premise_check):
         premise_name = "Null Checker on Column X"
-        data_node.insert_premise(premise_name, premise_check(), column="X")
+        mock_data_node.insert_premise(premise_name, premise_check(), column="X")
 
-        assert premise_name in data_node.premises
-        assert isinstance(data_node.premises[premise_name], DataPremise)
+        assert premise_name in mock_data_node.premises
+        assert isinstance(mock_data_node.premises[premise_name], DataPremise)
 
     def test_if_raises_exception_when_premise_param_is_not_data_premise_subclass(
-        self, data_node, wrong_premise_check
+        self, mock_data_node, wrong_premise_check
     ):
         premise_name = "Null Checker on Column Y"
 
         with pytest.raises(WrongTypeReference) as msg:
-            data_node.insert_premise(
+            mock_data_node.insert_premise(
                 name=premise_name, premise_factory=wrong_premise_check()
             )
 
@@ -82,38 +83,40 @@ class TestDataNodeInsertPremise:
         premise_name = "Null Checker on Column Q"
 
         with pytest.raises(WrongTypeReference) as msg:
-            data_node.insert_premise(name=premise_name, premise_factory="wrong_type")
+            mock_data_node.insert_premise(
+                name=premise_name, premise_factory="wrong_type"
+            )
 
         assert str(msg.value) == expected_message
 
     def test_if_overwrite_premise_if_it_is_already_inserted(
-        self, data_node, premise_check, another_premise_check
+        self, mock_data_node, premise_check, another_premise_check
     ):
         premise_name = "Null Checker on Column X"
 
-        data_node.insert_premise(
+        mock_data_node.insert_premise(
             name=premise_name, premise_factory=premise_check(), column="X"
         )
 
-        assert premise_name in data_node.premises
-        assert isinstance(data_node.premises[premise_name], DataPremise)
+        assert premise_name in mock_data_node.premises
+        assert isinstance(mock_data_node.premises[premise_name], DataPremise)
 
-        data_node.insert_premise(
+        mock_data_node.insert_premise(
             name=premise_name, premise_factory=another_premise_check(), column="X.x"
         )
-        assert data_node.premises[premise_name].column == "X.x"
+        assert mock_data_node.premises[premise_name].data_node == mock_data_node
 
 
 class TestDataNodeRemovePremise:
-    def test_if_remove_string_premise(self, data_node, premise_check):
+    def test_if_remove_string_premise(self, mock_data_node, premise_check):
         premise_name = "Null Checker on Column X"
 
-        data_node.insert_premise(
+        mock_data_node.insert_premise(
             name=premise_name, premise_factory=premise_check(), column="X"
         )
 
-        assert premise_name in data_node.premises
-        assert isinstance(data_node.premises[premise_name], DataPremise)
+        assert premise_name in mock_data_node.premises
+        assert isinstance(mock_data_node.premises[premise_name], DataPremise)
 
-        data_node.remove_premise(name=premise_name)
-        assert premise_name not in data_node.premises
+        mock_data_node.remove_premise(name=premise_name)
+        assert premise_name not in mock_data_node.premises

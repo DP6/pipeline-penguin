@@ -1,5 +1,5 @@
 """This module provides the abstract DataPremise constructor."""
-import pipeline_penguin.core.data_node as data_node
+from __future__ import annotations
 
 
 class DataPremise:
@@ -11,7 +11,7 @@ class DataPremise:
         data_node: Reference to the DataNode used in the validation.
     """
 
-    def __init__(self, name: str, type: str, data_node: data_node.DataNode):
+    def __init__(self, name: str, data_node: "DataNode", type: str):
         """Initialization of the DataPremise."""
         self.name = name
         self.type = type

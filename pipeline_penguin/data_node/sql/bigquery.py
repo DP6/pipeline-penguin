@@ -31,7 +31,7 @@ class DataNodeBigQuery(DataNode):
         self.service_account_json = service_account_json
         self.supported_premise_types = [PremiseType.SQL]
 
-    def get_connector(self, premise_type: str) -> Connector:
+    def get_connector(self, premise_type: str) -> "Connector":
         """Method for retrieving the Connector to be used while querying data for
         this DataNode.
         Calls for a Default connector if there's no Connector of the given type inside
