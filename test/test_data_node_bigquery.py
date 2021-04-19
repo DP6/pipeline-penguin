@@ -23,7 +23,7 @@ class TestDataNodeBigQuery:
             ),
             DataNode,
         )
-        
+
     def test_node_type_reference(self):
         data_node = DataNodeBigQuery(
             "name_test",
