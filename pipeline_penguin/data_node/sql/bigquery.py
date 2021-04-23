@@ -44,16 +44,15 @@ class DataNodeBigQuery(DataNode):
         Returns:
             Connector: Connector retrieved.
         """
-        key = f"{premise_type}.{premise_source}"
+        key = f"{premise_type}{self.source}"
 
         if key in self.connectors:
             return self.connectors[key]
 
-        conector_manager = ConnectorManager()
-        connector = connector_manager.get_connector(key)
+        connector = ConnectorManager().get_default(premise_type, self.source)
         if connector is None:
             raise WrongTypeReference(
-                f"Could not find {premise_type}.{source} as a custom or default connector"
+                f"Could not find {key} as a custom or default connector"
             )
 
         return connector

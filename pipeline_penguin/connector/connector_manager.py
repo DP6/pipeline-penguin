@@ -4,6 +4,8 @@ from pipeline_penguin.core.connector import Connector
 
 
 class ConnectorManager:
+    _instance = None
+
     def __new__(cls):
         """
         ConnectorManager use Singleton Design Pattern.
