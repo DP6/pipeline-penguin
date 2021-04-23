@@ -11,7 +11,7 @@ from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
 @pytest.fixture
 def _mock_data_node_with_passed_validation(monkeypatch):
     def mock_function(self, type):
-        connector_mock = Connector("SQL")
+        connector_mock = Connector()
         connector_mock.run = MagicMock(return_value=pd.DataFrame())
         return connector_mock
 
@@ -21,7 +21,7 @@ def _mock_data_node_with_passed_validation(monkeypatch):
 @pytest.fixture
 def _mock_data_node_with_failed_validation(monkeypatch):
     def mock_function(self, type):
-        connector_mock = Connector("SQL")
+        connector_mock = Connector()
         connector_mock.run = MagicMock(return_value=pd.DataFrame([1, 2, 3]))
         return connector_mock
 

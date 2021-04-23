@@ -4,6 +4,7 @@ from pipeline_penguin.core.data_node import DataNode, NodeType
 from pipeline_penguin.core.data_premise import PremiseType
 from pipeline_penguin.connector.connector_manager import ConnectorManager
 from pipeline_penguin.exceptions import WrongTypeReference
+from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 
 
 class DataNodeBigQuery(DataNode):
@@ -49,7 +50,7 @@ class DataNodeBigQuery(DataNode):
         if key in self.connectors:
             return self.connectors[key]
 
-        connector = ConnectorManager().get_default(premise_type, self.source)
+        connector = ConnectorManager().get_default(ConnectorSQLBigQuery)
         if connector is None:
             raise WrongTypeReference(
                 f"Could not find {key} as a custom or default connector"

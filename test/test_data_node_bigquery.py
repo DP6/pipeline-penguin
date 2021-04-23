@@ -34,7 +34,7 @@ def _mock_isfile(monkeypatch):
 
 @pytest.fixture
 def _mock_connector_manager(monkeypatch):
-    def mock_function(self, premise_type, source):
+    def mock_function(self, connector):
         return "ConnectorSQLBigQuery"
 
     monkeypatch.setattr(ConnectorManager, "get_default", mock_function)
