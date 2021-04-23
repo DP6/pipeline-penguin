@@ -5,6 +5,7 @@ from os import path
 import pandas as pd
 from google.oauth2.service_account import Credentials
 
+from pipeline_penguin.core.data_node import NodeType
 from pipeline_penguin.core.connector.sql import ConnectorSQL
 
 
@@ -21,10 +22,11 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         FileNotFoundError: If the provided credentials_path is invalid.
     """
 
+    source = NodeType.BIG_QUERY
+
     def __init__(self, credentials_path: str, max_results: int = 1000):
         """Initialize the connector."""
         super().__init__()
-        self.source = "BigQuery"
 
         if not (path.isfile(credentials_path)):
             raise FileNotFoundError(f"{credentials_path} does not exist")
