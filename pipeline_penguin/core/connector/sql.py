@@ -11,9 +11,11 @@ class ConnectorSQL(Connector):
         type: Base connector type (default: SQL)
     """
 
+    type = "SQL"
+
     def __init__(self):
         """Initialize the ConnectorSQL constructor."""
-        super().__init__("SQL")
+        super().__init__()
 
     def run(self, query):
         """Stub method to be overwritten."""
