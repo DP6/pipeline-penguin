@@ -1,5 +1,4 @@
 """This module provides the abstract DataPremise constructor."""
-from __future__ import annotations
 
 
 class DataPremise:
@@ -11,10 +10,9 @@ class DataPremise:
         data_node: Reference to the DataNode used in the validation.
     """
 
-    def __init__(self, name: str, data_node: "DataNode", type: str):
+    def __init__(self, name: str, data_node: "DataNode"):
         """Initialization of the DataPremise."""
         self.name = name
-        self.type = type
         self.data_node = data_node
 
     def validate(self):
