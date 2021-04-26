@@ -2,6 +2,9 @@
 
 from pipeline_penguin.core.data_node import DataNode, NodeType
 from pipeline_penguin.core.data_premise import PremiseType
+from pipeline_penguin.connector.connector_manager import ConnectorManager
+from pipeline_penguin.exceptions import WrongTypeReference
+from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 
 
 class DataNodeBigQuery(DataNode):
@@ -28,3 +31,29 @@ class DataNodeBigQuery(DataNode):
         self.table_id = table_id
         self.service_account_json = service_account_json
         self.supported_premise_types = [PremiseType.SQL]
+
+    def get_connector(self, premise_type: str) -> "Connector":
+        """Method for retrieving the Connector to be used while querying data for
+        this DataNode.
+        Calls for a Default connector if there's no Connector of the given type inside
+        the **self.connectors** dictionary.
+
+        Args:
+            premise_type (str): Type of Premise for identifying the Connector.
+        Raises:
+            WrongTypeReference: If a Connector of the provied type does not exist.
+        Returns:
+            Connector: Connector retrieved.
+        """
+        key = f"{premise_type}{self.source}"
+
+        if key in self.connectors:
+            return self.connectors[key]
+
+        connector = ConnectorManager().get_default(ConnectorSQLBigQuery)
+        if connector is None:
+            raise WrongTypeReference(
+                f"Could not find {key} as a custom or default connector"
+            )
+
+        return connector
