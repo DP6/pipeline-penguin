@@ -1,6 +1,7 @@
 """Premise for checking SQL null values."""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
+from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 
 
 class DataPremiseSQLCheckNull(DataPremiseSQL):
@@ -28,8 +29,9 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         }
 
         super().__init__(name, data_node, query_template.format(**query_args))
+        self.column = column
 
-    def validate(self) -> bool:
+    def validate(self) -> PremiseOutput:
         """Run the validation function.
 
         Returns:
@@ -37,4 +39,18 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         """
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(self.query)
-        return len(data_frame) == 0
+        failed_count = len(data_frame)
+        passed = failed_count == 0
+
+        output = PremiseOutput(
+            self, self.data_node, self.column, passed, failed_count, data_frame
+        )
+        return output
+
+    def to_serializeble_dict(self) -> dict:
+        return {
+            "name": self.name,
+            "type": self.type,
+            "column": self.column,
+            "query": self.query,
+        }

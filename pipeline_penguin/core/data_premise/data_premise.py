@@ -15,6 +15,9 @@ class DataPremise:
         self.name = name
         self.data_node = data_node
 
-    def validate(self):
+    def validate(self) -> "PremiseOutput":
         """Abstract method for running the validation test."""
         pass
+
+    def to_serializeble_dict(self) -> dict:
+        return {}

@@ -1,5 +1,6 @@
 """This module provides the abstract PremiseOutput constructor."""
 import pandas as pd
+from typing import Dict
 
 
 class PremiseOutput:
@@ -28,9 +29,20 @@ class PremiseOutput:
         self.data_node = data_node
         self.column = column
         self.pass_validation = pass_validation
-        self.failed_count = (failed_count,)
+        self.failed_count = failed_count
         self.failed_values = failed_values
 
     def format(self, formatter: "OutputFormatter"):
         """Abstract method for formating the output"""
-        pass
+        return formatter.export_output(self)
+
+    def to_serializeble_dict(self) -> Dict:
+        results = {
+            "pass_validation": self.pass_validation,
+            "failed_values": self.failed_values,
+            "failed_count": self.failed_count,
+        }
+        results.update({"data_premise": self.data_premise.to_serializeble_dict()})
+        results.update({"data_node": self.data_node.to_serializeble_dict()})
+
+        return results

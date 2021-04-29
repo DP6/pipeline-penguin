@@ -103,3 +103,6 @@ class DataNode:
             print(f"{name}: {'passed' if passed else 'failed'}")
 
         return results
+
+    def to_serializeble_dict(self) -> dict:
+        return {}
