@@ -45,7 +45,7 @@ def _mock_formatter():
     def mock_formatter():
         class MockFormatter:
             def export_output(self, premise_output):
-                return premise_output
+                return "{}"
 
         return MockFormatter()
 
@@ -93,10 +93,3 @@ class TestPremiseOutput:
         }
 
         assert output.to_serializeble_dict() == expected_result
-
-    def test_format_output(self, _mock_premise, _mock_formatter, _output_kwargs):
-        data_premise = _mock_premise()
-        formatter = _mock_formatter()
-        output = PremiseOutput(data_premise, data_premise.data_node, **_output_kwargs())
-
-        assert output.format(formatter) == output

@@ -32,10 +32,6 @@ class PremiseOutput:
         self.failed_count = failed_count
         self.failed_values = failed_values
 
-    def format(self, formatter: "OutputFormatter"):
-        """Abstract method for formating the output"""
-        return formatter.export_output(self)
-
     def to_serializeble_dict(self) -> Dict:
         results = {
             "pass_validation": self.pass_validation,

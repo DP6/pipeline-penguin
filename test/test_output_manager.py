@@ -12,9 +12,6 @@ def _mock_premise_output():
         class MockPremiseOutput:
             data_premise = MockDataPremise()
 
-            def format(self, formatter):
-                return {}
-
         return MockPremiseOutput()
 
     yield mock_premise_output
@@ -25,7 +22,7 @@ def _mock_formatter():
     def mock_formatter():
         class MockFormatter:
             def export_output(self, premise_output):
-                return premise_output
+                return "{}"
 
         return MockFormatter()
 
@@ -45,6 +42,6 @@ class TestOutputManager:
         output_manager.outputs["test_data_node"] = {"test_data_premise": premise_output}
 
         formatter = _mock_formatter()
-        expected_results = {"test_data_node": {"test_data_premise": {}}}
+        expected_results = {"test_data_node": {"test_data_premise": "{}"}}
 
         assert output_manager.format_outputs(formatter) == expected_results

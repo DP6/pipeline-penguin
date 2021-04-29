@@ -21,6 +21,8 @@ class OutputManager:
         for node_name, data_node in self.outputs.items():
             results[node_name] = {}
             for premise_name, premise_output in data_node.items():
-                results[node_name][premise_name] = premise_output.format(formatter)
+                results[node_name][premise_name] = formatter.export_output(
+                    premise_output
+                )
 
         return results
