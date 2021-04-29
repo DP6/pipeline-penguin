@@ -19,3 +19,6 @@ class DataPremiseSQL(DataPremise):
         """Initialize the DataPremiseSQL object."""
         super().__init__(name, data_node)
         self.query = query
+
+    def to_serializeble_dict(self) -> dict:
+        return {}
