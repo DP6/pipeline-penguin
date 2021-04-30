@@ -77,7 +77,7 @@ class TestPremiseOutput:
         output = PremiseOutput(data_premise, data_premise.data_node, **kwargs)
         expected_result = {
             "pass_validation": kwargs["pass_validation"],
-            "failed_values": kwargs["failed_values"],
+            "failed_values": kwargs["failed_values"].to_dict(),
             "failed_count": kwargs["failed_count"],
             "data_premise": {
                 "name": data_premise.name,
@@ -91,5 +91,6 @@ class TestPremiseOutput:
                 "supported_premise_types": data_premise.data_node.supported_premise_types,
             },
         }
+        result = output.to_serializeble_dict()
 
-        assert output.to_serializeble_dict() == expected_result
+        assert result == expected_result

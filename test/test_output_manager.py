@@ -36,12 +36,34 @@ class TestOutputManager:
         assert isinstance(output_manager, OutputManager)
         assert output_manager.outputs == {}
 
-    def test_format_outputs(self, _mock_premise_output, _mock_formatter):
+    def test_format_single_output(self, _mock_premise_output, _mock_formatter):
         output_manager = OutputManager()
         premise_output = _mock_premise_output()
         output_manager.outputs["test_data_node"] = {"test_data_premise": premise_output}
 
         formatter = _mock_formatter()
         expected_results = {"test_data_node": {"test_data_premise": "{}"}}
+
+        assert output_manager.format_outputs(formatter) == expected_results
+
+    def test_format_many_outputs(self, _mock_premise_output, _mock_formatter):
+        output_manager = OutputManager()
+        premise_output_A = _mock_premise_output()
+        premise_output_B = _mock_premise_output()
+
+        # Simulating outputs
+        output_manager.outputs["test_data_node_A"] = {
+            "premise_output_A": premise_output_A,
+            "premise_output_B": premise_output_B,
+        }
+        output_manager.outputs["test_data_node_B"] = {
+            "premise_output_A": premise_output_A
+        }
+
+        formatter = _mock_formatter()
+        expected_results = {
+            "test_data_node_A": {"premise_output_A": "{}", "premise_output_B": "{}"},
+            "test_data_node_B": {"premise_output_A": "{}"},
+        }
 
         assert output_manager.format_outputs(formatter) == expected_results
