@@ -103,3 +103,7 @@ class DataNode:
             print(f"{name}: {'passed' if passed else 'failed'}")
 
         return results
+
+    def to_serializeble_dict(self) -> dict:
+        """Abstract method for converting the data_node to a json-like format."""
+        return {}
