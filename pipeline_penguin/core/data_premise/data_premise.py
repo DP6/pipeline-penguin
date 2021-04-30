@@ -20,4 +20,5 @@ class DataPremise:
         pass
 
     def to_serializeble_dict(self) -> dict:
+        """Abstract method for converting the data_premise to a json-like format."""
         return {}
