@@ -28,8 +28,7 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
             "column": column,
         }
 
-        super().__init__(name, data_node, query_template.format(**query_args))
-        self.column = column
+        super().__init__(name, data_node, column, query_template.format(**query_args))
 
     def validate(self) -> PremiseOutput:
         """Run the validation function.
@@ -46,11 +45,3 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
             self, self.data_node, self.column, passed, failed_count, data_frame
         )
         return output
-
-    def to_serializeble_dict(self) -> dict:
-        return {
-            "name": self.name,
-            "type": self.type,
-            "column": self.column,
-            "query": self.query,
-        }

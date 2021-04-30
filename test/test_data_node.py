@@ -32,7 +32,7 @@ def _premise_check():
     def check_null():
         class CheckIfNullCreator(DataPremiseSQL):
             def __init__(self, name, data_node: DataNode, column: str, query: str = ""):
-                super().__init__(name, data_node, query)
+                super().__init__(name, data_node, column, query)
 
             def validate(self):
                 return True
@@ -47,7 +47,7 @@ def _another_premise_check():
     def another_fake_check():
         class CheckFakeCreator(DataPremiseSQL):
             def __init__(self, name, data_node: DataNode, column: str, query: str = ""):
-                super().__init__(name, data_node, query)
+                super().__init__(name, data_node, column, query)
 
         return CheckFakeCreator
 

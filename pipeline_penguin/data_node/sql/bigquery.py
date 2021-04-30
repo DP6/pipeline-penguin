@@ -63,7 +63,7 @@ class DataNodeBigQuery(DataNode):
         only built-in data types.
 
         Returns:
-            dict -> Dicionary containing attributes of the PremiseOutput.
+            dict -> Dicionary containing attributes of the DataNode.
         """
         result = {
             "name": self.name,
