@@ -57,3 +57,22 @@ class DataNodeBigQuery(DataNode):
             )
 
         return connector
+
+    def to_serializeble_dict(self) -> dict:
+        """Returns a dictionary representation of the current DataNode using
+        only built-in data types.
+
+        Returns:
+            dict -> Dicionary containing attributes of the DataNode.
+        """
+        result = {
+            "name": self.name,
+            "source": self.source,
+            "supported_premise_types": self.supported_premise_types,
+            "project_id": self.project_id,
+            "dataset_id": self.dataset_id,
+            "table_id": self.table_id,
+            "service_account_json": self.service_account_json,
+        }
+
+        return result

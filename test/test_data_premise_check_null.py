@@ -49,8 +49,8 @@ class TestDataPremiseSQLCheckNull:
             "service_account.json",
         )
         data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
-        result = data_premise.validate()
-        assert result is True
+        output = data_premise.validate()
+        assert output.pass_validation is True
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = DataNodeBigQuery(
@@ -61,5 +61,5 @@ class TestDataPremiseSQLCheckNull:
             "service_account.json",
         )
         data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
-        result = data_premise.validate()
-        assert result is False
+        output = data_premise.validate()
+        assert output.pass_validation is False
