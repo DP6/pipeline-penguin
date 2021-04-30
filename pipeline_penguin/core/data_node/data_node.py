@@ -105,4 +105,5 @@ class DataNode:
         return results
 
     def to_serializeble_dict(self) -> dict:
+        """Abstract method for converting the data_node to a json-like format."""
         return {}
