@@ -6,8 +6,8 @@ from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 class OutputManager:
     """A OutputManager represents an collection of results from DataPremises validations.
 
-    Args:
-        outputs: Dictionary containing DataNodes, DataPremises and their PremiseOutputs
+    Attributes:
+        outputs: Dictionary structure containing the PremiseOutputs ordered by
     """
 
     def __init__(self):
