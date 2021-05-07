@@ -18,28 +18,30 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
     def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
         """Initialize the DataPremise after building the validation query."""
 
-        query_template = (
-            "SELECT count(*) FROM `{project}.{dataset}.{table}` WHERE {column} is null"
-        )
-        query_args = {
-            "project": data_node.project_id,
-            "dataset": data_node.dataset_id,
-            "table": data_node.table_id,
-            "column": column,
-        }
+        super().__init__(name, data_node, column)
+        self.query_template = "SELECT count(*) as total FROM `{project}.{dataset}.{table}` WHERE {column} is null"
 
-        super().__init__(name, data_node, column, query_template.format(**query_args))
+    def query_args(self):
+        return {
+            "project": self.data_node.project_id,
+            "dataset": self.data_node.dataset_id,
+            "table": self.data_node.table_id,
+            "column": self.column,
+        }
 
     def validate(self) -> PremiseOutput:
         """Run the validation function.
 
         Returns:
-            bool: True if no null values are found in the given column, False otherwise.
+            PremiseOutput: Wrapper object for the validation results
         """
+
+        query = self.query_template.format(**self.query_args())
         connector = self.data_node.get_connector(self.type)
-        data_frame = connector.run(self.query)
-        failed_count = len(data_frame)
-        passed = failed_count == 0
+        data_frame = connector.run(query)
+
+        passed = len(data_frame["total"]) == 0
+        failed_count = data_frame["total"][0] if not passed else 0
 
         output = PremiseOutput(
             self, self.data_node, self.column, passed, failed_count, data_frame

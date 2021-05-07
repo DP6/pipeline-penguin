@@ -19,7 +19,6 @@ def _data_premise_sql_arguments():
         "name": "name_test",
         "data_node": DataNode("node_test", "TEST_SOURCE"),
         "column": "test_column",
-        "query": "SELECT * FROM `table`",
     }
 
 

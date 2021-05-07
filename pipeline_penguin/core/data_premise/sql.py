@@ -16,11 +16,13 @@ class DataPremiseSQL(DataPremise):
 
     type = PremiseType.SQL
 
-    def __init__(self, name: str, data_node: "DataNode", column: str, query: str):
+    def __init__(self, name: str, data_node: "DataNode", column: str):
         """Initialize the DataPremiseSQL object."""
         super().__init__(name, data_node)
-        self.query = query
         self.column = column
+
+    def query_args(self):
+        pass
 
     def to_serializeble_dict(self) -> dict:
         """Returns a dictionary representation of the current DataPremise using
