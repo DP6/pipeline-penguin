@@ -12,7 +12,7 @@ from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
 def _mock_data_node_with_passed_validation(monkeypatch):
     def mock_function(self, type):
         connector_mock = Connector()
-        connector_mock.run = MagicMock(return_value=pd.DataFrame())
+        connector_mock.run = MagicMock(return_value=pd.DataFrame([], columns=["total"]))
         return connector_mock
 
     monkeypatch.setattr(DataNodeBigQuery, "get_connector", mock_function)
@@ -22,7 +22,9 @@ def _mock_data_node_with_passed_validation(monkeypatch):
 def _mock_data_node_with_failed_validation(monkeypatch):
     def mock_function(self, type):
         connector_mock = Connector()
-        connector_mock.run = MagicMock(return_value=pd.DataFrame([1, 2, 3]))
+        connector_mock.run = MagicMock(
+            return_value=pd.DataFrame([100], columns=["total"])
+        )
         return connector_mock
 
     monkeypatch.setattr(DataNodeBigQuery, "get_connector", mock_function)
@@ -50,7 +52,8 @@ class TestDataPremiseSQLCheckNull:
         )
         data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
         output = data_premise.validate()
-        assert output.pass_validation is True
+        assert output.pass_validation == True
+        assert output.failed_count == 0
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = DataNodeBigQuery(
@@ -62,4 +65,5 @@ class TestDataPremiseSQLCheckNull:
         )
         data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
         output = data_premise.validate()
-        assert output.pass_validation is False
+        assert output.pass_validation == False
+        assert output.failed_count == 100
