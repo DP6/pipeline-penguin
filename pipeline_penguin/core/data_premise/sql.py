@@ -31,9 +31,12 @@ class DataPremiseSQL(DataPremise):
         Returns:
             dict -> Dicionary containing attributes of the DataPremise.
         """
-        return {
+        as_dict = {
             "name": self.name,
             "type": self.type,
             "column": self.column,
-            "query": self.query,
+            "query_args": self.query_args(),
         }
+        if hasattr(self, "query_template"):
+            as_dict["query"] = getattr(self, "query_template")
+        return as_dict

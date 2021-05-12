@@ -1,10 +1,12 @@
 """Premise for checking SQL null values."""
 
+from typing import Union
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseSQLCheckNull(DataPremiseSQL):
+class DataPremiseCheckInArray(DataPremiseSQL):
     """This DataPremise is responsible for validating if a given column does not have null values.
 
     Args:
@@ -15,11 +17,20 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         type: Constant indicating the type of the premise (SQL).
     """
 
-    def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
+    def __init__(
+        self,
+        name: str,
+        data_node: "DataNodeBigQuery",
+        column: str,
+        array: Union[str, list, float, bool],  # TODO Add datetime support
+    ):
         """Initialize the DataPremise after building the validation query."""
+        if type(array) == "list":
+            array = str(array)
 
+        self.query_template = "SELECT count(*) total FROM `{project}.{dataset}.{table}` WHERE {column} IN UNNEST({array})"
+        self.array = array
         super().__init__(name, data_node, column)
-        self.query_template = "SELECT count(*) as total FROM `{project}.{dataset}.{table}` WHERE {column} is null"
 
     def query_args(self):
         return {
@@ -27,6 +38,7 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
             "dataset": self.data_node.dataset_id,
             "table": self.data_node.table_id,
             "column": self.column,
+            "array": self.array,
         }
 
     def validate(self) -> PremiseOutput:
