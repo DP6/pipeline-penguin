@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckNull
+from pipeline_penguin.data_premise.sql import DataPremiseCheckRegexpContains
 
 
 @pytest.fixture
@@ -36,7 +36,7 @@ def _mock_data_node_with_failed_validation(monkeypatch):
             def get_connector(self, *args, **kwargs):
                 connector_mock = MagicMock()
                 connector_mock.run = MagicMock(
-                    return_value=pd.DataFrame([100], columns=["total"])
+                    return_value=pd.DataFrame([50], columns=["total"])
                 )
                 return connector_mock
 
@@ -48,26 +48,34 @@ def _mock_data_node_with_failed_validation(monkeypatch):
 class TestDataPremiseSQLCheckNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
-        assert isinstance(data_premise, DataPremiseSQLCheckNull)
+        data_premise = DataPremiseCheckRegexpContains(
+            "test_name", data_node, "test_column", "^regexp (test){3}$"
+        )
+        assert isinstance(data_premise, DataPremiseCheckRegexpContains)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
+        data_premise = DataPremiseCheckRegexpContains(
+            "test_name", data_node, "test_column", "^regexp (test){3}$"
+        )
         output = data_premise.validate()
         assert output.pass_validation == True
         assert output.failed_count == 0
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
+        data_premise = DataPremiseCheckRegexpContains(
+            "test_name", data_node, "test_column", "^regexp (test){3}$"
+        )
         output = data_premise.validate()
         assert output.pass_validation == False
-        assert output.failed_count == 100
+        assert output.failed_count == 50
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseSQLCheckNull("test_name", data_node, "test_column")
+        data_premise = DataPremiseCheckRegexpContains(
+            "test_name", data_node, "test_column", "^regexp (test){3}$"
+        )
         args = data_premise.query_args()
 
         assert args == {
@@ -75,4 +83,5 @@ class TestDataPremiseSQLCheckNull:
             "dataset": "dataset_test",
             "table": "table_test",
             "column": "test_column",
+            "pattern": "^regexp (test){3}$",
         }

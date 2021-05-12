@@ -2,9 +2,10 @@
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseSQLCheckNull(DataPremiseSQL):
+class DataPremiseCheckComparison(DataPremiseSQL):
     """This DataPremise is responsible for validating if a given column does not have null values.
 
     Args:
@@ -15,11 +16,32 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         type: Constant indicating the type of the premise (SQL).
     """
 
-    def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
+    def __init__(
+        self,
+        name: str,
+        data_node: "DataNodeBigQuery",
+        column: str,
+        operator: str,
+        value: str,
+    ):
         """Initialize the DataPremise after building the validation query."""
+        supported_operators = [
+            "<",
+            "<=",
+            "=",
+            "=>",
+            "!=",
+            "<>",
+        ]
+        if operator not in supported_operators:
+            raise WrongTypeReference(
+                f"Operator not supported, supported operators: {supported_operators}"
+            )
 
+        self.query_template = "SELECT count({column} {operator} {value}) result, count({column}) total FROM `{project}.{dataset}.{table}`"
+        self.operator = operator
+        self.value = value
         super().__init__(name, data_node, column)
-        self.query_template = "SELECT count(*) as total FROM `{project}.{dataset}.{table}` WHERE {column} is null"
 
     def query_args(self):
         return {
@@ -27,6 +49,8 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
             "dataset": self.data_node.dataset_id,
             "table": self.data_node.table_id,
             "column": self.column,
+            "operator": self.operator,
+            "value": self.value,
         }
 
     def validate(self) -> PremiseOutput:
@@ -40,8 +64,8 @@ class DataPremiseSQLCheckNull(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
-        passed = failed_count == 0
+        passed = data_frame["result"][0] == data_frame["total"][0]
+        failed_count = data_frame["total"][0] - data_frame["result"][0]
 
         output = PremiseOutput(
             self, self.data_node, self.column, passed, failed_count, data_frame
