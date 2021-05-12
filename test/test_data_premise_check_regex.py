@@ -45,7 +45,7 @@ def _mock_data_node_with_failed_validation(monkeypatch):
     yield mock_data_node
 
 
-class TestDataPremiseSQLCheckNull:
+class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
         data_premise = DataPremiseCheckRegexpContains(

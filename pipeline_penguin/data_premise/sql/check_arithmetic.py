@@ -6,7 +6,7 @@ from pipeline_penguin.exceptions import WrongTypeReference
 from typing import Union
 
 
-class DataPremiseCheckArithmetic(DataPremiseSQL):
+class DataPremiseCheckArithmeticOperationEqualsResult(DataPremiseSQL):
     """This DataPremise is responsible for validating if a given column does not have null values.
 
     Args:

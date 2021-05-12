@@ -2,7 +2,9 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckArithmetic
+from pipeline_penguin.data_premise.sql import (
+    DataPremiseCheckArithmeticOperationEqualsResult,
+)
 from pipeline_penguin.exceptions import WrongTypeReference
 
 
@@ -46,17 +48,17 @@ def _mock_data_node_with_failed_validation(monkeypatch):
     yield mock_data_node
 
 
-class TestDataPremiseSQLCheckNull:
+class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckArithmetic(
+        data_premise = DataPremiseCheckArithmeticOperationEqualsResult(
             "test_name", data_node, "test_column", "+", 20, 20
         )
-        assert isinstance(data_premise, DataPremiseCheckArithmetic)
+        assert isinstance(data_premise, DataPremiseCheckArithmeticOperationEqualsResult)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckArithmetic(
+        data_premise = DataPremiseCheckArithmeticOperationEqualsResult(
             "test_name", data_node, "test_column", "+", 20, 20
         )
         output = data_premise.validate()
@@ -65,7 +67,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckArithmetic(
+        data_premise = DataPremiseCheckArithmeticOperationEqualsResult(
             "test_name", data_node, "test_column", "+", 20, 20
         )
         output = data_premise.validate()
@@ -74,7 +76,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckArithmetic(
+        data_premise = DataPremiseCheckArithmeticOperationEqualsResult(
             "test_name", data_node, "test_column", "+", 20, 20
         )
         args = data_premise.query_args()
@@ -96,6 +98,6 @@ class TestDataPremiseSQLCheckNull:
         data_node = _mock_data_node_with_passed_validation()
 
         with pytest.raises(WrongTypeReference):
-            data_premise = DataPremiseCheckArithmetic(
+            data_premise = DataPremiseCheckArithmeticOperationEqualsResult(
                 "test_name", data_node, "test_column", "G", 20, 20
             )

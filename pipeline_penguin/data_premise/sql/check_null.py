@@ -4,7 +4,7 @@ from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 
 
-class DataPremiseSQLCheckNull(DataPremiseSQL):
+class DataPremiseSQLCheckIsNull(DataPremiseSQL):
     """This DataPremise is responsible for validating if a given column does not have null values.
 
     Args:

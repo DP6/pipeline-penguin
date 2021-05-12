@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckBetween
+from pipeline_penguin.data_premise.sql import DataPremiseCheckValuesAreBetween
 
 
 @pytest.fixture
@@ -45,17 +45,17 @@ def _mock_data_node_with_failed_validation(monkeypatch):
     yield mock_data_node
 
 
-class TestDataPremiseSQLCheckNull:
+class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckBetween(
+        data_premise = DataPremiseCheckValuesAreBetween(
             "test_name", data_node, "test_column", 100, 200
         )
-        assert isinstance(data_premise, DataPremiseCheckBetween)
+        assert isinstance(data_premise, DataPremiseCheckValuesAreBetween)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckBetween(
+        data_premise = DataPremiseCheckValuesAreBetween(
             "test_name", data_node, "test_column", 100, 200
         )
         output = data_premise.validate()
@@ -64,7 +64,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckBetween(
+        data_premise = DataPremiseCheckValuesAreBetween(
             "test_name", data_node, "test_column", 100, 200
         )
         output = data_premise.validate()
@@ -73,7 +73,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckBetween(
+        data_premise = DataPremiseCheckValuesAreBetween(
             "test_name", data_node, "test_column", 100, 200
         )
         args = data_premise.query_args()

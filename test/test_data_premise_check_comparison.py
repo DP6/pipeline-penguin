@@ -3,7 +3,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckComparison
+from pipeline_penguin.data_premise.sql import DataPremiseCheckLogicalComparisonWithValue
 
 
 @pytest.fixture
@@ -46,17 +46,17 @@ def _mock_data_node_with_failed_validation(monkeypatch):
     yield mock_data_node
 
 
-class TestDataPremiseSQLCheckNull:
+class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckComparison(
+        data_premise = DataPremiseCheckLogicalComparisonWithValue(
             "test_name", data_node, "test_column", "<", 100
         )
-        assert isinstance(data_premise, DataPremiseCheckComparison)
+        assert isinstance(data_premise, DataPremiseCheckLogicalComparisonWithValue)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckComparison(
+        data_premise = DataPremiseCheckLogicalComparisonWithValue(
             "test_name", data_node, "test_column", "<", 100
         )
         output = data_premise.validate()
@@ -65,7 +65,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckComparison(
+        data_premise = DataPremiseCheckLogicalComparisonWithValue(
             "test_name", data_node, "test_column", "<", 100
         )
         output = data_premise.validate()
@@ -74,7 +74,7 @@ class TestDataPremiseSQLCheckNull:
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckComparison(
+        data_premise = DataPremiseCheckLogicalComparisonWithValue(
             "test_name", data_node, "test_column", "<", 100
         )
         args = data_premise.query_args()
@@ -95,6 +95,6 @@ class TestDataPremiseSQLCheckNull:
         data_node = _mock_data_node_with_passed_validation()
 
         with pytest.raises(WrongTypeReference):
-            data_premise = DataPremiseCheckComparison(
+            data_premise = DataPremiseCheckLogicalComparisonWithValue(
                 "test_name", data_node, "test_column", "G", 100
             )
