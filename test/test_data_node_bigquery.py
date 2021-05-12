@@ -1,6 +1,6 @@
 from pipeline_penguin.core.data_node import DataNode, NodeType
 from pipeline_penguin.data_node import DataNodeBigQuery
-from pipeline_penguin.data_premise.sql.check_null import DataPremiseSQLCheckNull
+from pipeline_penguin.data_premise.sql.check_null import DataPremiseSQLCheckIsNull
 from pipeline_penguin.core.data_premise.data_premise import DataPremise
 import pytest
 from os import path
@@ -73,7 +73,7 @@ class TestDataNodeBigQuery:
         )
 
         data_node.insert_premise(
-            "check_nulls", DataPremiseSQLCheckNull, column="test_column"
+            "check_nulls", DataPremiseSQLCheckIsNull, column="test_column"
         )
 
     def test_raises_error_when_inserting_unsupported_premise(self, _mock_premise):

@@ -5,7 +5,7 @@ from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseCheckBetween(DataPremiseSQL):
+class DataPremiseCheckValuesAreBetween(DataPremiseSQL):
     """This DataPremise is responsible for validating if a given column does not have null values.
 
     Args:
