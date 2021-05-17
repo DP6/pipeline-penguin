@@ -19,7 +19,7 @@ class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
     ):
         """Initialize the DataPremise after building the validation query."""
 
-        self.query_template = "SELECT COUNT(*) total FROM `{project}.{dataset}.{table}` WHERE {column} LIKE {pattern}"
+        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} LIKE {pattern}"
         self.pattern = pattern
         super().__init__(name, data_node, column)
 
@@ -44,7 +44,7 @@ class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
+        failed_count = len(data_frame["result"])
         passed = failed_count == 0
 
         output = PremiseOutput(

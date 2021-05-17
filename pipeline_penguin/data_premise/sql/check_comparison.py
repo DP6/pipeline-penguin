@@ -32,7 +32,7 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
                 f"Operator not supported, supported operators: {supported_operators}"
             )
 
-        self.query_template = "SELECT count({column} {operator} {value}) result, count({column}) total FROM `{project}.{dataset}.{table}`"
+        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {value}"
         self.operator = operator
         self.value = value
         super().__init__(name, data_node, column)
@@ -59,8 +59,8 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        passed = data_frame["result"][0] == data_frame["total"][0]
-        failed_count = data_frame["total"][0] - data_frame["result"][0]
+        failed_count = len(data_frame["result"])
+        passed = failed_count == 0
 
         output = PremiseOutput(
             self, self.data_node, self.column, passed, failed_count, data_frame

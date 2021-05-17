@@ -19,7 +19,7 @@ def _mock_data_node_with_passed_validation(monkeypatch):
             def get_connector(self, *args, **kwargs):
                 connector_mock = MagicMock()
                 connector_mock.run = MagicMock(
-                    return_value=pd.DataFrame([[100, 100]], columns=["result", "total"])
+                    return_value=pd.DataFrame([], columns=["result"])
                 )
                 return connector_mock
 
@@ -39,7 +39,7 @@ def _mock_data_node_with_failed_validation(monkeypatch):
             def get_connector(self, *args, **kwargs):
                 connector_mock = MagicMock()
                 connector_mock.run = MagicMock(
-                    return_value=pd.DataFrame([[40, 100]], columns=["result", "total"])
+                    return_value=pd.DataFrame([20, 10, 50], columns=["result"])
                 )
                 return connector_mock
 
@@ -72,7 +72,7 @@ class TestDataPremiseSQLCheckIsNull:
         )
         output = data_premise.validate()
         assert output.pass_validation == False
-        assert output.failed_count == 60
+        assert output.failed_count == 3
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
