@@ -28,7 +28,7 @@ class DataPremiseSQLCheckArithmeticOperationEqualsResult(DataPremiseSQL):
             raise WrongTypeReference(
                 f"Operator not supported, supported operators: {supported_operators}"
             )
-        self.query_template = "SELECT COUNT(*) as total FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {second_term} = {expected_result}"
+        self.query_template = "SELECT * as result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {second_term} = {expected_result}"
         self.operator = operator
         self.second_term = second_term
         self.expected_result = expected_result
@@ -56,10 +56,11 @@ class DataPremiseSQLCheckArithmeticOperationEqualsResult(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
+        failed_count = len(data_frame["result"])
         passed = failed_count == 0
 
         output = PremiseOutput(
             self, self.data_node, self.column, passed, failed_count, data_frame
         )
+
         return output

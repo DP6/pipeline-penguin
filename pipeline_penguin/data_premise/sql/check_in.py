@@ -22,7 +22,7 @@ class DataPremiseSQLCheckInArray(DataPremiseSQL):
         if type(array) == "list":
             array = str(array)
 
-        self.query_template = "SELECT count(*) total FROM `{project}.{dataset}.{table}` WHERE {column} IN UNNEST({array})"
+        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} IN UNNEST({array})"
         self.array = array
         super().__init__(name, data_node, column)
 
@@ -47,7 +47,7 @@ class DataPremiseSQLCheckInArray(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
+        failed_count = len(data_frame["result"])
         passed = failed_count == 0
 
         output = PremiseOutput(

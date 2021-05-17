@@ -19,7 +19,7 @@ class DataPremiseSQLCheckRegexpContains(DataPremiseSQL):
 
         # TODO: Deal with negativated regexp_contains
 
-        self.query_template = "SELECT COUNT(*) total FROM `{project}.{dataset}.{table}` WHERE REGEXP_CONTAINS({column}, {pattern})"
+        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE REGEXP_CONTAINS({column}, {pattern})"
         self.pattern = pattern
         super().__init__(name, data_node, column)
 
@@ -44,7 +44,7 @@ class DataPremiseSQLCheckRegexpContains(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
+        failed_count = len(data_frame["result"])
         passed = failed_count == 0
 
         output = PremiseOutput(
