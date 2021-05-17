@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckRegexpContains
+from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckRegexpContains
 
 
 @pytest.fixture
@@ -48,14 +48,14 @@ def _mock_data_node_with_failed_validation(monkeypatch):
 class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckRegexpContains(
+        data_premise = DataPremiseSQLCheckRegexpContains(
             "test_name", data_node, "test_column", "^regexp (test){3}$"
         )
-        assert isinstance(data_premise, DataPremiseCheckRegexpContains)
+        assert isinstance(data_premise, DataPremiseSQLCheckRegexpContains)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckRegexpContains(
+        data_premise = DataPremiseSQLCheckRegexpContains(
             "test_name", data_node, "test_column", "^regexp (test){3}$"
         )
         output = data_premise.validate()
@@ -64,7 +64,7 @@ class TestDataPremiseSQLCheckIsNull:
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckRegexpContains(
+        data_premise = DataPremiseSQLCheckRegexpContains(
             "test_name", data_node, "test_column", "^regexp (test){3}$"
         )
         output = data_premise.validate()
@@ -73,7 +73,7 @@ class TestDataPremiseSQLCheckIsNull:
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckRegexpContains(
+        data_premise = DataPremiseSQLCheckRegexpContains(
             "test_name", data_node, "test_column", "^regexp (test){3}$"
         )
         args = data_premise.query_args()

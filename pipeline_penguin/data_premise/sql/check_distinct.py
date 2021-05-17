@@ -1,19 +1,11 @@
-"""Premise for checking SQL null values."""
+"""Premise for checking distinct values."""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 
 
-class DataPremiseCheckDistinct(DataPremiseSQL):
-    """This DataPremise is responsible for validating if a given column does not have null values.
-
-    Args:
-        name: Name of the premise.
-        column: Column to be validated.
-    Attributes:
-        query: SQL query to be executed for premise validation.
-        type: Constant indicating the type of the premise (SQL).
-    """
+class DataPremiseSQLCheckDistinct(DataPremiseSQL):
+    """This DataPremise is responsible for validating if a given column only has distinct values."""
 
     def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
         """Initialize the DataPremise after building the validation query."""
@@ -22,6 +14,7 @@ class DataPremiseCheckDistinct(DataPremiseSQL):
         self.query_template = "SELECT count(DISTINCT {column}) distinct, count({column}) total as total FROM `{project}.{dataset}.{table}`"
 
     def query_args(self):
+        """Arguments for building the Premise's validation query."""
         return {
             "project": self.data_node.project_id,
             "dataset": self.data_node.dataset_id,

@@ -1,19 +1,13 @@
-"""Premise for checking SQL null values."""
+"""Premise for checking LIKE logical operator."""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseCheckLikePattern(DataPremiseSQL):
-    """This DataPremise is responsible for validating if a given column does not have null values.
-
-    Args:
-        name: Name of the premise.
-        column: Column to be validated.
-    Attributes:
-        query: SQL query to be executed for premise validation.
-        type: Constant indicating the type of the premise (SQL).
+class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
+    """This DataPremise is responsible for validating if the values of a given column matches a patterns
+    with the LIKE operator.
     """
 
     def __init__(
@@ -30,6 +24,7 @@ class DataPremiseCheckLikePattern(DataPremiseSQL):
         super().__init__(name, data_node, column)
 
     def query_args(self):
+        """Arguments for building the Premise's validation query."""
         return {
             "project": self.data_node.project_id,
             "dataset": self.data_node.dataset_id,
