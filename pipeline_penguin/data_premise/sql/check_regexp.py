@@ -1,20 +1,12 @@
-"""Premise for checking SQL null values."""
+"""Premise for checking regexp operations."""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseCheckRegexpContains(DataPremiseSQL):
-    """This DataPremise is responsible for validating if a given column does not have null values.
-
-    Args:
-        name: Name of the premise.
-        column: Column to be validated.
-    Attributes:
-        query: SQL query to be executed for premise validation.
-        type: Constant indicating the type of the premise (SQL).
-    """
+class DataPremiseSQLCheckRegexpContains(DataPremiseSQL):
+    """This DataPremise is responsible for validating if the values of a given column matches a regexp pattern."""
 
     def __init__(
         self,
@@ -32,6 +24,7 @@ class DataPremiseCheckRegexpContains(DataPremiseSQL):
         super().__init__(name, data_node, column)
 
     def query_args(self):
+        """Arguments for building the Premise's validation query."""
         return {
             "project": self.data_node.project_id,
             "dataset": self.data_node.dataset_id,

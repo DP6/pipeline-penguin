@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckDistinct
+from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckDistinct
 
 
 @pytest.fixture
@@ -48,26 +48,34 @@ def _mock_data_node_with_failed_validation(monkeypatch):
 class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckDistinct("test_name", data_node, "test_column")
-        assert isinstance(data_premise, DataPremiseCheckDistinct)
+        data_premise = DataPremiseSQLCheckDistinct(
+            "test_name", data_node, "test_column"
+        )
+        assert isinstance(data_premise, DataPremiseSQLCheckDistinct)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckDistinct("test_name", data_node, "test_column")
+        data_premise = DataPremiseSQLCheckDistinct(
+            "test_name", data_node, "test_column"
+        )
         output = data_premise.validate()
         assert output.pass_validation == True
         assert output.failed_count == 0
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckDistinct("test_name", data_node, "test_column")
+        data_premise = DataPremiseSQLCheckDistinct(
+            "test_name", data_node, "test_column"
+        )
         output = data_premise.validate()
         assert output.pass_validation == False
         assert output.failed_count == 60
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckDistinct("test_name", data_node, "test_column")
+        data_premise = DataPremiseSQLCheckDistinct(
+            "test_name", data_node, "test_column"
+        )
         args = data_premise.query_args()
 
         assert args == {

@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import MagicMock
 import pandas as pd
-from pipeline_penguin.data_premise.sql import DataPremiseCheckLikePattern
+from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckLikePattern
 
 
 @pytest.fixture
@@ -48,14 +48,14 @@ def _mock_data_node_with_failed_validation(monkeypatch):
 class TestDataPremiseSQLCheckIsNull:
     def test_instance_type(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckLikePattern(
+        data_premise = DataPremiseSQLCheckLikePattern(
             "test_name", data_node, "test_column", "test_%"
         )
-        assert isinstance(data_premise, DataPremiseCheckLikePattern)
+        assert isinstance(data_premise, DataPremiseSQLCheckLikePattern)
 
     def test_passing_validate(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckLikePattern(
+        data_premise = DataPremiseSQLCheckLikePattern(
             "test_name", data_node, "test_column", "test_%"
         )
         output = data_premise.validate()
@@ -64,7 +64,7 @@ class TestDataPremiseSQLCheckIsNull:
 
     def test_failing_validate(self, _mock_data_node_with_failed_validation):
         data_node = _mock_data_node_with_failed_validation()
-        data_premise = DataPremiseCheckLikePattern(
+        data_premise = DataPremiseSQLCheckLikePattern(
             "test_name", data_node, "test_column", "test_%"
         )
         output = data_premise.validate()
@@ -73,7 +73,7 @@ class TestDataPremiseSQLCheckIsNull:
 
     def test_return_query_args(self, _mock_data_node_with_passed_validation):
         data_node = _mock_data_node_with_passed_validation()
-        data_premise = DataPremiseCheckLikePattern(
+        data_premise = DataPremiseSQLCheckLikePattern(
             "test_name", data_node, "test_column", "test_%"
         )
         args = data_premise.query_args()
