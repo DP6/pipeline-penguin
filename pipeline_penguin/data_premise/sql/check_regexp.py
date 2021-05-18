@@ -1,32 +1,36 @@
-"""Premise for checking SQL null values."""
+"""Premise for checking regexp operations."""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+from pipeline_penguin.exceptions import WrongTypeReference
 
 
-class DataPremiseSQLCheckIsNull(DataPremiseSQL):
-    """This DataPremise is responsible for validating if a given column does not have null values.
+class DataPremiseSQLCheckRegexpContains(DataPremiseSQL):
+    """This DataPremise is responsible for validating if the values of a given column matches a regexp pattern."""
 
-    Args:
-        name: Name of the premise.
-        column: Column to be validated.
-    Attributes:
-        query: SQL query to be executed for premise validation.
-        type: Constant indicating the type of the premise (SQL).
-    """
-
-    def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
+    def __init__(
+        self,
+        name: str,
+        data_node: "DataNodeBigQuery",
+        column: str,
+        pattern: str,
+    ):
         """Initialize the DataPremise after building the validation query."""
 
+        # TODO: Deal with negativated regexp_contains
+
+        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE REGEXP_CONTAINS({column}, {pattern})"
+        self.pattern = pattern
         super().__init__(name, data_node, column)
-        self.query_template = "SELECT count(*) as total FROM `{project}.{dataset}.{table}` WHERE {column} is null"
 
     def query_args(self):
+        """Arguments for building the Premise's validation query."""
         return {
             "project": self.data_node.project_id,
             "dataset": self.data_node.dataset_id,
             "table": self.data_node.table_id,
             "column": self.column,
+            "pattern": self.pattern,
         }
 
     def validate(self) -> PremiseOutput:
@@ -40,7 +44,7 @@ class DataPremiseSQLCheckIsNull(DataPremiseSQL):
         connector = self.data_node.get_connector(self.type)
         data_frame = connector.run(query)
 
-        failed_count = data_frame["total"][0]
+        failed_count = len(data_frame["result"])
         passed = failed_count == 0
 
         output = PremiseOutput(
