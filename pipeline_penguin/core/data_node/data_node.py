@@ -116,7 +116,6 @@ class DataNode:
         Returns:
             Connector: Connector retrieved.
         """
-        # TODO: Maybe move the High-level method here?
         return
 
     def run_premises(self) -> Dict:
@@ -142,5 +141,4 @@ class DataNode:
         Returns:
             A `dictionary` object containing the DataNode representation.
         """
-        # TODO: change to @abstract
         return {}

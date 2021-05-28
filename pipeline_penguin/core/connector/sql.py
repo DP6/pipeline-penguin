@@ -28,5 +28,4 @@ class ConnectorSQL(Connector):
         Args:
             query: SQL query to be executed
         """
-        # TODO: add @abstract here
         pass

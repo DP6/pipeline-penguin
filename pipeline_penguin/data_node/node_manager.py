@@ -125,7 +125,6 @@ class NodeManager:
         Returns:
             `None`
         """
-        # TODO: remove the "if" so it raises a KeyError when the DataNode does not exist.
         if name in self.__nodes:
             del self.__nodes[name]
 

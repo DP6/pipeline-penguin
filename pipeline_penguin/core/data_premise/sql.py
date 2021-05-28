@@ -65,8 +65,6 @@ class DataPremiseSQL(DataPremise):
             "column": self.column,
             "query_args": self.query_args(),
         }
-        # TODO: Change this to an abstract @property
-        # https://stackoverflow.com/questions/2736255/abstract-attributes-in-python
         if hasattr(self, "query_template"):
             as_dict["query"] = getattr(self, "query_template")
         return as_dict
