@@ -1,13 +1,30 @@
-from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+r"""Core premise_output module, contains the `OutputManager` class.
 
-"""Manage all the OutputPremises from a validation"""
+OutputManager is a Singleton which stores every `PremiseOutput` returned by the validations. It can
+be used to mass format all PremiseOutputs on the same OutputFormatter type.
+
+Location: pipeline_penguin/core/premise_output/
+
+Example usage:
+
+```python
+output_manager = OutputManager()
+premise_output = _mock_premise_output()
+output_manager.outputs["test_data_node"] = {"test_data_premise": premise_output}
+
+formatter = _mock_formatter()
+expected_results = {"test_data_node": {"test_data_premise": "{}"}}
+
+output_manager.format_outputs(formatter) == expected_results
+```
+"""
 
 
 class OutputManager:
-    """A OutputManager represents an collection of results from DataPremises validations.
+    """An OutputManager stores "PremiseOutputs" returned by DataPremises validations.
 
     Attributes:
-        outputs: Dictionary structure containing the PremiseOutputs ordered by
+        outputs: Dictionary structure containing the PremiseOutputs
     """
 
     def __init__(self):
@@ -15,7 +32,13 @@ class OutputManager:
         self.outputs = {}
 
     def format_outputs(self, formatter: "OutputFormatter"):
-        """Method for formating output from all PremiseOutputs on outputs"""
+        """Method for applyting an OutputFormatter over every PremiseOutput.
+
+        Args:
+            formatter: The OutputFormatter instance to be applied on every PremiseOutput.
+        Returns:
+            A `dictionary` containing the formatted results.
+        """
         results = {}
 
         for node_name, data_node in self.outputs.items():
