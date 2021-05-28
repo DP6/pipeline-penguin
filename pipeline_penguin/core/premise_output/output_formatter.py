@@ -23,8 +23,7 @@ class OutputFormatterLog(OutputFormatter):
 ```
 """
 
-# TODO: Maybe we should rethink what is the purpose of a Formatter? If it is responsible for turning
-# results into a data format OR exporting them to other destinations.
+
 class OutputFormatter:
     """Module used for exporting the results of a previously executed validation into a specific
     data format (JSON, csv, xml, etc).
@@ -32,5 +31,4 @@ class OutputFormatter:
 
     def export_output(self, premise_output: "PremiseOutput"):
         """Abstract method for transforming the given PremiseOutput into the desired format."""
-        # TODO turn into @abstract
         pass

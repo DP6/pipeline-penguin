@@ -33,5 +33,4 @@ class Connector:
 
     def run(self):
         """Method for extracting data from the related data source."""
-        # TODO: Add @abstract
         pass

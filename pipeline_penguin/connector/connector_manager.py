@@ -112,7 +112,6 @@ class ConnectorManager:
             The `Connector` object related to the constructed key or `None` if no connector is
             found.
         """
-        # TODO: Revise this method, suggestion: change the "get_key" method to the connector itself.
         return self.__default_connectors.get(self._get_dict_key(connector))
 
     def remove_default(self, connector: Connector):
@@ -125,7 +124,7 @@ class ConnectorManager:
             The `Connector` object related to the constructed key or `None` if no connector is
             found.
         """
-        # TODO: Rename for better clarity or change to a complete deletion.
+
         dict_key = self._get_dict_key(connector)
         if dict_key in self.__default_connectors:
             removed_connector = self.__default_connectors[dict_key]

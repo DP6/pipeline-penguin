@@ -19,5 +19,4 @@ its designed to be inherited by other classes for building specific output behav
 
 Location: pipeline_penguin/core/premise_output/
 """
-# TODO: Maybe move output_manager and premise_output to pipeline_penguin/premise_output folder.
 from .output_formatter import OutputFormatter

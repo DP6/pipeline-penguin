@@ -27,7 +27,6 @@ import pandas as pd
 from typing import Dict
 
 
-# TODO: Maybe move this module to the "/premise_output" main package
 class PremiseOutput:
     """A PremiseOutput represents the results of a DataPremise Validation.
 

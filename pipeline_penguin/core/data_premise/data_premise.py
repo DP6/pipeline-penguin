@@ -48,7 +48,7 @@ class DataPremise:
 
     def validate(self) -> "PremiseOutput":
         """Abstract method for executing the validation test."""
-        # TODO: change to @abstract
+
         pass
 
     def to_serializeble_dict(self) -> Dict:
@@ -58,5 +58,4 @@ class DataPremise:
         Returns:
             A `dictionary` object containing the DataPremise representation.
         """
-        # TODO: change to @abstract
         return {}

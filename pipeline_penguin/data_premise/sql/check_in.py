@@ -41,7 +41,7 @@ class DataPremiseSQLCheckInArray(DataPremiseSQL):
         name: str,
         data_node: "DataNodeBigQuery",
         column: str,
-        array: Union[str, list, float, bool],  # TODO Add datetime support
+        array: Union[str, list, float, bool],
     ):
         if type(array) == "list":
             array = str(array)

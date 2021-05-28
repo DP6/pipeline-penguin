@@ -6,11 +6,6 @@ against a `DataNode`. This package only convers SQL-based validations.
 
 Location: pipeline_penguin/data_premise/sql
 """
-# TODO: Rebuild/rename the modules for a more inuitive approach.
-# check_distinct -> Is OK if all values are distinct
-# check_null -> IS OK if all values are NOT null
-# check_between -> Is OK if the values belong to a given set
-# checks_regex -> Is OK if the values matches a pattern
 from .check_null import DataPremiseSQLCheckIsNull
 from .check_distinct import DataPremiseSQLCheckDistinct
 from .check_arithmetic import DataPremiseSQLCheckArithmeticOperationEqualsResult
