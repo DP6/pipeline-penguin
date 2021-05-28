@@ -1,18 +1,50 @@
-"""This module provides the abstract PremiseOutput constructor."""
+r"""Core premise_output module, contains the `PremiseOutput` class.
+
+PremiseOutput is a data strucutre for abstracting the validation results of a single DataPremise
+execution. It is designed to be used by different `OutputFormatters` instances for compiling the
+results in a specific format.
+
+Location: pipeline_penguin/core/premise_output/
+
+Example usage:
+
+```python
+class DataPremiseSQLCheckNull(DataPremiseSQL):
+
+    # ... DataPremise initialization code ...
+
+    def validate(self):
+        # ... validation execution ...
+
+        # Returning the results of a validation
+        return PremiseOutput(
+            self, self.data_node, self.colum, passed, failed_count, data_frame
+        )
+
+```
+"""
 import pandas as pd
 from typing import Dict
 
 
+# TODO: Maybe move this module to the "/premise_output" main package
 class PremiseOutput:
     """A PremiseOutput represents the results of a DataPremise Validation.
 
     Args:
         data_premise: The DataPremise that generated this output.
-        data_node: The DataNode that the DataPremise ran on.
-        column: Column name.
-        pass_validation: Indicates if it passed the DataPremise rules without any exceptions or not.
-        failed_count: Count the number of exceptions in the DataPremise validation.
-        failed_values: A Pandas DataFrame carrying the exception values found.
+        data_node: The DataNode related to the DataPremise ran on.
+        column: Name of the validated column.
+        pass_validation: Indicated whether the data passed the validation or not.
+        failed_count: Number of incorrect results returned by the DataPremise.
+        failed_values: A pandas dataframe with the incorrect results returned by the DataPremise
+    Attributes
+        data_premise: The DataPremise that generated this output.
+        data_node: The DataNode related to the DataPremise ran on.
+        column: Name of the validated column.
+        pass_validation: Indicated whether the data passed the validation or not.
+        failed_count: Number of incorrect results returned by the DataPremise.
+        failed_values: A pandas dataframe with the incorrect results returned by the DataPremise
     """
 
     def __init__(
@@ -24,7 +56,6 @@ class PremiseOutput:
         failed_count: int,
         failed_values: pd.DataFrame,
     ):
-        """Initialization of the DataPremise."""
         self.data_premise = data_premise
         self.data_node = data_node
         self.column = column
@@ -34,10 +65,10 @@ class PremiseOutput:
 
     def to_serializeble_dict(self) -> Dict:
         """Returns a dictionary representation of the current PremiseOutput using
-        only built-in data types
+        python's built-in data types.
 
         Returns:
-            dict -> Dicionary containing attributes of the PremiseOutput.
+            A `dictionary` object containing the PremiseOutput representation.
         """
         results = {
             "pass_validation": self.pass_validation,

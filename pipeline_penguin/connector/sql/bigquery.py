@@ -1,4 +1,19 @@
-"""This module provides the ConnectorSQLBigQuery constructor."""
+"""Contains the `ConnectorSQLBigQuery` object responsible for interfacing the communication with
+the bigquery GCP service.
+
+The BigQuery connector uses the pandas GBQ library for running queries against a BigQuery database.
+It requires the provision of a service account key file in json format.
+
+Location: pipeline_penguin/connector/sql
+
+Example usage:
+
+```python
+bq_connector = ConnectorSQLBigQuery(credentials_path="credentials.json")
+
+query_results = bq_connector.run("SELECT * FROM `my_project.my_dataset.my_table`", max_results=500)
+```
+"""
 
 from os import path
 
@@ -10,22 +25,24 @@ from pipeline_penguin.core.connector.sql import ConnectorSQL
 
 
 class ConnectorSQLBigQuery(ConnectorSQL):
-    """Constructor for the connector_sql_bigquery.
+    """Object responsible for interfacing the communication with BigQuery data sources.
 
     Args:
-        credentials_path: Path to a service account JSON file
-        max_results: Default maximum row count for the resulting pandas dataframe (default: 1000)
+        credentials_path: Path to a service account JSON file.
+        max_results: Default maximum row count for the resulting pandas dataframe (default: 1000).
     Attributes:
-        type: Base connector type (constant: "SQL")
-        source: Source type (constant: "BigQuery")
+        type: Base connector type, derived from the ConnectorSQL parent class (constant: "SQL").
+        source: Source type (constant: "BigQuery").
+        credentials_path: Path to a service account JSON file.
+        max_results: Default maximum row count for the resulting pandas dataframe (default: 1000).
     Raises:
-        FileNotFoundError: If the provided credentials_path is invalid.
+        FileNotFoundError: If the file located in the provided credentials_path is invalid or
+                           cannot be accessed.
     """
 
     source = NodeType.BIG_QUERY
 
     def __init__(self, credentials_path: str, max_results: int = 1000):
-        """Initialize the connector."""
         super().__init__()
 
         if not (path.isfile(credentials_path)):
@@ -35,13 +52,16 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         self.max_results = max_results
 
     def run(self, query: str, max_results: int = None):
-        """Retrieve the results of the provided query.
+        """Method for executing a query and retrieving its results.
 
         Args:
-            query: SQL code in BigQuery's standard foramt. Ref: https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
-            max_results: max row count for the resulting pandas dataframe. Uses the default value when omitted.
+            query: SQL code in BigQuery's standard format. Reference:
+                   https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax
+            max_results: Max row count for the resulting pandas dataframe. Uses the default when
+                         not provided.
         Returns:
-            A pandas DataFrame object with the results of the provided query up to the maximum number of rows allowed.
+            A pandas `DataFrame` object with the results of the provided query up to the
+            maximum number of rows allowed.
         """
         # Using default max_results
         max_results = max_results if max_results else self.max_results
