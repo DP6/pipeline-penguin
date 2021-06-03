@@ -1,4 +1,17 @@
-"""Premise for checking a logical comparison."""
+"""This module provides DataPremise for validating if a logical operation between a column and a
+provided value is true.
+
+Location: pipeline_penguin/data_premise/sql
+
+Example usage:
+
+```python
+check_logical_prem = DataPremiseSQLCheckLogicalComparisonWithValue(
+    "test_name", data_node, "test_column", "<", 100
+)
+data_node.insert_premise(check_logical_prem)
+```
+"""
 
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
@@ -6,8 +19,25 @@ from pipeline_penguin.exceptions import WrongTypeReference
 
 
 class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
-    """This DataPremise is responsible for validating if a logical expression involving the given
-    column is True.
+    """This DataPremise is responsible for validating if a logical operation between a column and a
+    provided value is true. (i.e. validate if column >= 20).
+
+    Args:
+        name: Name for the data premise.
+        data_node: Reference to the DataNode used in the validation.
+        column: Column to be read by the premise.
+        operator: The logical operator (<,<=,=,=>,!=,<>).
+        value: Value for the second term of the operation.
+    Attributes:
+        name: Name for the data premise.
+        data_node: Reference to the DataNode used in the validation.
+        type: Type indicator of the premise. It is always "SQL".
+        column: Column to be read by the premise.
+        operator: The logical operator (<,<=,=,=>,!=,<>).
+        value: Value for the second term of the operation.
+    Raises:
+        WrongTypeReference: If the "operator" argument is not a supported character ["<","<=","=",
+        "=>","!=","<>"]
     """
 
     def __init__(
@@ -18,7 +48,6 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
         operator: str,
         value: str,
     ):
-        """Initialize the DataPremise after building the validation query."""
         supported_operators = [
             "<",
             "<=",
@@ -38,7 +67,12 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
         super().__init__(name, data_node, column)
 
     def query_args(self):
-        """Arguments for building the Premise's validation query."""
+        """Method for returning the arguments to be passed on the query template of this
+        validation.
+
+        Returns:
+            A `dictionary` with the query parameters.
+        """
         return {
             "project": self.data_node.project_id,
             "dataset": self.data_node.dataset_id,
@@ -49,10 +83,10 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
         }
 
     def validate(self) -> PremiseOutput:
-        """Run the validation function.
+        """Method for executing the validation over the DataNode.
 
         Returns:
-            PremiseOutput: Wrapper object for the validation results
+            PremiseOutput: Object storeing the results for this validation.
         """
 
         query = self.query_template.format(**self.query_args())

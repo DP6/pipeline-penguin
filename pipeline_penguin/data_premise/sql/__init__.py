@@ -1,4 +1,11 @@
-"""pipeline_penguin/data_premise/sql/__init__.py"""
+"""Main data_premise package, contains high-level data_nodes for SQL-based data premises (BigQuery,
+MySQL, etc).
+
+This package provides `DataPremise` constructors, which are pre-written validations to be executed
+against a `DataNode`. This package only convers SQL-based validations.
+
+Location: pipeline_penguin/data_premise/sql
+"""
 from .check_null import DataPremiseSQLCheckIsNull
 from .check_distinct import DataPremiseSQLCheckDistinct
 from .check_arithmetic import DataPremiseSQLCheckArithmeticOperationEqualsResult
