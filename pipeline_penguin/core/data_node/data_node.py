@@ -1,26 +1,54 @@
-"""This module provides the abstract DataNode constructor."""
+"""Core data_node module, contains the abstract `DataNode` class.
+
+DataNode objects represent a single data source on an existing data pipeline where we execute
+the desired validations.
+
+This modules provides the `DataNode` abstract constructor. Designed to be inherited by other
+classes for building more specific data sources, it must not be instantiated directly.
+
+Location: pipeline_penguin/core/data_node/
+
+Example usage:
+
+```python
+class DataNodeBigQuery(DataNode):
+    def __init__(self):
+        # ...
+        # Code for initializing the BigQuery Connector.
+        # ...
+        super().__init__(NodeType.BIG_QUERY)
+
+    def to_serializeble_dict(self):
+        # ...
+        # Code for summarizing the DataNode as a dictionary
+        # ...
+        return {}
+```
+"""
 import inspect
 from typing import Dict, Type, Any
 
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
-from pipeline_penguin.core.connector.connector import Connector
 
 
 class DataNode:
-    """Base DataNode class.
+    """Abstract parent constructor for building other DataNode classes.
+
+    DataNode objects represent a single data source on an existing data pipeline where we execute
+    the desired validations.
 
     Args:
         name: Reference name of this DataNode
         source: Type of data source
     Attributes:
-        premises: Dictionary holding every data_premise inserted
-        supported_premise_types: Array of premise types allowed to be inserted on the data_node
-        connectors: Custom data Connectors to be used while extracting data for this Node.
+        premises: Dictionary storing data_premises registered on this DataNode.
+        supported_premise_types: Array of premise types allowed to be registered on the DataNode.
+        connectors: Custom data Connectors to be used while extracting data for this specific
+                    DataNode (In contrast to the Default Connectors used by the ConnectorManager)
     """
 
     def __init__(self, name: str, source: str):
-        """Initialize the Data Node."""
         self.name = name
         self.source = source
         self.premises: Dict[str, Type["DataPremise"]] = {}
@@ -29,7 +57,7 @@ class DataNode:
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
-        """Return whether the given premise factory is a subclass of DataPremise or not.
+        """Return whether the given constructor class is DataPremise subclass or not.
 
         Args:
             premise_factory: Any object to be validated.
@@ -43,15 +71,16 @@ class DataNode:
     def insert_premise(
         self, name: str, premise_factory: Type[DataPremise], *args, **kwargs
     ) -> None:
-        """Insert a premise on the DataNode.
+        """Insert a Data Premise on the DataNode.
 
         Args:
             name: name of the premise
-            premise_factory: class constructor to be used in premise creation
+            premise_factory: The __class constructor__ to be used in premise creation. Not to be
+                             mistaken by an previously instantiated DataPremise class
             *args, **kwargs: Arguments passed down to the given constructor
         Raises:
-            WrongTypeReference: If the given constructor is not a subclass of DataPremise
-            WrongTypeReference: If the given constructor is of an unsupported type
+            WrongTypeReference: If the given constructor is not a subclass of DataPremise or is of
+                                an unsupported type
         """
         if not self._is_data_premise_subclass(premise_factory):
             raise WrongTypeReference(
@@ -67,18 +96,19 @@ class DataNode:
         self.premises.update({premise.name: premise})
 
     def remove_premise(self, name: str) -> None:
-        """Remove an previously inserted premise.
+        """Remove an previously inserted DataPremise given its name.
 
         Args:
             name: name of the premise to be removed
         """
         del self.premises[name]
 
-    def get_connector(self, premise_type: str) -> Connector:
-        """Abstract method for retrieving the Connector to be used while querying data for
-        this DataNode.
-        If there's no corresponding Connector inside the internal `connectors` attribute, we look
-        for one from the ConnectorManager.
+    def get_connector(self, premise_type: str) -> "Connector":
+        """Abstract method for retrieving the Connector to be used while querying data from this
+        DataNode.
+
+        If there's no corresponding Connector inside the internal `connectors` attribute, we must
+        look for one from the ConnectorManager.
 
         Args:
             premise_type (str): Type of Premise for identifying the Connector.
@@ -89,11 +119,11 @@ class DataNode:
         return
 
     def run_premises(self) -> Dict:
-        """Run every DataPremise validation for this DataNode, printing the results and saving them
-        on a Dictionary.
+        """Run every DataPremise validation for this DataNode, printing their validation status and
+        saving them on a Dictionary.
 
         Returns:
-            Dict: Conolidation of all validations executed.
+            A `dictionary` object consolidating all validations executed.
         """
         results = {}
 
@@ -104,6 +134,11 @@ class DataNode:
 
         return results
 
-    def to_serializeble_dict(self) -> dict:
-        """Abstract method for converting the data_node to a json-like format."""
+    def to_serializeble_dict(self) -> Dict:
+        """Method for constructing a dictionary representation of the current DataNode using
+        only built-in data types.
+
+        Returns:
+            A `dictionary` object containing the DataNode representation.
+        """
         return {}

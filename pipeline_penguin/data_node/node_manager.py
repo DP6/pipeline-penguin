@@ -1,5 +1,29 @@
-"""This module provides the NodeManager constructor."""
+"""Contains the `NodeManager` object, responsible for creating, removing and managing DataNode
+instances.
 
+The `NodeManager` is a singleton object that provides methods for creating, listing, retrieving and
+removing DataNodes.
+
+Location: pipeline_penguin/data_node/
+
+Example usage:
+
+```python
+node_manager = NodeManager()
+data_node = node_manager.create_node(
+    name="Pipeline X - Table Y",
+    node_factory=DataNodeBigQuery,
+    project_id= "teste",
+    dataset_id= "dataset_test",
+    table_id= "table",
+    service_account_json= "service_account.json",
+)
+
+bigquery_args.update({"source": "BigQuery", "premises": {}})
+
+node_manager.remove_node(name="Pipeline X - Table Y")
+```
+"""
 import copy
 import inspect
 from typing import Type, Optional, Union, Any, List
@@ -12,7 +36,11 @@ from pipeline_penguin.exceptions import (
 
 
 class NodeManager:
-    """Singleton interface for managing all DataNodes."""
+    """Singleton responsible for creating, listing, retrieving and removing DataNodes.
+
+    Attributes:
+        __nodes: Protected dictionary for storing the added DataNodes.
+    """
 
     _instance = None
 
@@ -23,15 +51,16 @@ class NodeManager:
         return cls._instance
 
     def __init__(self):
-        """Initialization. The private __nodes attribute contains every DataNode created by the manager."""
         self.__nodes = {}
 
     @staticmethod
     def _is_data_node_class(node_factory: Any) -> bool:
-        """Validation for DataNode constructor type.
+        """Method for checking if a given object is of a `DataNode` class constructor.
 
         Args:
-            node_factory: Constructor for a DataNode object
+            node_factory: Any object.
+        Returns:
+            A `boolean` value indicating whether the provied object is a `DataNode` class or not.
         """
         return (
             node_factory != DataNode
@@ -42,7 +71,7 @@ class NodeManager:
     def create_node(
         self, name: str, node_factory: Type[DataNode], *args, **kwargs
     ) -> DataNode:
-        """Instantiate a new DataNode in the internal data structure.
+        """Method for instantiating a new DataNode inside the internal data structure.
 
         Args:
             name: Name of the DataNode
@@ -50,7 +79,10 @@ class NodeManager:
             *args, **kwargs: Arguments used on the DataNode's initialization.
         Raises:
             WrongTypeReference: If the provided constructor is not a subclass of DataNode
-            NodeManagerMissingCorrectArgs: When the node was not able to initialize the provided arguments
+            NodeManagerMissingCorrectArgs: When the node was not able to initialize the provided
+            arguments
+        Returns:
+            The newly created `DataNode` instance.
         """
         try:
             if self._is_data_node_class(node_factory):
@@ -64,35 +96,50 @@ class NodeManager:
         return node
 
     def get_node(self, name: str) -> Optional[Type[DataNode]]:
-        """Retrival of DataNodes by name.
+        """Method for retrieving a DataNode by its name.
 
         Args:
             name: Name of the DataNode to retrieve
+        Returns:
+            The identified `DataNode` or `None` if it does not exist
         """
         return self.__nodes.get(name)
 
     def list_nodes(self) -> List[Type[DataNode]]:
-        """List all existing data nodes."""
+        """Method for listing previously created DataNode instances.
+
+        Returns:
+            A `list` of strings representing the name attribute of previously added `DataNode`
+            instances.
+        """
         for key in self.__nodes.keys():
             print(key)
 
         return list(self.__nodes.keys())
 
     def remove_node(self, name: str) -> None:
-        """Remove a previously added DataNode.
+        """Method for deleting an previously added DataNode instance given its name.
 
         Args:
             name: Name of the DataNode to be removed.
+        Returns:
+            `None`
         """
         if name in self.__nodes:
             del self.__nodes[name]
 
     def copy_node(self, node: Union[str, DataNode], name: str) -> Optional[DataNode]:
-        """Create a copy of the given DataNode with a new name.
+        """Method for copying a DataNode and adding the copy to the NodeManager's internal
+        dictionary.
 
         Args:
-            node: Primary DataNode
-            name: Name for the DataNode copy
+            node: Name (string) or instance of the DataNode to be copied. If a name is provided we
+            try to retrieve the DataNode's instance using the self.get method.
+            name: Name for the DataNode copy.
+        Raises:
+            WrongTypeReference: If the `node` argument is not a string or a DataNode instance.
+        Returns:
+            The `DataNode` copy instance.
         """
         if isinstance(node, DataNode):
             copied_node = copy.deepcopy(node)
