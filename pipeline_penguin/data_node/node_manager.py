@@ -32,6 +32,8 @@ from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     WrongTypeReference,
 )
+from pipeline_penguin.core.premise_output.output_formatter import OutputFormatter
+from pipeline_penguin.core.premise_output.output_manager import OutputManager
 
 
 class NodeManager:
@@ -154,3 +156,18 @@ class NodeManager:
             self.__nodes.update({name: copied_node})
 
             return copied_node
+
+    def run_premises(self) -> OutputManager:
+        """Run DataPremise validations for every DataNode registered on the internal __nodes
+        dictionary while storing their results on a OutputManager object.
+
+        Returns:
+            A `OutPutManager` instance consolidating all validation results on its "output"
+            attribute
+        """
+        output_manager = OutputManager()
+        for name, data_node in self.__nodes.items():
+            results = data_node.run_premises()
+            output_manager.outputs[name] = results
+
+        return output_manager
