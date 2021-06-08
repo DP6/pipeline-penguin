@@ -15,7 +15,6 @@ def bigquery_args():
         "project_id": "teste",
         "dataset_id": "dataset_test",
         "table_id": "table",
-        "service_account_json": "service_account.json",
     }
 
 
@@ -23,7 +22,6 @@ def bigquery_args():
 def bigquery_missing_args():
     yield {
         "table_id": "table",
-        "service_account_json": "service_account.json",
     }
 
 
@@ -45,7 +43,6 @@ class TestCreateNode:
             "project_id": data_node.project_id,
             "dataset_id": data_node.dataset_id,
             "table_id": data_node.table_id,
-            "service_account_json": data_node.service_account_json,
             "source": NodeType.BIG_QUERY,
             "premises": {},
         } == bigquery_args

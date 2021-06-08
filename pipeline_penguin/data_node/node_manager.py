@@ -16,7 +16,6 @@ data_node = node_manager.create_node(
     project_id= "teste",
     dataset_id= "dataset_test",
     table_id= "table",
-    service_account_json= "service_account.json",
 )
 
 bigquery_args.update({"source": "BigQuery", "premises": {}})
