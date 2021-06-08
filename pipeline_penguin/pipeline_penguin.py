@@ -1,4 +1,4 @@
-r"""Containst the PipelinePenguin, responsible for centralizing the instances of DataNodes and
+r"""Contains the PipelinePenguin, responsible for centralizing the instances of DataNodes and
 Connectors into a single object instance.
 
 Location: pipeline_penguin/
@@ -15,7 +15,6 @@ pipe.nodes.create_node(
     project_id= "teste",
     dataset_id= "dataset_test",
     table_id= "table",
-    service_account_json= "service_account.json",
 )
 
 # Adding a connetor

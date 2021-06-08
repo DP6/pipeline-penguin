@@ -16,7 +16,6 @@ def _data_node():
         "project_id": "teste",
         "dataset_id": "dataset_test",
         "table_id": "table",
-        "service_account_json": "service_account.json",
     }
 
     node_manager = NodeManager()
