@@ -1,12 +1,17 @@
+import pandas as pd
+from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
+from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+from pipeline_penguin.premise_output.output_formatter_log import OutputFormatterLog
 import pytest
 
 from pipeline_penguin.core.data_node import DataNode, NodeType
-from pipeline_penguin.data_node import NodeManager
+from pipeline_penguin.data_node import NodeManager, node_manager
 from pipeline_penguin.data_node.sql import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     WrongTypeReference,
 )
+from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckIsNull
 
 
 @pytest.fixture()
@@ -318,3 +323,33 @@ class TestCopyNode:
             new_node = node_manager.copy_node(
                 node=17272, name="Pipeline New - Table New"
             )
+
+
+@pytest.fixture()
+def _mock_passing_premise():
+    def mock_premise():
+        class MockPremiseCreator(DataPremiseSQL):
+            def __init__(self, name, data_node: DataNode, column: str):
+                super().__init__(name, data_node, column)
+
+            def validate(self):
+                return PremiseOutput(
+                    self, self.data_node, self.column, True, 0, pd.DataFrame()
+                )
+
+        return MockPremiseCreator
+
+    yield mock_premise
+
+
+class TestRunPremises:
+    def test_run_premises(self, bigquery_args, _mock_passing_premise):
+        node_manager = NodeManager()
+
+        data_node = node_manager.create_node(
+            name="Pipeline Z - Table K",
+            node_factory=DataNodeBigQuery,
+            **bigquery_args,
+        )
+        data_node.insert_premise("check null", _mock_passing_premise(), "test_column")
+        print(node_manager.run_premises())
