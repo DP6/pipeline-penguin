@@ -12,6 +12,7 @@ from pipeline_penguin.exceptions import (
     WrongTypeReference,
 )
 from pipeline_penguin.data_premise.sql import DataPremiseSQLCheckIsNull
+from pipeline_penguin.core.premise_output.output_manager import OutputManager
 
 
 @pytest.fixture()
@@ -352,4 +353,7 @@ class TestRunPremises:
             **bigquery_args,
         )
         data_node.insert_premise("check null", _mock_passing_premise(), "test_column")
-        print(node_manager.run_premises())
+        output_manager = node_manager.run_premises()
+
+        assert isinstance(output_manager, OutputManager)
+        assert output_manager.outputs
