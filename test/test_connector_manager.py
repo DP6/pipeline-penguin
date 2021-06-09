@@ -48,6 +48,7 @@ class TestGetDefault:
 
     def test_if_returns_none_if_connector_was_not_found(self, mock_isfile):
         connector_manager = ConnectorManager()
+        connector_manager.reset()
 
         connector = connector_manager.get_default(ConnectorSQLBigQuery)
 
