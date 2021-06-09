@@ -14,6 +14,7 @@ formatter.export_output(premise_output)
 from pipeline_penguin.core.premise_output.output_formatter import OutputFormatter
 import json
 import numpy as np
+import decimal
 
 
 class NpEncoder(json.JSONEncoder):
@@ -21,6 +22,8 @@ class NpEncoder(json.JSONEncoder):
         if isinstance(obj, np.integer):
             return int(obj)
         elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, decimal.Decimal):
             return float(obj)
         elif isinstance(obj, np.ndarray):
             return obj.tolist()

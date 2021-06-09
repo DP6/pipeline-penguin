@@ -43,7 +43,7 @@ class DataPremiseSQLCheckRegexpContains(DataPremiseSQL):
         pattern: str,
     ):
 
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE REGEXP_CONTAINS({column}, {pattern})"
+        self.query_template = 'SELECT {column} result FROM `{project}.{dataset}.{table}` WHERE REGEXP_CONTAINS({column}, r"{pattern}")'
         self.pattern = pattern
         super().__init__(name, data_node, column)
 

@@ -61,7 +61,7 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
                 f"Operator not supported, supported operators: {supported_operators}"
             )
 
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {value}"
+        self.query_template = "SELECT {column} result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {value}"
         self.operator = operator
         self.value = value
         super().__init__(name, data_node, column)
