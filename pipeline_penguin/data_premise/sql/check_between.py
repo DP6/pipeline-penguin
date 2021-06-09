@@ -46,7 +46,7 @@ class DataPremiseSQLCheckValuesAreBetween(DataPremiseSQL):
         upper_bound: str,
     ):
 
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE  {column} BETWEEN {lower_bound} AND {upper_bound}"
+        self.query_template = "SELECT {column} as result FROM `{project}.{dataset}.{table}` WHERE  {column} BETWEEN {lower_bound} AND {upper_bound}"
         self.lower_bound = lower_bound
         self.upper_bound = upper_bound
         super().__init__(name, data_node, column)

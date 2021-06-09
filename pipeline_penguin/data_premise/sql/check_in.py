@@ -46,7 +46,7 @@ class DataPremiseSQLCheckInArray(DataPremiseSQL):
         if type(array) == "list":
             array = str(array)
 
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} IN UNNEST({array})"
+        self.query_template = "SELECT {column} as result result FROM `{project}.{dataset}.{table}` WHERE {column} IN UNNEST({array})"
         self.array = array
         super().__init__(name, data_node, column)
 

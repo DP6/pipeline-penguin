@@ -50,7 +50,7 @@ class DataPremiseSQL(DataPremise):
 
     def query_args(self):
         """Returns the arguments to be used while building the SQL query on premise execution"""
-        pass
+        return {}
 
     def to_serializeble_dict(self) -> dict:
         """Method for constructing a dictionary representation of the current DataPremise using
