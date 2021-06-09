@@ -127,10 +127,10 @@ class DataNode:
         """
         results = {}
 
-        for name, premise in self.premises.items():
-            passed = premise.validate()
-            results[name] = passed
-            print(f"{name}: {'passed' if passed else 'failed'}")
+        for premise_name, premise in self.premises.items():
+            result = premise.validate()
+            results[premise_name] = result
+            print(f"{self.name} - {premise_name}: {'Passed' if result.pass_validation else 'Failed'}")
 
         return results
 
