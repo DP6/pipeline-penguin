@@ -61,7 +61,7 @@ class DataPremiseSQLCheckArithmeticOperationEqualsResult(DataPremiseSQL):
             raise WrongTypeReference(
                 f"Operator not supported, supported operators: {supported_operators}"
             )
-        self.query_template = "SELECT * as result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {second_term} = {expected_result}"
+        self.query_template = "SELECT {column} as result FROM `{project}.{dataset}.{table}` WHERE {column} {operator} {second_term} = {expected_result}"
         self.operator = operator
         self.second_term = second_term
         self.expected_result = expected_result

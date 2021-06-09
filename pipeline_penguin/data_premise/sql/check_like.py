@@ -43,7 +43,7 @@ class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
         pattern: str,
     ):
 
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE {column} LIKE {pattern}"
+        self.query_template = "SELECT {column} as result FROM `{project}.{dataset}.{table}` WHERE {column} LIKE {pattern}"
         self.pattern = pattern
         super().__init__(name, data_node, column)
 
