@@ -13,6 +13,21 @@ formatter.export_output(premise_output)
 
 from pipeline_penguin.core.premise_output.output_formatter import OutputFormatter
 import json
+import numpy as np
+
+
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        else:
+            return super(NpEncoder, self).default(obj)
 
 
 class OutputFormatterLog(OutputFormatter):
@@ -30,7 +45,7 @@ class OutputFormatterLog(OutputFormatter):
         data_premise = premise_output.data_premise
         output_data = premise_output.to_serializeble_dict()
 
-        json_data = json.dumps(output_data, indent=4, sort_keys=True)
+        json_data = json.dumps(output_data, indent=4, sort_keys=True, cls=NpEncoder)
 
         msg = f"Results of {data_premise.name} validation:\n{json_data}"
         return msg

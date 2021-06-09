@@ -48,7 +48,6 @@ class TestDataNodeBigQuery:
                 "project_test",
                 "dataset_test",
                 "table_test",
-                "account_test",
             ),
             DataNode,
         )
@@ -59,7 +58,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
         assert data_node.source == NodeType.BIG_QUERY
 
@@ -69,7 +67,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
 
         data_node.insert_premise(
@@ -82,7 +79,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
 
         with pytest.raises(WrongTypeReference):
@@ -96,7 +92,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
 
         mock_connector = ConnectorSQLBigQuery("true_file.json")
@@ -110,7 +105,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
         assert data_node.get_connector("SQL") == "ConnectorSQLBigQuery"
 
@@ -120,7 +114,6 @@ class TestDataNodeBigQuery:
             "project_test",
             "dataset_test",
             "table_test",
-            "account_test",
         )
         with pytest.raises(WrongTypeReference):
             data_node.get_connector("SQL")

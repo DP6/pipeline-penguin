@@ -35,6 +35,7 @@ class ConnectorManager:
     """
 
     _instance = None
+    __default_connectors = {}
 
     def __new__(cls):
         """Used for maintaining a single instance of the Manager"""
@@ -42,7 +43,8 @@ class ConnectorManager:
             cls._instance = super(ConnectorManager, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def reset(self):
+        self._instance = None
         self.__default_connectors = {}
 
     @staticmethod
