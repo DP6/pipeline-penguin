@@ -29,12 +29,15 @@ def _data_node():
 @pytest.fixture()
 def _premise_check():
     def check_null():
+        class MockPremiseOutput:
+            pass_validation = True
+
         class CheckIfNullCreator(DataPremiseSQL):
             def __init__(self, name, data_node: DataNode, column: str):
                 super().__init__(name, data_node, column)
 
             def validate(self):
-                return True
+                return MockPremiseOutput()
 
         return CheckIfNullCreator
 
@@ -132,7 +135,7 @@ class TestDataNodeRunPremise:
         _data_node.insert_premise(
             name=premise_name, premise_factory=_premise_check(), column="X"
         )
-        assert _data_node.run_premises() == {premise_name: True}
+        assert _data_node.run_premises()[premise_name].pass_validation
 
     def test_run_premises_with_many_premises(self, _data_node, _premise_check):
         premise_names = ["premise_a", "premise_b", "premise_c"]
@@ -144,4 +147,6 @@ class TestDataNodeRunPremise:
 
         expected_result = {name: True for name in premise_names}
 
-        assert _data_node.run_premises() == expected_result
+        assert _data_node.run_premises()["premise_a"].pass_validation
+        assert _data_node.run_premises()["premise_b"].pass_validation
+        assert _data_node.run_premises()["premise_c"].pass_validation
