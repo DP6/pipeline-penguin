@@ -26,4 +26,4 @@ jobs:
       - name: Testing
         run: pipenv run test
       - name: Coverage
-        run: pipenv run python -m pytest --cache-clear --cov=. tests
+        run: pipenv run python -m pytest --cache-clear --cov=. test
