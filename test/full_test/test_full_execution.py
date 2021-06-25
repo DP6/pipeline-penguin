@@ -1,11 +1,15 @@
+from pipeline_penguin.data_premise.sql.check_arithmetic import (
+    DataPremiseSQLCheckArithmeticOperationEqualsResult,
+)
 import pytest
+import json
 
 # Imports for mocking
 import pandas as pd
 from google.oauth2.service_account import Credentials
 from os import path
 
-# Pipeline Penguing
+# Pipeline Pengguin
 from pipeline_penguin import PipelinePenguin
 from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 from pipeline_penguin.premise_output.output_formatter_log import OutputFormatterLog
@@ -16,6 +20,12 @@ from pipeline_penguin.data_premise.sql.check_regexp import (
     DataPremiseSQLCheckRegexpContains,
 )
 from pipeline_penguin.data_premise.sql.check_in import DataPremiseSQLCheckInArray
+from pipeline_penguin.data_premise.sql.check_between import (
+    DataPremiseSQLCheckValuesAreBetween,
+)
+from pipeline_penguin.data_premise.sql.check_comparison import (
+    DataPremiseSQLCheckLogicalComparisonWithValue,
+)
 
 
 @pytest.fixture
@@ -39,14 +49,30 @@ def _mock_is_file(monkeypatch):
 @pytest.fixture
 def _mock_pandas_read_gbq(monkeypatch):
     def mock_pandas_read_gbq(query, credentials, max_results):
-        return pd.DataFrame([[0, 2]], columns=["total", "result"])
+        return pd.DataFrame([[0, 0]], columns=["total", "result"])
 
     monkeypatch.setattr(pd, "read_gbq", mock_pandas_read_gbq)
 
 
 class TestFullExecution:
-    def test_everything(
+    def test_setup_PipelinePenguin_instance(
         self, _mock_from_service_account_file, _mock_is_file, _mock_pandas_read_gbq
+    ):
+        pp = PipelinePenguin()
+
+        assert isinstance(pp, PipelinePenguin)
+
+        gcp_service_acc = "./service_acc.json"
+        bq_conn = ConnectorSQLBigQuery(gcp_service_acc)
+        pp.connectors.define_default(bq_conn)
+
+        assert pp.connectors.get_default(ConnectorSQLBigQuery) == bq_conn
+
+    def test_default_execution(
+        self,
+        _mock_from_service_account_file,
+        _mock_is_file,
+        _mock_pandas_read_gbq,
     ):
         pp = PipelinePenguin()
 
@@ -75,54 +101,12 @@ class TestFullExecution:
             column="session_id",
         )
 
-        bq_conversions.insert_premise(
-            "TransactionID is in the correct format",
-            DataPremiseSQLCheckRegexpContains,
-            column="transactionId",
-            pattern=r"^ORD\\d{12}$",
-        )
+        validation_conversions_results = bq_conversions.run_premises()
 
-        # Running premise and printing the results
-        validation_results = bq_conversions.run_premises()
+        p1_results = validation_conversions_results["All transactions have revenue"]
+        assert p1_results.pass_validation
+        assert p1_results.data_node == bq_conversions
 
-        print(
-            log_formatter.export_output(
-                validation_results["All transactions have revenue"]
-            )
-        )
-        print(
-            log_formatter.export_output(
-                validation_results["All session ids are distinct"]
-            )
-        )
-        print(
-            log_formatter.export_output(
-                validation_results["TransactionID is in the correct format"]
-            )
-        )
-
-        # ------ Setting up the "Events" data node ------
-        bq_events = pipe.nodes.create_node(
-            "Events",
-            DataNodeBigQuery,
-            project_id="dp6-estudos",
-            dataset_id="test_pipeline_penguin",
-            table_id="vw_events",
-        )
-
-        bq_events.insert_premise(
-            "Check if events are ecommerce actions",
-            DataPremiseSQLCheckInArray,
-            column="eventCategory",
-            array=["Enhanced Ecommerce"],
-        )
-
-        # Running premise and printing the results
-        validation_results = bq_events.run_premises()
-
-        print(
-            log_formatter.export_output(
-                validation_results["Check if events are ecommerce actions"]
-            )
-        )
-        assert False
+        p2_results = validation_conversions_results["All session ids are distinct"]
+        assert p2_results.pass_validation
+        assert p2_results.data_node == bq_conversions
