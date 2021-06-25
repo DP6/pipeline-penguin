@@ -1,3 +1,5 @@
+[![testing](https://github.com/DP6/pipeline-penguin/actions/workflows/main.yml/badge.svg)](https://github.com/DP6/pipeline-penguin/actions/workflows/main.yml)
+
 # Pipeline Penguin
 
 Simple pipeline validator.
@@ -16,12 +18,11 @@ Simple pipeline validator.
   </ol>
 </details>
 
-
 ## Getting Started
 
 ### Python version
 
-* Python 3.9
+- Python 3.9
 
 ### Installation
 
@@ -54,4 +55,3 @@ pipenv run format
 ```
 pipenv run format-check
 ```
-
