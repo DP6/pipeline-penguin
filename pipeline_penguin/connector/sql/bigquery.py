@@ -19,6 +19,7 @@ from os import path
 
 import pandas as pd
 from google.oauth2.service_account import Credentials
+import google.auth
 
 from pipeline_penguin.core.data_node import NodeType
 from pipeline_penguin.core.connector.sql import ConnectorSQL
@@ -45,10 +46,15 @@ class ConnectorSQLBigQuery(ConnectorSQL):
     def __init__(self, credentials_path: str, max_results: int = 1000):
         super().__init__()
 
-        if not (path.isfile(credentials_path)):
+        print(path.isfile)
+        if credentials_path == "default":
+            print("Using google.auth.default credentials")
+            self.credentials, self.project_id = google.auth.default()
+        elif path.isfile(credentials_path):
+            self.credentials = Credentials.from_service_account_file(credentials_path)
+        else:
             raise FileNotFoundError(f"{credentials_path} does not exist")
 
-        self.credentials_path = credentials_path
         self.max_results = max_results
 
     def run(self, query: str, max_results: int = None):
@@ -66,8 +72,11 @@ class ConnectorSQLBigQuery(ConnectorSQL):
         # Using default max_results
         max_results = max_results if max_results else self.max_results
 
-        credentials = Credentials.from_service_account_file(self.credentials_path)
-
-        df = pd.read_gbq(query=query, credentials=credentials, max_results=max_results)
+        df = pd.read_gbq(
+            query=query,
+            credentials=self.credentials,
+            max_results=max_results,
+            project_id=self.project_id if self.project_id else None,
+        )
 
         return df
