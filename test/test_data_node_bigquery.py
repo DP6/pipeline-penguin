@@ -4,6 +4,7 @@ from pipeline_penguin.data_premise.sql.check_null import DataPremiseSQLCheckIsNu
 from pipeline_penguin.core.data_premise.data_premise import DataPremise
 import pytest
 from os import path
+from google.oauth2.service_account import Credentials
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 from pipeline_penguin.connector.connector_manager import ConnectorManager
@@ -38,6 +39,11 @@ def _mock_connector_manager(monkeypatch):
         return "ConnectorSQLBigQuery"
 
     monkeypatch.setattr(ConnectorManager, "get_default", mock_function)
+
+
+@pytest.fixture
+def _mock_from_service_account_file(monkeypatch):
+    monkeypatch.setattr(Credentials, "from_service_account_file", lambda path: None)
 
 
 class TestDataNodeBigQuery:
@@ -86,7 +92,9 @@ class TestDataNodeBigQuery:
                 "check_nulls", _mock_premise(), column="test_column"
             )
 
-    def test_get_internal_connector(self, _mock_isfile):
+    def test_get_internal_connector(
+        self, _mock_isfile, _mock_from_service_account_file
+    ):
         data_node = DataNodeBigQuery(
             "name_test",
             "project_test",
