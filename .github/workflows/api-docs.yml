@@ -25,4 +25,6 @@ jobs:
       - name: Testing
         run: |
           pipenv run build-docs
-          bash push_git_changes.sh "Building API documentation"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          if [[ `git status --porcelain` ]]; then git commit -am "Formatting Code" && git push; fi;
