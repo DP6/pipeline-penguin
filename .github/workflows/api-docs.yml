@@ -27,4 +27,4 @@ jobs:
           pipenv run build-docs
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          if [[ `git status --porcelain` ]]; then git commit -am "Formatting Code" && git push; fi;
+          if [[ `git status --porcelain` ]]; then git commit -am "Formatting Code" && git push origin ${{ github.event.pull_request.base.ref }}; fi;
