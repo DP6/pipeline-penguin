@@ -23,10 +23,6 @@ jobs:
           pip install pipenv
           pipenv install --dev
       - name: Testing
-        run: pipenv run build-docs
-      - name: Push Changes
         run: |
-          git config --global user.name 'Koopa Troopa'
-          git config --global user.email 'koopas@dp6.com.br'
-          git commit -am "Updating API documentation"
-          git push
+          pipenv run build-docs
+          bash push_git_changes.sh "Building API documentation"
