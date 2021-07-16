@@ -1,10 +1,9 @@
-name: testing
+name: api-docs
 
 on:
   push:
-    branches: "*"
-  pull_request:
-    branches: "*"
+    branches: "master"
+    types: [closed]
 
   workflow_dispatch:
 
@@ -24,6 +23,10 @@ jobs:
           pip install pipenv
           pipenv install --dev
       - name: Testing
-        run: pipenv run test
-      - name: Coverage
-        run: pipenv run python -m pytest --cache-clear --cov=. test
+        run: pipenv run build-docs
+      - name: Push Changes
+        run: |
+          git config --global user.name 'Koopa Troopa'
+          git config --global user.email 'koopas@dp6.com.br'
+          git commit -am "Updating API documentation"
+          git push
