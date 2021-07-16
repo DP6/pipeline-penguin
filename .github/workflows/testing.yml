@@ -24,10 +24,7 @@ jobs:
       - name: Formatting
         run: |
           pipenv run format
-          git config --global user.name 'Koopa Troopa'
-          git config --global user.email 'koopas@dp6.com.br'
-          git commit -am "Updating API documentation"
-          git push
+          bash push_git_changes.sh
       - name: Testing
         run: pipenv run test
       - name: Coverage
