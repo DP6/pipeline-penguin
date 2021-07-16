@@ -24,7 +24,7 @@ jobs:
       - name: Formatting
         run: |
           pipenv run format
-          bash push_git_changes.sh
+          bash push_git_changes.sh "Formatting code"
       - name: Testing
         run: pipenv run test
       - name: Coverage
