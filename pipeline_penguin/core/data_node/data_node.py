@@ -53,7 +53,11 @@ class DataNode:
         self.source = source
         self.premises: Dict[str, Type["DataPremise"]] = {}
         self.supported_premise_types = []
-        self.connectors = {}
+        self.connectors = {
+
+
+            
+        }
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
