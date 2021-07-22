@@ -1,6 +1,5 @@
 import pytest
 
-from pipeline_penguin.core.data_node import NodeType
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
 from pipeline_penguin.data_node import NodeManager
@@ -144,8 +143,6 @@ class TestDataNodeRunPremise:
             _data_node.insert_premise(
                 name=name, premise_factory=_premise_check(), column="X"
             )
-
-        expected_result = {name: True for name in premise_names}
 
         assert _data_node.run_premises()["premise_a"].pass_validation
         assert _data_node.run_premises()["premise_b"].pass_validation
