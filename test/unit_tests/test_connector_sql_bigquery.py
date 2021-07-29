@@ -4,7 +4,7 @@ from google.oauth2.service_account import Credentials
 from os import path
 import pandas as pd
 
-from pipeline_penguin.core.connector import Connector, ConnectorSQL
+from pipeline_penguin.core.connector import ConnectorSQL
 from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 
 
@@ -15,7 +15,7 @@ def mock_from_service_account_file(monkeypatch):
 
 @pytest.fixture
 def mock_pandas_read_gbq(monkeypatch):
-    def mock_function(query, credentials, max_results):
+    def mock_function(query, credentials, max_results, project_id):
         return pd.DataFrame([i for i in range(max_results)])
 
     monkeypatch.setattr(pd, "read_gbq", mock_function)
