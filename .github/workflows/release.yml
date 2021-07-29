@@ -1,4 +1,4 @@
-name: api-docs
+name: release
 
 on:
   workflow_dispatch:
