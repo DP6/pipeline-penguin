@@ -43,7 +43,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
 
     source = NodeType.BIG_QUERY
 
-    def __init__(self, credentials_path: str, max_results: int = 1000):
+    def __init__(self, credentials_path: str = "default", max_results: int = 1000):
         super().__init__()
 
         print(path.isfile)
@@ -52,6 +52,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
             self.credentials, self.project_id = google.auth.default()
         elif path.isfile(credentials_path):
             self.credentials = Credentials.from_service_account_file(credentials_path)
+            self.project_id = None
         else:
             raise FileNotFoundError(f"{credentials_path} does not exist")
 
@@ -76,7 +77,7 @@ class ConnectorSQLBigQuery(ConnectorSQL):
             query=query,
             credentials=self.credentials,
             max_results=max_results,
-            project_id=self.project_id if self.project_id else None,
+            project_id=self.project_id,
         )
 
         return df
