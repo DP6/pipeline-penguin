@@ -1,3 +1,8 @@
+"""
+Since the "NodeManager" class uses a Singleton pattern the same instance will be used for
+every unit test executed. This may cause unpredictible behavior in some of the tests.
+"""
+
 import pandas as pd
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput

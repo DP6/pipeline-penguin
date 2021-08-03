@@ -1,15 +1,15 @@
+"""
+Since the "ConnectorManager" class uses a Singleton pattern the same instance will be used for
+every unit test executed. This may cause unpredictible behavior in some of the tests.
+"""
+
 import pytest
 
 from google.oauth2.service_account import Credentials
 from os import path
 
-from pipeline_penguin.core.connector import Connector
 from pipeline_penguin.connector import ConnectorManager
 from pipeline_penguin.connector.sql import ConnectorSQLBigQuery
-from pipeline_penguin.exceptions import (
-    ConnectorManagerMissingCorrectArgs,
-    WrongTypeReference,
-)
 
 
 @pytest.fixture
