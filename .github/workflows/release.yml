@@ -1,12 +1,6 @@
-name: testing
+name: release
 
 on:
-  push:
-    branches: "*"
-
-  pull_request:
-    branches: "master"
-
   workflow_dispatch:
 
 jobs:
@@ -15,8 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }} # Getting name of branch on pull_request
       - name: Set up python
         uses: actions/setup-python@v2
         with:
@@ -26,13 +18,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
           pipenv install --dev
-      - name: Formatting
+      - name: Build Wheel
         run: |
-          pipenv run format
+          pipenv run build
           git config --local user.email "jubelcassioverridasilva@gmail.com"
           git config --local user.name "JubelCassio"
-          if [[ `git status --porcelain` ]]; then git commit -am "Formatting Code" && git push; fi;
-      - name: Testing
-        run: pipenv run test
-      - name: Coverage
-        run: pipenv run python -m pytest --cache-clear --cov=. test
+          if [[ `git status --porcelain` ]]; then git add dist/ && git commit -m "Building version" && git push; fi;
