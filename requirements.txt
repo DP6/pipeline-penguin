@@ -1,0 +1,2 @@
+pandas-gbq==0.14.1
+pandas==1.2.3

@@ -48,7 +48,7 @@ def _mock_is_file(monkeypatch):
 
 @pytest.fixture
 def _mock_pandas_read_gbq(monkeypatch):
-    def mock_pandas_read_gbq(query, credentials, max_results):
+    def mock_pandas_read_gbq(query, credentials, max_results, project_id):
         return pd.DataFrame([[0, 0]], columns=["total", "result"])
 
     monkeypatch.setattr(pd, "read_gbq", mock_pandas_read_gbq)

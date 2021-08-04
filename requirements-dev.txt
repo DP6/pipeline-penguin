@@ -1,0 +1,6 @@
+pytest==6.2.2
+pdoc==0.4.1
+black==20.8b1
+build==0.5.1
+setuptools==57.0.0
+wheel==0.36.2
