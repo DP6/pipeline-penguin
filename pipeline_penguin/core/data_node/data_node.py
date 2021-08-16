@@ -26,6 +26,7 @@ class DataNodeBigQuery(DataNode):
 ```
 """
 import inspect
+from pipeline_penguin.core.premise_output.output_manager import OutputManager
 from typing import Dict, Type, Any
 
 from pipeline_penguin.core.data_premise import DataPremise
@@ -118,23 +119,24 @@ class DataNode:
         """
         return
 
-    def run_premises(self) -> Dict:
+    def run_premises(self) -> OutputManager:
         """Run every DataPremise validation for this DataNode, printing their validation status and
         saving them on a Dictionary.
 
         Returns:
             A `dictionary` object consolidating all validations executed.
         """
-        results = {}
+        output_mgr = OutputManager()
 
         for premise_name, premise in self.premises.items():
-            result = premise.validate()
-            results[premise_name] = result
+            premise_output = premise.validate()
+            output_mgr.outputs.update({premise_name: premise_output})
             print(
-                f"{self.name} - {premise_name}: {'Passed' if result.pass_validation else 'Failed'}"
+                f"{self.name} - {premise_name}: \
+                  {'Passed' if premise_output.pass_validation else 'Failed'}"
             )
 
-        return results
+        return output_mgr
 
     def to_serializeble_dict(self) -> Dict:
         """Method for constructing a dictionary representation of the current DataNode using
