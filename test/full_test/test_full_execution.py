@@ -101,12 +101,12 @@ class TestFullExecution:
             column="session_id",
         )
 
-        validation_conversions_results = bq_conversions.run_premises()
+        all_results = bq_conversions.run_premises()
 
-        p1_results = validation_conversions_results["All transactions have revenue"]
+        p1_results = all_results.outputs.get("All transactions have revenue")
         assert p1_results.pass_validation
         assert p1_results.data_node == bq_conversions
 
-        p2_results = validation_conversions_results["All session ids are distinct"]
+        p2_results = all_results.outputs.get("All session ids are distinct")
         assert p2_results.pass_validation
         assert p2_results.data_node == bq_conversions

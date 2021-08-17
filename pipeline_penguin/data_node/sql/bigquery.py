@@ -59,7 +59,7 @@ class DataNodeBigQuery(DataNode):
         self.table_id = table_id
         self.supported_premise_types = [PremiseType.SQL]
 
-    def get_connector(self, premise_type: str) -> "Connector":
+    def get_connector(self, premise_type: str) -> ConnectorSQLBigQuery:
         """Method for retrieving the Connector to be used while querying data from
         this DataNode.
 

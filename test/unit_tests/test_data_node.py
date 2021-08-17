@@ -1,3 +1,4 @@
+from pipeline_penguin.core.premise_output.output_manager import OutputManager
 import pytest
 
 from pipeline_penguin.core.data_premise import DataPremise
@@ -126,7 +127,10 @@ class TestDataNodeRemovePremise:
 
 class TestDataNodeRunPremise:
     def test_run_premises_without_any_premise(self, _data_node):
-        assert _data_node.run_premises() == {}
+        output_mgr = _data_node.run_premises()
+
+        assert isinstance(output_mgr, OutputManager)
+        assert output_mgr.outputs == {}
 
     def test_run_premises_with_a_single_premise(self, _data_node, _premise_check):
 
@@ -134,7 +138,9 @@ class TestDataNodeRunPremise:
         _data_node.insert_premise(
             name=premise_name, premise_factory=_premise_check(), column="X"
         )
-        assert _data_node.run_premises()[premise_name].pass_validation
+
+        output_mgr = _data_node.run_premises()
+        assert output_mgr.outputs.get(premise_name).pass_validation
 
     def test_run_premises_with_many_premises(self, _data_node, _premise_check):
         premise_names = ["premise_a", "premise_b", "premise_c"]
@@ -144,6 +150,8 @@ class TestDataNodeRunPremise:
                 name=name, premise_factory=_premise_check(), column="X"
             )
 
-        assert _data_node.run_premises()["premise_a"].pass_validation
-        assert _data_node.run_premises()["premise_b"].pass_validation
-        assert _data_node.run_premises()["premise_c"].pass_validation
+        output_mgr = _data_node.run_premises()
+
+        assert output_mgr.outputs.get("premise_a").pass_validation
+        assert output_mgr.outputs.get("premise_b").pass_validation
+        assert output_mgr.outputs.get("premise_c").pass_validation
