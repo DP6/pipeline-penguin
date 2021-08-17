@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="pdoc 7.2.0" />
-    <title>pipeline_penguin.exceptions API documentation</title>
+    <title>pipeline_penguin.connector API documentation</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%2244.5%202.5%2015%2015%22%3E%3Cpath%20d%3D%22M49.351%2021.041c-.233-.721-.546-2.408-.772-4.076-.042-.09-.067-.187-.046-.288-.166-1.347-.277-2.625-.241-3.351-1.378-1.008-2.271-2.586-2.271-4.362%200-.976.272-1.935.788-2.774.057-.094.122-.18.184-.268-.033-.167-.052-.339-.052-.516%200-1.477%201.202-2.679%202.679-2.679.791%200%201.496.352%201.987.9a6.3%206.3%200%200%201%201.001.029c.492-.564%201.207-.929%202.012-.929%201.477%200%202.679%201.202%202.679%202.679a2.65%202.65%200%200%201-.269%201.148c.383.747.595%201.572.595%202.41%200%202.311-1.507%204.29-3.635%205.107.037.699.147%202.27.423%203.294l.137.461c.156%202.136-4.612%205.166-5.199%203.215zm.127-4.919a4.78%204.78%200%200%200%20.775-.584c-.172-.115-.505-.254-.88-.378zm.331%202.302l.828-.502c-.202-.143-.576-.328-.984-.49zm.45%202.157l.701-.403c-.214-.115-.536-.249-.891-.376l.19.779zM49.13%204.141c0%20.152.123.276.276.276s.275-.124.275-.276-.123-.276-.276-.276-.275.124-.275.276zm.735-.389a1.15%201.15%200%200%201%20.314.783%201.16%201.16%200%200%201-1.162%201.162c-.457%200-.842-.27-1.032-.653-.026.117-.042.238-.042.362a1.68%201.68%200%200%200%201.679%201.679%201.68%201.68%200%200%200%201.679-1.679c0-.843-.626-1.535-1.436-1.654zm3.076%201.654a1.68%201.68%200%200%200%201.679%201.679%201.68%201.68%200%200%200%201.679-1.679c0-.037-.009-.072-.011-.109-.21.3-.541.508-.935.508a1.16%201.16%200%200%201-1.162-1.162%201.14%201.14%200%200%201%20.474-.912c-.015%200-.03-.005-.045-.005-.926.001-1.679.754-1.679%201.68zm1.861-1.265c0%20.152.123.276.276.276s.275-.124.275-.276-.123-.276-.276-.276-.275.124-.275.276zm1.823%204.823c0-.52-.103-1.035-.288-1.52-.466.394-1.06.64-1.717.64-1.144%200-2.116-.725-2.499-1.738-.383%201.012-1.355%201.738-2.499%201.738-.867%200-1.631-.421-2.121-1.062-.307.605-.478%201.267-.478%201.942%200%202.486%202.153%204.51%204.801%204.51s4.801-2.023%204.801-4.51zm-3.032%209.156l-.146-.492c-.276-1.02-.395-2.457-.444-3.268a6.11%206.11%200%200%201-1.18.115%206.01%206.01%200%200%201-2.536-.562l.006.175c.802.215%201.848.612%202.021%201.25.079.295-.021.601-.274.837l-.598.501c.667.304%201.243.698%201.311%201.179.02.144.022.507-.393.787l-.564.365c1.285.521%201.361.96%201.381%201.126.018.142.011.496-.427.746l-.854.489c.064-1.19%201.985-2.585%202.697-3.248zM49.34%209.925c0-.667%201-.667%201%200%200%20.653.818%201.205%201.787%201.205s1.787-.552%201.787-1.205c0-.667%201-.667%201%200%200%201.216-1.25%202.205-2.787%202.205s-2.787-.989-2.787-2.205zm-.887-7.633c-.093.077-.205.114-.317.114a.5.5%200%200%201-.318-.886L49.183.397a.5.5%200%200%201%20.703.068.5.5%200%200%201-.069.703zm7.661-.065c-.086%200-.173-.022-.253-.068l-1.523-.893c-.575-.337-.069-1.2.506-.863l1.523.892a.5.5%200%200%201%20.179.685c-.094.158-.261.247-.432.247z%22%20fill%3D%22%233bb300%22/%3E%3C/svg%3E"/>
 
 
@@ -31,20 +31,23 @@
                     <h2>API Documentation</h2>
                         <ul class="memberlist">
             <li>
-                    <a class="class" href="#NodeManagerMissingCorrectArgs">NodeManagerMissingCorrectArgs</a>
+                    <a class="class" href="#ConnectorManager">ConnectorManager</a>
                             <ul class="memberlist">
-                </ul>
-
-            </li>
-            <li>
-                    <a class="class" href="#ConnectorManagerMissingCorrectArgs">ConnectorManagerMissingCorrectArgs</a>
-                            <ul class="memberlist">
-                </ul>
-
-            </li>
-            <li>
-                    <a class="class" href="#WrongTypeReference">WrongTypeReference</a>
-                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#ConnectorManager.__init__">ConnectorManager</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConnectorManager.reset">reset</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConnectorManager.define_default">define_default</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConnectorManager.get_default">get_default</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConnectorManager.remove_default">remove_default</a>
+                        </li>
                 </ul>
 
             </li>
@@ -61,169 +64,339 @@
     <main class="pdoc">
             <section>
                     <h1 class="modulename">
-<a href="./../pipeline_penguin.html">pipeline_penguin</a><wbr>.exceptions    </h1>
+<a href="./../pipeline_penguin.html">pipeline_penguin</a><wbr>.connector    </h1>
 
-                        <div class="docstring"><p>This module contains custom Exceptions to be used on the internal components of the
-pipeline_penguin.</p>
+                        <div class="docstring"><p>Main connector package, contains high-level connectors and the <code>connector_manager</code> module.</p>
 
-<p>Location: pipeline_penguin/</p>
+<p>This package stores high-level connector modules used for communication with the data sources
+upon execution of the data premises. It also contains the <code><a href="#ConnectorManager">ConnectorManager</a></code> object, responsible
+for defining and managing the default connectors.</p>
 
-<p>Example usage:</p>
-
-<div class="codehilite"><pre><span></span><code><span class="k">raise</span> <span class="n">WrongTypeReference</span><span class="p">(</span><span class="s2">&quot;DataNode should be of type NodeType&quot;</span><span class="p">)</span>
-</code></pre></div>
+<p>Location: pipeline_penguin/connector/</p>
 </div>
 
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;This module contains custom Exceptions to be used on the internal components of the</span>
-<span class="sd">pipeline_penguin.</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;Main connector package, contains high-level connectors and the `connector_manager` module.</span>
 
-<span class="sd">Location: pipeline_penguin/</span>
+<span class="sd">This package stores high-level connector modules used for communication with the data sources</span>
+<span class="sd">upon execution of the data premises. It also contains the `ConnectorManager` object, responsible</span>
+<span class="sd">for defining and managing the default connectors.</span>
 
-<span class="sd">Example usage:</span>
-
-<span class="sd">```python</span>
-
-<span class="sd">raise WrongTypeReference(&quot;DataNode should be of type NodeType&quot;)</span>
-
-<span class="sd">```</span>
+<span class="sd">Location: pipeline_penguin/connector/</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.connector_manager</span> <span class="kn">import</span> <span class="n">ConnectorManager</span>
 
-
-<span class="k">class</span> <span class="nc">NodeManagerMissingCorrectArgs</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when there are missing arguments in DataNode __init__.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span>
-
-
-<span class="k">class</span> <span class="nc">ConnectorManagerMissingCorrectArgs</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when there are missing arguments in ConnectorManager create_connector.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span>
-
-
-<span class="k">class</span> <span class="nc">WrongTypeReference</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when reference is the wrong type.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ConnectorManager&quot;</span><span class="p">]</span>
 </pre></div>
 
         </details>
 
             </section>
-                <section id="NodeManagerMissingCorrectArgs">
+                <section id="ConnectorManager">
                                 <div class="attr class">
-        <a class="headerlink" href="#NodeManagerMissingCorrectArgs">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#ConnectorManager">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">NodeManagerMissingCorrectArgs</span><wbr>(<span class="base">builtins.TypeError</span>):
+        <span class="name">ConnectorManager</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">NodeManagerMissingCorrectArgs</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when there are missing arguments in DataNode __init__.&quot;&quot;&quot;</span>
+            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ConnectorManager</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Singleton responsible for registering default connectors used for communication with</span>
+<span class="sd">    the data sources.</span>
 
-    <span class="k">pass</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        __default_connectors: Internal data structure for storing registered Connectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">__default_connectors</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Used for maintaining a single instance of the Manager&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ConnectorManager</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_connector_subclass</span><span class="p">(</span><span class="n">connector_type</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Used for validating if an object is a Connector instance</span>
+<span class="sd">        Args:</span>
+<span class="sd">            connector_type: any object</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A `boolean` that says whether the given object is a Connector instance or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">connector_type</span> <span class="o">!=</span> <span class="n">Connector</span>
+            <span class="ow">and</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">connector_type</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">connector_type</span><span class="p">,</span> <span class="n">Connector</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_dict_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Produces a key for identification of the registered the Connector using a combination of</span>
+<span class="sd">        its &quot;type&quot; and &quot;source&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: The Connector to be identified/registered on the internal data strucutre.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A `string` generated from the given connetor to be used as a dictionary key.</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            `ConnectorManagerMissingCorrectArgs` if the provided argument is not a Connector type</span>
+<span class="sd">            object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_connector_subclass</span><span class="p">(</span>
+                <span class="n">connector</span><span class="o">.</span><span class="vm">__class__</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_connector_subclass</span><span class="p">(</span><span class="n">connector</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">connector</span><span class="o">.</span><span class="n">type</span> <span class="o">+</span> <span class="n">connector</span><span class="o">.</span><span class="n">source</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConnectorManagerMissingCorrectArgs</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">define_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Method for registering a given connetor in the connector manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: The Connector to be identified/registered on the internal data strucutre.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            `ConnectorManagerMissingCorrectArgs` if the provided argument is not a Connector type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_connector_subclass</span><span class="p">(</span><span class="n">connector</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="o">=</span><span class="n">connector</span><span class="p">):</span> <span class="n">connector</span><span class="p">}</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">WrongTypeReference</span><span class="p">(</span><span class="s2">&quot;Connector should be of type Connector&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConnectorManagerMissingCorrectArgs</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">get_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for obtaining a previously registered connector of the same type and source of</span>
+<span class="sd">        the given _Connector class_.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: The Connector object where the key will be derived from.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The `Connector` object related to the constructed key or `None` if no connector is</span>
+<span class="sd">            found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">remove_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for deleting a previously registered connector of the same type and source of</span>
+<span class="sd">        the given _Connector class_.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: Connector class for the key to be extracted</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The `Connector` object related to the constructed key or `None` if no connector is</span>
+<span class="sd">            found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dict_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dict_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">:</span>
+            <span class="n">removed_connector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">removed_connector</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Raised when there are missing arguments in DataNode __init__.</p>
+            <div class="docstring"><p>Singleton responsible for registering default connectors used for communication with
+the data sources.</p>
+
+<p>Attributes:
+    __default_connectors: Internal data structure for storing registered Connectors.</p>
 </div>
 
 
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>builtins.TypeError</dt>
-                                <dd id="NodeManagerMissingCorrectArgs.__init__" class="function">TypeError</dd>
+                            <div id="ConnectorManager.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ConnectorManager.__init__">#&nbsp;&nbsp</a>
 
-            </div>
-            <div><dt>builtins.BaseException</dt>
-                                <dd id="NodeManagerMissingCorrectArgs.with_traceback" class="function">with_traceback</dd>
-                <dd id="NodeManagerMissingCorrectArgs.args" class="variable">args</dd>
+        
+            <span class="name">ConnectorManager</span><span class="signature">()</span>
+    </div>
 
-            </div>
-                                </dl>
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Used for maintaining a single instance of the Manager&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ConnectorManager</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Used for maintaining a single instance of the Manager</p>
+</div>
+
+
                             </div>
-                </section>
-                <section id="ConnectorManagerMissingCorrectArgs">
-                                <div class="attr class">
-        <a class="headerlink" href="#ConnectorManagerMissingCorrectArgs">#&nbsp;&nbsp</a>
+                            <div id="ConnectorManager.reset" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ConnectorManager.reset">#&nbsp;&nbsp</a>
 
         
-        <span class="def">class</span>
-        <span class="name">ConnectorManagerMissingCorrectArgs</span><wbr>(<span class="base">builtins.TypeError</span>):
+            <span class="def">def</span>
+            <span class="name">reset</span><span class="signature">(self)</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ConnectorManagerMissingCorrectArgs</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when there are missing arguments in ConnectorManager create_connector.&quot;&quot;&quot;</span>
-
-    <span class="k">pass</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Raised when there are missing arguments in ConnectorManager create_connector.</p>
-</div>
+    
 
-
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>builtins.TypeError</dt>
-                                <dd id="ConnectorManagerMissingCorrectArgs.__init__" class="function">TypeError</dd>
-
-            </div>
-            <div><dt>builtins.BaseException</dt>
-                                <dd id="ConnectorManagerMissingCorrectArgs.with_traceback" class="function">with_traceback</dd>
-                <dd id="ConnectorManagerMissingCorrectArgs.args" class="variable">args</dd>
-
-            </div>
-                                </dl>
                             </div>
-                </section>
-                <section id="WrongTypeReference">
-                                <div class="attr class">
-        <a class="headerlink" href="#WrongTypeReference">#&nbsp;&nbsp</a>
+                            <div id="ConnectorManager.define_default" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ConnectorManager.define_default">#&nbsp;&nbsp</a>
 
         
-        <span class="def">class</span>
-        <span class="name">WrongTypeReference</span><wbr>(<span class="base">builtins.Exception</span>):
+            <span class="def">def</span>
+            <span class="name">define_default</span><span class="signature">(
+    self,
+    connector: <a href="../pipeline_penguin.html#core.connector.connector.Connector">pipeline_penguin.core.connector.connector.Connector</a>
+) -&gt; None</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">WrongTypeReference</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Raised when reference is the wrong type.&quot;&quot;&quot;</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">define_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Method for registering a given connetor in the connector manager.</span>
 
-    <span class="k">pass</span>
+<span class="sd">        Args:</span>
+<span class="sd">            connector: The Connector to be identified/registered on the internal data strucutre.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            `ConnectorManagerMissingCorrectArgs` if the provided argument is not a Connector type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_connector_subclass</span><span class="p">(</span><span class="n">connector</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="o">=</span><span class="n">connector</span><span class="p">):</span> <span class="n">connector</span><span class="p">}</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">WrongTypeReference</span><span class="p">(</span><span class="s2">&quot;Connector should be of type Connector&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConnectorManagerMissingCorrectArgs</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Raised when reference is the wrong type.</p>
+            <div class="docstring"><p>Method for registering a given connetor in the connector manager.</p>
+
+<p>Args:
+    connector: The Connector to be identified/registered on the internal data strucutre.
+Returns:
+    None
+Raises:
+    <code>ConnectorManagerMissingCorrectArgs</code> if the provided argument is not a Connector type</p>
 </div>
 
 
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>builtins.Exception</dt>
-                                <dd id="WrongTypeReference.__init__" class="function">Exception</dd>
+                            </div>
+                            <div id="ConnectorManager.get_default" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ConnectorManager.get_default">#&nbsp;&nbsp</a>
 
-            </div>
-            <div><dt>builtins.BaseException</dt>
-                                <dd id="WrongTypeReference.with_traceback" class="function">with_traceback</dd>
-                <dd id="WrongTypeReference.args" class="variable">args</dd>
+        
+            <span class="def">def</span>
+            <span class="name">get_default</span><span class="signature">(self, connector: <a href="../pipeline_penguin.html#core.connector.connector.Connector">pipeline_penguin.core.connector.connector.Connector</a>)</span>:
+    </div>
 
-            </div>
-                                </dl>
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for obtaining a previously registered connector of the same type and source of</span>
+<span class="sd">        the given _Connector class_.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: The Connector object where the key will be derived from.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The `Connector` object related to the constructed key or `None` if no connector is</span>
+<span class="sd">            found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="p">))</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Method for obtaining a previously registered connector of the same type and source of
+the given _Connector class_.</p>
+
+<p>Args:
+    connector: The Connector object where the key will be derived from.
+Returns:
+    The <code>Connector</code> object related to the constructed key or <code>None</code> if no connector is
+    found.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConnectorManager.remove_default" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ConnectorManager.remove_default">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">remove_default</span><span class="signature">(self, connector: <a href="../pipeline_penguin.html#core.connector.connector.Connector">pipeline_penguin.core.connector.connector.Connector</a>)</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">remove_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Connector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for deleting a previously registered connector of the same type and source of</span>
+<span class="sd">        the given _Connector class_.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connector: Connector class for the key to be extracted</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The `Connector` object related to the constructed key or `None` if no connector is</span>
+<span class="sd">            found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dict_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dict_key</span><span class="p">(</span><span class="n">connector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dict_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">:</span>
+            <span class="n">removed_connector</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_connectors</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">removed_connector</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Method for deleting a previously registered connector of the same type and source of
+the given _Connector class_.</p>
+
+<p>Args:
+    connector: Connector class for the key to be extracted
+Returns:
+    The <code>Connector</code> object related to the constructed key or <code>None</code> if no connector is
+    found.</p>
+</div>
+
+
                             </div>
                 </section>
     </main>
