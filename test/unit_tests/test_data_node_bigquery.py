@@ -1,5 +1,5 @@
 from pipeline_penguin.core.data_node import DataNode, NodeType
-from pipeline_penguin.data_node import DataNodeBigQuery
+from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
 from pipeline_penguin.data_premise.sql.check_null import DataPremiseSQLCheckIsNull
 from pipeline_penguin.core.data_premise.data_premise import DataPremise
 import pytest

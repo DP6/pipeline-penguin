@@ -48,8 +48,8 @@ class PremiseOutput:
 
     def __init__(
         self,
-        data_premise: "DataPremise",
-        data_node: "DataNode",
+        data_premise: "pipeline_penguin.core.data_premise.DataPremise",
+        data_node: "pipeline_penguin.core.data_node.DataNode",
         column: str,
         pass_validation: bool,
         failed_count: int,
