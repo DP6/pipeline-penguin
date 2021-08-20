@@ -16,6 +16,7 @@ data_node.insert_premise(check_like_prem)
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from pipeline_penguin.exceptions import WrongTypeReference
+from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
@@ -38,7 +39,7 @@ class DataPremiseSQLCheckLikePattern(DataPremiseSQL):
     def __init__(
         self,
         name: str,
-        data_node: "DataNodeBigQuery",
+        data_node: DataNode,
         column: str,
         pattern: str,
     ):

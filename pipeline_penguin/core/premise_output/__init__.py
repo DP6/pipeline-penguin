@@ -20,3 +20,5 @@ its designed to be inherited by other classes for building specific output behav
 Location: pipeline_penguin/core/premise_output/
 """
 from .output_formatter import OutputFormatter
+from .premise_output import PremiseOutput
+from .output_manager import OutputManager

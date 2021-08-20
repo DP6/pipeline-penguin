@@ -8,4 +8,4 @@ Location: pipeline_penguin/connector/
 """
 from .connector_manager import ConnectorManager
 
-__all__ = ["ConnectorManager"]
+__all__ = ["ConnectorManager", "sql"]
