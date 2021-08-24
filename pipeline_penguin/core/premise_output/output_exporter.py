@@ -24,7 +24,7 @@ class OutputFormatterLog(OutputFormatter):
 """
 
 
-class OutputFormatter:
+class OutputExporter:
     """Module used for exporting the results of a previously executed validation into a specific
     data format (JSON, csv, xml, etc).
     """
