@@ -1,6 +1,6 @@
-r"""Contains the `OutputFormatterRSH` constructor, used to sent data_premises results to an RSH cloud function.
+r"""Contains the `OutputFormatterRSH` constructor, which parses a PremiseOutput into a json object to be sent to a Cloud Function
 
-It sends a request with parameters:
+The resulting object is composed of the following parameters:
 
 | Parameters                   | Type | Example                               | Description                                             |
 |------------------------------|------|---------------------------------------|---------------------------------------------------------|
@@ -23,27 +23,15 @@ Example usage:
 
 ```python
 formatter = OutputFormatterRSH()
-formatter.export_output(premise_output)
+body = formatter.export_output(premise_output)
 ```
 """
 
 
 from pipeline_penguin.core.premise_output.output_formatter import OutputFormatter
 from google.oauth2.service_account import Credentials
-
-import google.auth
-from os import path
-
-
-def make_authorized_post_request(service_url, body, credentials):
-    """
-    make_authorized_get_request makes a GET request to the specified HTTP endpoint
-    in service_url (must be a complete URL) by authenticating with the
-    ID token obtained from the google-auth client library.
-    """
-    auth_sess = google.auth.transport.requests.AuthorizedSession(credentials)
-    resp = auth_sess.post(service_url, json=body)
-    return resp
+from typing import Dict
+import json
 
 
 class OutputFormatterRSH(OutputFormatter):
@@ -52,15 +40,14 @@ class OutputFormatterRSH(OutputFormatter):
     def export_output(
         self,
         premise_output: "PremiseOutput",
-        url: str,
         project: str,
         spec: str,
         deploy: str,
         code: str,
         description: str,
-        credentials_path: str = "default",
-    ) -> str:
-        """Send a request to structure defined by Raft Suite Hub.
+    ) -> Dict:
+        """Structures a PremiseOutput into a json format defined by the Raft Suite Hub.
+        Reference: https://dp6.github.io/raft-suite-hub/
 
         Args:
             premise_output: PremiseOutput object to be formatted
@@ -72,15 +59,8 @@ class OutputFormatterRSH(OutputFormatter):
             description:
             credentials_path: Path to service_account for authentication
         Returns:
-            None
+            Dict : json data to be sent on the "body" of a POST request
         """
-
-        if credentials_path == "default":
-            print("Using google.auth.default credentials")
-            credentials, project_id = google.auth.default()
-        elif path.isfile(credentials_path):
-            credentials = Credentials.from_service_account_file(credentials_path)
-
         body = {
             "project": project,
             "module": "pipeline-penguin",
@@ -98,4 +78,6 @@ class OutputFormatterRSH(OutputFormatter):
             },
         }
 
-        return make_authorized_post_request(url, body, credentials)
+        json.dumps(body)  # Checking if the object is serializable
+
+        return body
