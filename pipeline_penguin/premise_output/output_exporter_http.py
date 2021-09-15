@@ -23,6 +23,7 @@ from google import auth
 from typing import Dict
 
 import requests
+from build.lib.pipeline_penguin.core.premise_output.output_manager import premise_output
 
 
 def make_authorized_post_request(
@@ -44,37 +45,54 @@ def make_authorized_post_request(
     return auth_sess.post(service_url, headers=headers, data=body, **kwargs)
 
 
-class OutputFormatterHTTPCloudFunction(OutputExporter):
-    """Sends data to a HTTP Cloud Function."""
-
-    def export_output(
+class OutputExporterCloudFunctionHttp(OutputExporter):
+    def __init__(
         self,
         url: str,
         headers: Dict = {},
-        body: Dict = {},
         credentials_path: str = None,
-        **kwargs
-    ) -> str:
-        """Fires the request to a given Cloud Function.
+        req_args: Dict = {},
+    ) -> None:
+        """[summary]
+
+        Args:
+            url (str): Endpoint
+            headers (Dict, optional): Request headers. Defaults to {}.
+            credentials_path (str, optional): Path to service account for authentication. Defaults to None.
+            req_args (Dict, optional): Additional arguments to use on the request. Defaults to {}.
+        """
+        super().__init__()
+        self.url = url
+        self.headers = headers
+        self.credentials_path = credentials_path
+        self.req_args = req_args
+
+    def export(self, body) -> str:
+        """Fires the request to a given Google Cloud Function Endpoint. May be authenticated or not.
 
         Args:
             premise_output: PremiseOutput object to be formatted
-            url: URL for the RSH cloud function
-            headers (Dict): request headers
             body (Dict): request body
-            credentials_path: Path to service_account for authentication
             **kwargs: Other arguments for the request
         Returns:
             Response: Object with the response from the Cloud Function
         """
 
-        if credentials_path is None:
+        if self.credentials_path is None:
             print("Firing unauthenticated request")
-            return requests.post(url, headers=headers, data=body, **kwargs)
-        elif credentials_path == "default":
+            response = requests.post(
+                self.url, headers=self.headers, data=body, **self.req_args
+            )
+        elif self.credentials_path == "default":
             print("Using google.auth.default credentials")
             credentials, project_id = auth.default()
         else:
-            credentials = Credentials.from_service_account_file(credentials_path)
+            credentials = Credentials.from_service_account_file(self.credentials_path)
+
         print("Firing authenticated request")
-        return make_authorized_post_request(url, headers, body, credentials)
+        response = make_authorized_post_request(
+            self.url, self.headers, body, credentials, **self.req_args
+        )
+        result = "success" if 200 <= response.status_code < 300 else "failure"
+
+        return {"result": result, "contents": response}
