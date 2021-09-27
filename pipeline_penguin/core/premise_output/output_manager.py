@@ -31,7 +31,9 @@ class OutputManager:
         """Initialization of the DataPremise."""
         self.outputs = {}
 
-    def format_outputs(self, formatter: "OutputFormatter"):
+    def format_outputs(
+        self, formatter: "pipeline_penguin.core.premise_output.OutputFormatter"
+    ):
         """Method for applyting an OutputFormatter over every PremiseOutput.
 
         Args:

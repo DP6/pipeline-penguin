@@ -7,7 +7,6 @@ class, used for creating, deleting and managing multiple DataNodes.
 
 Location: pipeline_penguin/data_node/
 """
-from .sql.bigquery import DataNodeBigQuery
 from .node_manager import NodeManager
 
-__all__ = ["NodeManager", "DataNodeBigQuery"]
+__all__ = ["NodeManager", "sql"]

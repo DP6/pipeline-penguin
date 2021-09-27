@@ -29,6 +29,8 @@ class OutputFormatter:
     data format (JSON, csv, xml, etc).
     """
 
-    def export_output(self, premise_output: "PremiseOutput"):
+    def export_output(
+        self, premise_output: "pipeline_penguin.core.premise_output.PremiseOutput"
+    ):
         """Abstract method for transforming the given PremiseOutput into the desired format."""
         pass

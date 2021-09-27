@@ -11,7 +11,7 @@ import pytest
 
 from pipeline_penguin.core.data_node import DataNode, NodeType
 from pipeline_penguin.data_node import NodeManager, node_manager
-from pipeline_penguin.data_node.sql import DataNodeBigQuery
+from pipeline_penguin.data_node.sql.bigquery import DataNodeBigQuery
 from pipeline_penguin.exceptions import (
     NodeManagerMissingCorrectArgs,
     WrongTypeReference,

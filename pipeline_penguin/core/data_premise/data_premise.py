@@ -27,6 +27,7 @@ class DataPremiseSQL(DataPremise):
 ```
 """
 from typing import Dict
+from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 
 
 class DataPremise:
@@ -42,11 +43,13 @@ class DataPremise:
         data_node: Reference to the DataNode used in the validation.
     """
 
-    def __init__(self, name: str, data_node: "DataNode"):
+    def __init__(
+        self, name: str, data_node: "pipeline_penguin.core.data_node.DataNode"
+    ):
         self.name = name
         self.data_node = data_node
 
-    def validate(self) -> "PremiseOutput":
+    def validate(self) -> PremiseOutput:
         """Abstract method for executing the validation test."""
 
         pass

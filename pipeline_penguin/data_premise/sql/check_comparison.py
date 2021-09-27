@@ -16,6 +16,7 @@ data_node.insert_premise(check_logical_prem)
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from pipeline_penguin.exceptions import WrongTypeReference
+from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
@@ -43,7 +44,7 @@ class DataPremiseSQLCheckLogicalComparisonWithValue(DataPremiseSQL):
     def __init__(
         self,
         name: str,
-        data_node: "DataNodeBigQuery",
+        data_node: DataNode,
         column: str,
         operator: str,
         value: str,
