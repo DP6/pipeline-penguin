@@ -37,7 +37,7 @@ import json
 class OutputFormatterRSH(OutputFormatter):
     """Contains the `OutputFormatterRSH` constructor, used to sent data_premises results to an RSH cloud function."""
 
-    def export_output(
+    def format(
         self,
         premise_output: "PremiseOutput",
         project: str,
@@ -53,10 +53,10 @@ class OutputFormatterRSH(OutputFormatter):
             premise_output: PremiseOutput object to be formatted
             url: URL for the RSH cloud function
             project: Project name running the validations
-            spec:
-            deploy:
-            code:
-            description:
+            spec: Name of the pipeline
+            deploy: Version of the validation
+            code: Type of validation code and its status
+            description: Description of the validation done
             credentials_path: Path to service_account for authentication
         Returns:
             Dict : json data to be sent on the "body" of a POST request
@@ -69,8 +69,8 @@ class OutputFormatterRSH(OutputFormatter):
             "code": code,
             "description": description,
             "payload": {
-                "data_premise": premise_output.data_premise,
-                "data_node": premise_output.data_node,
+                "data_premise": premise_output.data_premise.name,
+                "data_node": premise_output.data_node.name,
                 "column": premise_output.column,
                 "pass_validation": premise_output.pass_validation,
                 "failed_count": premise_output.failed_count,
