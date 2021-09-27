@@ -13,6 +13,7 @@ data_node.insert_premise(check_distinct_prem)
 """
 from pipeline_penguin.core.data_premise.sql import DataPremiseSQL
 from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
+from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 class DataPremiseSQLCheckDistinct(DataPremiseSQL):
@@ -29,7 +30,7 @@ class DataPremiseSQLCheckDistinct(DataPremiseSQL):
         column: Column to be read by the premise.
     """
 
-    def __init__(self, name: str, data_node: "DataNodeBigQuery", column: str):
+    def __init__(self, name: str, data_node: DataNode, column: str):
         super().__init__(name, data_node, column)
         self.query_template = "SELECT count(DISTINCT {column}) distinct, count({column}) total as total FROM `{project}.{dataset}.{table}`"
 

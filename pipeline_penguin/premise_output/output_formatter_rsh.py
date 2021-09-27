@@ -29,6 +29,7 @@ body = formatter.export_output(premise_output)
 
 
 from pipeline_penguin.core.premise_output.output_formatter import OutputFormatter
+from pipeline_penguin.core.premise_output.premise_output import PremiseOutput
 from google.oauth2.service_account import Credentials
 from typing import Dict
 import json

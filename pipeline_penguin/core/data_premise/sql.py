@@ -25,6 +25,7 @@ class DataPremiseSQLCheckIsNull(DataPremiseSQL):
         return output
 ```
 """
+from pipeline_penguin.core.data_node.data_node import DataNode
 from . import DataPremise, PremiseType
 
 
@@ -44,7 +45,12 @@ class DataPremiseSQL(DataPremise):
 
     type = PremiseType.SQL
 
-    def __init__(self, name: str, data_node: "DataNode", column: str):
+    def __init__(
+        self,
+        name: str,
+        data_node: "pipeline_penguin.core.data_node.DataNode",
+        column: str,
+    ):
         super().__init__(name, data_node)
         self.column = column
 

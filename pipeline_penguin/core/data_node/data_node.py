@@ -25,12 +25,13 @@ class DataNodeBigQuery(DataNode):
         return {}
 ```
 """
-import inspect
+from pipeline_penguin.core.connector.connector import Connector
 from pipeline_penguin.core.premise_output.output_manager import OutputManager
-from typing import Dict, Type, Any
-
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
+
+import inspect
+from typing import Dict, Type, Any
 
 
 class DataNode:
@@ -52,7 +53,7 @@ class DataNode:
     def __init__(self, name: str, source: str):
         self.name = name
         self.source = source
-        self.premises: Dict[str, Type["DataPremise"]] = {}
+        self.premises: Dict[str, Type[DataPremise]] = {}
         self.supported_premise_types = []
         self.connectors = {}
 
@@ -104,7 +105,7 @@ class DataNode:
         """
         del self.premises[name]
 
-    def get_connector(self, premise_type: str) -> "Connector":
+    def get_connector(self, premise_type: str) -> Connector:
         """Abstract method for retrieving the Connector to be used while querying data from this
         DataNode.
 
