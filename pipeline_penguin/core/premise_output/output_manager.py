@@ -51,9 +51,10 @@ class OutputManager:
         for node_name, data_node in self.outputs.items():
             results[node_name] = {}
             for premise_name, premise_output in data_node.items():
-                current_result = results[node_name][premise_name]
+                current_result = {}
                 current_result["premise_output"] = premise_output
                 current_result["formatted_output"] = formatter.format(premise_output)
+                results[node_name][premise_name] = current_result
 
         return results
 

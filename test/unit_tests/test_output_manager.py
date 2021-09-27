@@ -21,7 +21,7 @@ def _mock_premise_output():
 def _mock_formatter():
     def mock_formatter():
         class MockFormatter:
-            def export_output(self, premise_output):
+            def format(self, premise_output):
                 return "{}"
 
         return MockFormatter()
@@ -42,7 +42,14 @@ class TestOutputManager:
         output_manager.outputs["test_data_node"] = {"test_data_premise": premise_output}
 
         formatter = _mock_formatter()
-        expected_results = {"test_data_node": {"test_data_premise": "{}"}}
+        expected_results = {
+            "test_data_node": {
+                "test_data_premise": {
+                    "formatted_output": "{}",
+                    "premise_output": premise_output,
+                }
+            }
+        }
 
         assert output_manager.format_outputs(formatter) == expected_results
 
@@ -62,8 +69,22 @@ class TestOutputManager:
 
         formatter = _mock_formatter()
         expected_results = {
-            "test_data_node_A": {"premise_output_A": "{}", "premise_output_B": "{}"},
-            "test_data_node_B": {"premise_output_A": "{}"},
+            "test_data_node_A": {
+                "premise_output_A": {
+                    "formatted_output": "{}",
+                    "premise_output": premise_output_A,
+                },
+                "premise_output_B": {
+                    "formatted_output": "{}",
+                    "premise_output": premise_output_B,
+                },
+            },
+            "test_data_node_B": {
+                "premise_output_A": {
+                    "formatted_output": "{}",
+                    "premise_output": premise_output_A,
+                }
+            },
         }
 
         assert output_manager.format_outputs(formatter) == expected_results
