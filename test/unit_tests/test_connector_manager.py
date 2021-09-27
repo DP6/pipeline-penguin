@@ -9,7 +9,7 @@ from google.oauth2.service_account import Credentials
 from os import path
 
 from pipeline_penguin.connector import ConnectorManager
-from pipeline_penguin.connector.sql import ConnectorSQLBigQuery
+from pipeline_penguin.connector.sql.bigquery import ConnectorSQLBigQuery
 
 
 @pytest.fixture

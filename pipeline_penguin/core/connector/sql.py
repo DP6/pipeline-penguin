@@ -7,7 +7,6 @@ NoSQL, etc).
 Location: pipeline_penguin/core/connector/
 """
 
-# from ..connector import Connector
 from .connector import Connector
 
 

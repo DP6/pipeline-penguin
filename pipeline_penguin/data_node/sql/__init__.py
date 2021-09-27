@@ -6,6 +6,4 @@ abstracting a single data source on an existing data pipeline.
 
 Location: pipeline_penguin/data_node/sql/
 """
-from .bigquery import DataNodeBigQuery
-
-__all__ = ["DataNodeBigQuery"]
+__all__ = ["bigquery"]

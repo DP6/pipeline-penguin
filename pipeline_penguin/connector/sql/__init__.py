@@ -5,6 +5,4 @@ upon execution of the data premises.
 
 Location: pipeline_penguin/connector/sql
 """
-from .bigquery import ConnectorSQLBigQuery
-
-__all__ = ["ConnectorSQLBigQuery"]
+__all__ = ["bigquery"]
