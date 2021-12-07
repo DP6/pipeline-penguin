@@ -1,3 +1,4 @@
+# Pipeline Penguin
 ## Description
 
 Pipeline Penguin is a versatile python library for data quality.
@@ -188,7 +189,7 @@ pipenv run docs
 
 #### Bulding docs
 ```
-pipenv run pipenv run build-docs
+pipenv run build-docs
 ```
 
 ## Support or Contact
