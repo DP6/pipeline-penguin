@@ -4,7 +4,7 @@ Pipeline Penguin is a versatile python library for data quality.
 
 ## Documentation
 
-- [Reference](https://dp6.github.io/pipeline-penguin/docs/pipeline_penguin.html)
+- [Reference](https://dp6.github.io/pipeline-penguin/pipeline_penguin.html)
 
 ## Getting Started
 
@@ -192,7 +192,7 @@ pipenv run pipenv run build-docs
 ```
 
 ## Support or Contact
-Having trouble with PP? Check out our [documentation](https://dp6.github.io/pipeline-penguin/docs/pipeline_penguin.html) or contact support and we’ll help you sort it out.
+Having trouble with PP? Check out our [documentation](https://dp6.github.io/pipeline-penguin/pipeline_penguin.html) or contact support and we’ll help you sort it out.
 
 DP6 Koopa-Troopa Team
 e-mail: [koopas@dp6.com.br](koopas@dp6.com.br)
