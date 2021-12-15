@@ -12,12 +12,16 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-      # Updates documentation and code formatting
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pipenv
           pipenv install --dev
+      # Updates documentation and code formatting
       - name: Code auto formatting
         run: pipenv run format
       - name: Generating docstring documentation
