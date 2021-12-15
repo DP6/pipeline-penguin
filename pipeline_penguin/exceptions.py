@@ -10,6 +10,7 @@ Example usage:
 raise WrongTypeReference("DataNode should be of type NodeType")
 
 ```
+
 """
 
 
