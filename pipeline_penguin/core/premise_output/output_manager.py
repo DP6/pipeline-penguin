@@ -28,9 +28,25 @@ class OutputManager:
     """
 
     def __init__(self):
-        """Initialization of the DataPremise."""
         self.outputs = {}
 
+    def export_outputs(
+        self,
+        formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
+        exporter: "pipeline_penguin.core.premise_output.OutputExporter",
+    ) -> None:
+        """Method for sending every validation result to a given destination
+
+        Args:
+            formatter OutputFormatter): Formatter to use on the PremiseOutputs
+            exporter (OutputExporter): Exporter to use for sending the results
+
+        Returns:
+            None
+        """
+        pass
+
+    # TODO: Remove this method
     def format_outputs(
         self, formatter: "pipeline_penguin.core.premise_output.OutputFormatter"
     ):
