@@ -13,7 +13,7 @@ Pipeline Penguin is a versatile python library for data quality.
 You can use PyPI Test to install the early develoment build by executing this command:
 
 ```
-pip install -i https://test.pypi.org/simple/ pipeline-penguin
+pip install pipeline-penguin
 ```
 
 ### Core Concepts
