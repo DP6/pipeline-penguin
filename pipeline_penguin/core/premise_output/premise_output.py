@@ -78,3 +78,20 @@ class PremiseOutput:
         results.update({"data_node": self.data_node.to_serializeble_dict()})
 
         return results
+
+    def export(
+        self,
+        formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
+        exporter: "pipeline_penguin.core.premise_output.OutputExporter",
+    ) -> None:
+        """Applies a given "OutputFormatter" on the PremiseOutput and exports
+        the resulting data using the provided "OutputExporter".
+        
+        Args:
+            formatter OutputFormatter): Formatter to use on the PremiseOutput
+            exporter (OutputExporter): Exporter to use for sending the results
+
+        Returns:
+            None
+        """
+        pass
