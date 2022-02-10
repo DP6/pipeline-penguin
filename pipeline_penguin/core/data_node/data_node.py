@@ -56,6 +56,7 @@ class DataNode:
         self.premises: Dict[str, Type[DataPremise]] = {}
         self.supported_premise_types = []
         self.connectors = {}
+        self_relations = []
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
@@ -147,3 +148,18 @@ class DataNode:
             A `dictionary` object containing the DataNode representation.
         """
         return {}
+
+    def add_relation(relation: "NodeRelation") -> None:
+        """Adds a new relation for this DataNode
+
+        Raises:
+            InvalidNodeRelation: When the provided NodeRelation does not contains the current DataNode as its source or destination.
+        Args:
+            relation (NodeRelation): A NodeRelation object that contains the current DataNode as its source or destination
+        """
+        pass
+    
+    def get_relations() -> list('NodeRelation'):
+        """Returns all NodeRelation objects that contain the current DataNode
+        """
+        pass
