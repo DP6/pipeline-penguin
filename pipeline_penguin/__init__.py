@@ -39,3 +39,4 @@ class PipelinePenguin:
         """
         self.nodes = NodeManager()
         self.connectors = ConnectorManager()
+        self.pipelines = []
