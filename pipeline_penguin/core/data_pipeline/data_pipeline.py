@@ -15,7 +15,7 @@ class DataPipeline:
         self.name = name
         self.nodes = []
         
-    def order_relations() -> List["DataNode"]:
+    def sort_relations() -> List["DataNode"]:
         """Returns a list of data nodes recursively
         sorted by their relationships (via NodeRelations).
         
