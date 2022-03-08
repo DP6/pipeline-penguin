@@ -83,15 +83,20 @@ class PremiseOutput:
         self,
         formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
         exporter: "pipeline_penguin.core.premise_output.OutputExporter",
+        *args,
+        **kwargs
     ) -> None:
         """Applies a given "OutputFormatter" on the PremiseOutput and exports
         the resulting data using the provided "OutputExporter".
         
         Args:
-            formatter OutputFormatter): Formatter to use on the PremiseOutput
+            formatter (OutputFormatter): Formatter to use on the PremiseOutput
             exporter (OutputExporter): Exporter to use for sending the results
 
         Returns:
             None
         """
-        pass
+        formatterResult = ""
+
+        formatterResult = formatter.format(self)
+        exporter.export_output(formatterResult, *args, **kwargs)

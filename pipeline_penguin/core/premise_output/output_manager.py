@@ -34,6 +34,8 @@ class OutputManager:
         self,
         formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
         exporter: "pipeline_penguin.core.premise_output.OutputExporter",
+        *args,
+        **kwargs
     ) -> None:
         """Method for sending every validation result to a given destination
 
@@ -44,26 +46,7 @@ class OutputManager:
         Returns:
             None
         """
-        pass
-
-    # TODO: Remove this method
-    def format_outputs(
-        self, formatter: "pipeline_penguin.core.premise_output.OutputFormatter"
-    ):
-        """Method for applyting an OutputFormatter over every PremiseOutput.
-
-        Args:
-            formatter: The OutputFormatter instance to be applied on every PremiseOutput.
-        Returns:
-            A `dictionary` containing the formatted results.
-        """
-        results = {}
 
         for node_name, data_node in self.outputs.items():
-            results[node_name] = {}
             for premise_name, premise_output in data_node.items():
-                results[node_name][premise_name] = formatter.export_output(
-                    premise_output
-                )
-
-        return results
+                premise_output.export(formatter, exporter, *args, **kwargs)

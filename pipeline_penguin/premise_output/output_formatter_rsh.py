@@ -25,7 +25,6 @@ class OutputFormatterRSH(OutputFormatter):
     def format(
         self,
         premise_output: PremiseOutput,
-        url: str,
         project: str,
         spec: str,
         deploy: str,
@@ -63,14 +62,7 @@ class OutputFormatterRSH(OutputFormatter):
         Returns:
             str: stringfied json with the premise_output's data.
         """
-
-        if credentials_path == "default":
-            print("Using google.auth.default credentials")
-            credentials, project_id = google.auth.default()
-        elif path.isfile(credentials_path):
-            credentials = Credentials.from_service_account_file(credentials_path)
-
-        body = {
+        payload = {
             "project": project,
             "module": "pipeline-penguin",
             "spec": spec,
@@ -87,4 +79,4 @@ class OutputFormatterRSH(OutputFormatter):
             },
         }
 
-        return make_authorized_post_request(url, body, credentials)
+        return payload
