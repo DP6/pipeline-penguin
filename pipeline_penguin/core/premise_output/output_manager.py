@@ -30,7 +30,7 @@ class OutputManager:
     def __init__(self):
         self.outputs = {}
 
-    def export_outputs(
+    def export(
         self,
         formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
         exporter: "pipeline_penguin.core.premise_output.OutputExporter",
@@ -46,7 +46,6 @@ class OutputManager:
         Returns:
             None
         """
-
-        for node_name, data_node in self.outputs.items():
-            for premise_name, premise_output in data_node.items():
-                premise_output.export(formatter, exporter, *args, **kwargs)
+        
+        for data_premise_name, premise_output in self.outputs.items():
+            premise_output.export(formatter, exporter, *args, **kwargs)
