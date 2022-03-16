@@ -1,3 +1,22 @@
+"""data_pipeline module, provides the DataPipeline class used for grouping DataNodes into a
+validation branch.
+
+Example usage:
+```python
+data_node_a = DataNodeBigQuery()
+data_node_b = DataNodeBigQuery()
+data_node_c = DataNodeBigQuery()
+
+
+pipeline_a = DataPipeline('pipeline_a')
+pipeline_a.append(data_node_a)
+pipeline_a.append(data_node_b)
+
+# Runs only premises from data_node_a and data_node_b
+pipeline_a.run_premises 
+```
+"""
+
 from typing import List
 
 
