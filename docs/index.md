@@ -92,7 +92,7 @@ class CheckBanana(DataPremiseSQL):
         data_node: DataNodeBigQuery,
         column: str
     ):
-        self.query_template = "SELECT * result FROM `{project}.{dataset}.{table}` WHERE LOWER({column}) = 'banana')"
+        self.query_template = "SELECT {column} AS result FROM `{project}.{dataset}.{table}` WHERE LOWER({column}) = 'banana')"
         super().__init__(name, data_node, column)
 
     def query_args(self):
@@ -133,7 +133,7 @@ class CheckBanana(DataPremiseSQL):
 
 ```python
 from pipeline_penguin import PipelinePenguin
-import CheckBanana
+from CheckBanana import CheckBanana
 
 pp = PipelinePenguin()
 
@@ -142,11 +142,10 @@ pp.connectors.define_default(bq_connector)
 
 node = pp.nodes.create_node('Node Name', DataNodeBigQuery, project_id='example', dataset_id='example', table_id='example')
 
-node.insert_premise('Check Null', DataPremiseSQLCheckIsNull, "Column Name")
 node.insert_premise('Check Contains Banana', CheckBanana, "Column Name")
 
 log_formatter = OutputFormatterLog()
-outputs.format_outputs(log_formatter)
+log_formatter.export_output(node.premises['Check Is Null'].validate())
 ```
 
 ## Collaborate
