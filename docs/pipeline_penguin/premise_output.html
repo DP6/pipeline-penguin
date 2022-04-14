@@ -37,7 +37,7 @@
                                 <a class="function" href="#OutputFormatterLog.__init__">OutputFormatterLog</a>
                         </li>
                         <li>
-                                <a class="function" href="#OutputFormatterLog.export_output">export_output</a>
+                                <a class="function" href="#OutputFormatterLog.format">format</a>
                         </li>
                 </ul>
 
@@ -49,7 +49,43 @@
                                 <a class="function" href="#OutputFormatterRSH.__init__">OutputFormatterRSH</a>
                         </li>
                         <li>
-                                <a class="function" href="#OutputFormatterRSH.export_output">export_output</a>
+                                <a class="function" href="#OutputFormatterRSH.format">format</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#OutputExporterTerminal">OutputExporterTerminal</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#OutputExporterTerminal.__init__">OutputExporterTerminal</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#OutputExporterTerminal.export_output">export_output</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#OutputFormatterJSON">OutputFormatterJSON</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#OutputFormatterJSON.__init__">OutputFormatterJSON</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#OutputFormatterJSON.format">format</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#OutputExporterHTTP">OutputExporterHTTP</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#OutputExporterHTTP.__init__">OutputExporterHTTP</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#OutputExporterHTTP.export_output">export_output</a>
                         </li>
                 </ul>
 
@@ -80,8 +116,17 @@
 
 <span class="kn">from</span> <span class="nn">.output_formatter_log</span> <span class="kn">import</span> <span class="n">OutputFormatterLog</span>
 <span class="kn">from</span> <span class="nn">.output_formatter_rsh</span> <span class="kn">import</span> <span class="n">OutputFormatterRSH</span>
+<span class="kn">from</span> <span class="nn">.output_exporter_terminal</span> <span class="kn">import</span> <span class="n">OutputExporterTerminal</span>
+<span class="kn">from</span> <span class="nn">.output_formatter_json</span> <span class="kn">import</span> <span class="n">OutputFormatterJSON</span>
+<span class="kn">from</span> <span class="nn">.output_exporter_http</span> <span class="kn">import</span> <span class="n">OutputExporterHTTP</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OutputFormatterLog&quot;</span><span class="p">,</span> <span class="s2">&quot;OutputFormatterRSH&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;OutputFormatterLog&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OutputFormatterRSH&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OutputExporterTerminal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OutputFormatterJSON&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OutputExporterHTTP&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 
         </details>
@@ -99,10 +144,11 @@
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">OutputFormatterLog</span><span class="p">(</span><span class="n">OutputFormatter</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Contains the `OutputFormatterLog`constructor, used to print DataPremise results as a terminal</span>
-<span class="sd">    message.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Contains the `OutputFormatterLog`constructor, used format the premise results into</span>
+<span class="sd">    a human-readable message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Construct a human-readable message based on the results of a premise validation.</span>
 
 <span class="sd">        Args:</span>
@@ -121,8 +167,8 @@
 
         </details>
 
-            <div class="docstring"><p>Contains the <code><a href="#OutputFormatterLog">OutputFormatterLog</a></code>constructor, used to print DataPremise results as a terminal
-message.</p>
+            <div class="docstring"><p>Contains the <code><a href="#OutputFormatterLog">OutputFormatterLog</a></code>constructor, used format the premise results into
+a human-readable message</p>
 </div>
 
 
@@ -137,12 +183,12 @@ message.</p>
     
 
                             </div>
-                            <div id="OutputFormatterLog.export_output" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterLog.export_output">#&nbsp;&nbsp</a>
+                            <div id="OutputFormatterLog.format" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterLog.format">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
-            <span class="name">export_output</span><span class="signature">(
+            <span class="name">format</span><span class="signature">(
     self,
     premise_output: <a href="core/premise_output/premise_output.html#PremiseOutput">pipeline_penguin.core.premise_output.premise_output.PremiseOutput</a>
 ) -&gt; str</span>:
@@ -150,7 +196,7 @@ message.</p>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Construct a human-readable message based on the results of a premise validation.</span>
 
 <span class="sd">        Args:</span>
@@ -179,6 +225,15 @@ Returns:
 
 
                             </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core/premise_output/output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a></dt>
+                                <dd id="OutputFormatterLog.export_output" class="function"><a href="core/premise_output/output_formatter.html#OutputFormatter.export_output">export_output</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
                 </section>
                 <section id="OutputFormatterRSH">
                                 <div class="attr class">
@@ -194,39 +249,47 @@ Returns:
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">OutputFormatterRSH</span><span class="p">(</span><span class="n">OutputFormatter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Contains the `OutputFormatterRSH` constructor, used to sent data_premises results to an RSH cloud function.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">,</span>
-        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">project</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">deploy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">credentials_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Send a request to structure defined by Raft Suite Hub.</span>
+        <span class="sd">&quot;&quot;&quot;Converts a premise_output into the json payload needed for an Raft Suite Hub endpoint.</span>
+
+<span class="sd">        List of parameters with data contained by the resulting json::</span>
+
+<span class="sd">        | Parameters                   | Type | Example                               | Description                                             |</span>
+<span class="sd">        |------------------------------|------|---------------------------------------|---------------------------------------------------------|</span>
+<span class="sd">        | body.project                 | str  | Project A                             | Name of the project                                     |</span>
+<span class="sd">        | body.module                  | str  | pipeline-penguin                      | Name of the module                                      |</span>
+<span class="sd">        | body.spec                    | str  | analytics_to_bigquery                 | Name of the pipeline                                    |</span>
+<span class="sd">        | body.deploy                  | str  | 0.2                                   | Version of the Pipeline Penguin                         |</span>
+<span class="sd">        | body.code                    | str  | 00-00                                 | Type of validation code and its status                  |</span>
+<span class="sd">        | body.description             | str  | Checking if there is null on column X | Description of the validation done                      |</span>
+<span class="sd">        | body.payload.data_premise    | str  | check_null                            | Name of the DataPremise                                 |</span>
+<span class="sd">        | body.payload.data_node       | str  | data_a                                | Name of the DataNode                                    |</span>
+<span class="sd">        | body.payload.column          | str  | product_id                            | Name of the column                                      |</span>
+<span class="sd">        | body.payload.pass_validation | bool | true                                  | Indicated whether the data passed the validation or not |</span>
+<span class="sd">        | body.payload.failed_count    | int  | 5                                     | Count of rows that failed the validation                |</span>
+<span class="sd">        | body.payload.failed_values   | dict |                                       | Dict of examples that failed the validation             |</span>
+
 
 <span class="sd">        Args:</span>
-<span class="sd">            premise_output: PremiseOutput object to be formatted</span>
-<span class="sd">            url: URL for the RSH cloud function</span>
-<span class="sd">            project: Project name running the validations</span>
-<span class="sd">            spec:</span>
-<span class="sd">            deploy:</span>
-<span class="sd">            code:</span>
-<span class="sd">            description:</span>
-<span class="sd">            credentials_path: Path to service_account for authentication</span>
+<span class="sd">            premise_output (PremiseOutput): PremiseOutput object to be formatted</span>
+<span class="sd">            url (str): URL for the RSH cloud function</span>
+<span class="sd">            project (str): Project name running the validations</span>
+<span class="sd">            spec (str): Name of the pipeline</span>
+<span class="sd">            deploy (str): Version of the Pipeline Penguin</span>
+<span class="sd">            code (str): Type of validation code and its status</span>
+<span class="sd">            description (str): Description of the validation done</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            str: stringfied json with the premise_output&#39;s data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">credentials_path</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using google.auth.default credentials&quot;</span><span class="p">)</span>
-            <span class="n">credentials</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">credentials_path</span><span class="p">):</span>
-            <span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="o">.</span><span class="n">from_service_account_file</span><span class="p">(</span><span class="n">credentials_path</span><span class="p">)</span>
-
-        <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
             <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;pipeline-penguin&quot;</span><span class="p">,</span>
             <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="n">spec</span><span class="p">,</span>
@@ -243,7 +306,7 @@ Returns:
             <span class="p">},</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">make_authorized_post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">payload</span>
 </pre></div>
 
         </details>
@@ -263,59 +326,65 @@ Returns:
     
 
                             </div>
-                            <div id="OutputFormatterRSH.export_output" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterRSH.export_output">#&nbsp;&nbsp</a>
+                            <div id="OutputFormatterRSH.format" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterRSH.format">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
-            <span class="name">export_output</span><span class="signature">(
+            <span class="name">format</span><span class="signature">(
     self,
     premise_output: <a href="core/premise_output/premise_output.html#PremiseOutput">pipeline_penguin.core.premise_output.premise_output.PremiseOutput</a>,
-    url: str,
     project: str,
     spec: str,
     deploy: str,
     code: str,
-    description: str,
-    credentials_path: str = &#39;default&#39;
+    description: str
 ) -&gt; str</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">,</span>
-        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">project</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">deploy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">credentials_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Send a request to structure defined by Raft Suite Hub.</span>
+        <span class="sd">&quot;&quot;&quot;Converts a premise_output into the json payload needed for an Raft Suite Hub endpoint.</span>
+
+<span class="sd">        List of parameters with data contained by the resulting json::</span>
+
+<span class="sd">        | Parameters                   | Type | Example                               | Description                                             |</span>
+<span class="sd">        |------------------------------|------|---------------------------------------|---------------------------------------------------------|</span>
+<span class="sd">        | body.project                 | str  | Project A                             | Name of the project                                     |</span>
+<span class="sd">        | body.module                  | str  | pipeline-penguin                      | Name of the module                                      |</span>
+<span class="sd">        | body.spec                    | str  | analytics_to_bigquery                 | Name of the pipeline                                    |</span>
+<span class="sd">        | body.deploy                  | str  | 0.2                                   | Version of the Pipeline Penguin                         |</span>
+<span class="sd">        | body.code                    | str  | 00-00                                 | Type of validation code and its status                  |</span>
+<span class="sd">        | body.description             | str  | Checking if there is null on column X | Description of the validation done                      |</span>
+<span class="sd">        | body.payload.data_premise    | str  | check_null                            | Name of the DataPremise                                 |</span>
+<span class="sd">        | body.payload.data_node       | str  | data_a                                | Name of the DataNode                                    |</span>
+<span class="sd">        | body.payload.column          | str  | product_id                            | Name of the column                                      |</span>
+<span class="sd">        | body.payload.pass_validation | bool | true                                  | Indicated whether the data passed the validation or not |</span>
+<span class="sd">        | body.payload.failed_count    | int  | 5                                     | Count of rows that failed the validation                |</span>
+<span class="sd">        | body.payload.failed_values   | dict |                                       | Dict of examples that failed the validation             |</span>
+
 
 <span class="sd">        Args:</span>
-<span class="sd">            premise_output: PremiseOutput object to be formatted</span>
-<span class="sd">            url: URL for the RSH cloud function</span>
-<span class="sd">            project: Project name running the validations</span>
-<span class="sd">            spec:</span>
-<span class="sd">            deploy:</span>
-<span class="sd">            code:</span>
-<span class="sd">            description:</span>
-<span class="sd">            credentials_path: Path to service_account for authentication</span>
+<span class="sd">            premise_output (PremiseOutput): PremiseOutput object to be formatted</span>
+<span class="sd">            url (str): URL for the RSH cloud function</span>
+<span class="sd">            project (str): Project name running the validations</span>
+<span class="sd">            spec (str): Name of the pipeline</span>
+<span class="sd">            deploy (str): Version of the Pipeline Penguin</span>
+<span class="sd">            code (str): Type of validation code and its status</span>
+<span class="sd">            description (str): Description of the validation done</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">            str: stringfied json with the premise_output&#39;s data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">credentials_path</span> <span class="o">==</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using google.auth.default credentials&quot;</span><span class="p">)</span>
-            <span class="n">credentials</span><span class="p">,</span> <span class="n">project_id</span> <span class="o">=</span> <span class="n">google</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">credentials_path</span><span class="p">):</span>
-            <span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="o">.</span><span class="n">from_service_account_file</span><span class="p">(</span><span class="n">credentials_path</span><span class="p">)</span>
-
-        <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="n">project</span><span class="p">,</span>
             <span class="s2">&quot;module&quot;</span><span class="p">:</span> <span class="s2">&quot;pipeline-penguin&quot;</span><span class="p">,</span>
             <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="n">spec</span><span class="p">,</span>
@@ -332,27 +401,401 @@ Returns:
             <span class="p">},</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">make_authorized_post_request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">payload</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Send a request to structure defined by Raft Suite Hub.</p>
+            <div class="docstring"><p>Converts a premise_output into the json payload needed for an Raft Suite Hub endpoint.</p>
+
+<p>List of parameters with data contained by the resulting json::</p>
+
+<table>
+<thead>
+<tr>
+  <th>Parameters</th>
+  <th>Type</th>
+  <th>Example</th>
+  <th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>body.project</td>
+  <td>str</td>
+  <td>Project A</td>
+  <td>Name of the project</td>
+</tr>
+<tr>
+  <td>body.module</td>
+  <td>str</td>
+  <td>pipeline-penguin</td>
+  <td>Name of the module</td>
+</tr>
+<tr>
+  <td>body.spec</td>
+  <td>str</td>
+  <td>analytics_to_bigquery</td>
+  <td>Name of the pipeline</td>
+</tr>
+<tr>
+  <td>body.deploy</td>
+  <td>str</td>
+  <td>0.2</td>
+  <td>Version of the Pipeline Penguin</td>
+</tr>
+<tr>
+  <td>body.code</td>
+  <td>str</td>
+  <td>00-00</td>
+  <td>Type of validation code and its status</td>
+</tr>
+<tr>
+  <td>body.description</td>
+  <td>str</td>
+  <td>Checking if there is null on column X</td>
+  <td>Description of the validation done</td>
+</tr>
+<tr>
+  <td>body.payload.data_premise</td>
+  <td>str</td>
+  <td>check_null</td>
+  <td>Name of the DataPremise</td>
+</tr>
+<tr>
+  <td>body.payload.data_node</td>
+  <td>str</td>
+  <td>data_a</td>
+  <td>Name of the DataNode</td>
+</tr>
+<tr>
+  <td>body.payload.column</td>
+  <td>str</td>
+  <td>product_id</td>
+  <td>Name of the column</td>
+</tr>
+<tr>
+  <td>body.payload.pass_validation</td>
+  <td>bool</td>
+  <td>true</td>
+  <td>Indicated whether the data passed the validation or not</td>
+</tr>
+<tr>
+  <td>body.payload.failed_count</td>
+  <td>int</td>
+  <td>5</td>
+  <td>Count of rows that failed the validation</td>
+</tr>
+<tr>
+  <td>body.payload.failed_values</td>
+  <td>dict</td>
+  <td></td>
+  <td>Dict of examples that failed the validation</td>
+</tr>
+</tbody>
+</table>
 
 <p>Args:
-    premise_output: PremiseOutput object to be formatted
-    url: URL for the RSH cloud function
-    project: Project name running the validations
-    spec:
-    deploy:
-    code:
-    description:
-    credentials_path: Path to service_account for authentication
+    premise_output (PremiseOutput): PremiseOutput object to be formatted
+    url (str): URL for the RSH cloud function
+    project (str): Project name running the validations
+    spec (str): Name of the pipeline
+    deploy (str): Version of the Pipeline Penguin
+    code (str): Type of validation code and its status
+    description (str): Description of the validation done
 Returns:
-    None</p>
+    str: stringfied json with the premise_output's data.</p>
 </div>
 
 
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core/premise_output/output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a></dt>
+                                <dd id="OutputFormatterRSH.export_output" class="function"><a href="core/premise_output/output_formatter.html#OutputFormatter.export_output">export_output</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="OutputExporterTerminal">
+                                <div class="attr class">
+        <a class="headerlink" href="#OutputExporterTerminal">#&nbsp;&nbsp</a>
+
+        
+        <span class="def">class</span>
+        <span class="name">OutputExporterTerminal</span><wbr>(<span class="base"><a href="core/premise_output/output_exporter.html#OutputExporter">pipeline_penguin.core.premise_output.output_exporter.OutputExporter</a></span>):
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">OutputExporterTerminal</span><span class="p">(</span><span class="n">OutputExporter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains the `OutputExporterTerminal` constructor,used to send send the formatter&#39;s results to the console.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a message to the console</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            content (str): message to be printed out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Contains the <code><a href="#OutputExporterTerminal">OutputExporterTerminal</a></code> constructor,used to send send the formatter's results to the console.</p>
+</div>
+
+
+                            <div id="OutputExporterTerminal.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputExporterTerminal.__init__">#&nbsp;&nbsp</a>
+
+        
+            <span class="name">OutputExporterTerminal</span><span class="signature">()</span>
+    </div>
+
+        
+    
+
+                            </div>
+                            <div id="OutputExporterTerminal.export_output" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputExporterTerminal.export_output">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">export_output</span><span class="signature">(self, content: str)</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a message to the console</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            content (str): message to be printed out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Sends a message to the console</p>
+
+<p>Args:
+    content (str): message to be printed out</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core/premise_output/output_exporter.html#OutputExporter">pipeline_penguin.core.premise_output.output_exporter.OutputExporter</a></dt>
+                                <dd id="OutputExporterTerminal.export_outputs" class="function"><a href="core/premise_output/output_exporter.html#OutputExporter.export_outputs">export_outputs</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="OutputFormatterJSON">
+                                <div class="attr class">
+        <a class="headerlink" href="#OutputFormatterJSON">#&nbsp;&nbsp</a>
+
+        
+        <span class="def">class</span>
+        <span class="name">OutputFormatterJSON</span><wbr>(<span class="base"><a href="core/premise_output/output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a></span>):
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">OutputFormatterJSON</span><span class="p">(</span><span class="n">OutputFormatter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains the `OutputFormatterJSON`constructor, used format the premise</span>
+<span class="sd">    results into a JavaScript Object Notation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method for transforming the given PremiseOutput into the desired format.&quot;&quot;&quot;</span>
+
+        <span class="n">premise_output_result</span> <span class="o">=</span> <span class="n">premise_output</span><span class="o">.</span><span class="n">to_serializeble_dict</span><span class="p">()</span>
+        <span class="n">json_premise_output_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">premise_output_result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json_premise_output_result</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Contains the <code><a href="#OutputFormatterJSON">OutputFormatterJSON</a></code>constructor, used format the premise
+results into a JavaScript Object Notation</p>
+</div>
+
+
+                            <div id="OutputFormatterJSON.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterJSON.__init__">#&nbsp;&nbsp</a>
+
+        
+            <span class="name">OutputFormatterJSON</span><span class="signature">()</span>
+    </div>
+
+        
+    
+
+                            </div>
+                            <div id="OutputFormatterJSON.format" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputFormatterJSON.format">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">format</span><span class="signature">(
+    self,
+    premise_output: <a href="core/premise_output/premise_output.html#PremiseOutput">pipeline_penguin.core.premise_output.premise_output.PremiseOutput</a>
+) -&gt; str</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">premise_output</span><span class="p">:</span> <span class="n">PremiseOutput</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Abstract method for transforming the given PremiseOutput into the desired format.&quot;&quot;&quot;</span>
+
+        <span class="n">premise_output_result</span> <span class="o">=</span> <span class="n">premise_output</span><span class="o">.</span><span class="n">to_serializeble_dict</span><span class="p">()</span>
+        <span class="n">json_premise_output_result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">premise_output_result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json_premise_output_result</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Abstract method for transforming the given PremiseOutput into the desired format.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core/premise_output/output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a></dt>
+                                <dd id="OutputFormatterJSON.export_output" class="function"><a href="core/premise_output/output_formatter.html#OutputFormatter.export_output">export_output</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="OutputExporterHTTP">
+                                <div class="attr class">
+        <a class="headerlink" href="#OutputExporterHTTP">#&nbsp;&nbsp</a>
+
+        
+        <span class="def">class</span>
+        <span class="name">OutputExporterHTTP</span><wbr>(<span class="base"><a href="core/premise_output/output_exporter.html#OutputExporter">pipeline_penguin.core.premise_output.output_exporter.OutputExporter</a></span>):
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">OutputExporterHTTP</span><span class="p">(</span><span class="n">OutputExporter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains the `OutputExporterHTTP` constructor, used to send data_premises results to an HTTP endpoint&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="n">credentials</span><span class="p">:</span> <span class="n">Credentials</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a request to a given HTTP destination</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): HTTP(s) address for sending the request</span>
+<span class="sd">            method (str, optional): Method to use (GET, POST, PUT, etc). Defaults to &quot;POST&quot;.</span>
+<span class="sd">            body (dict, optional): Body of the request. Defaults to {}.</span>
+<span class="sd">            credentials (Credentials, optional): Credentials to use for an authorized google request. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Contains the <code><a href="#OutputExporterHTTP">OutputExporterHTTP</a></code> constructor, used to send data_premises results to an HTTP endpoint</p>
+</div>
+
+
+                            <div id="OutputExporterHTTP.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputExporterHTTP.__init__">#&nbsp;&nbsp</a>
+
+        
+            <span class="name">OutputExporterHTTP</span><span class="signature">()</span>
+    </div>
+
+        
+    
+
+                            </div>
+                            <div id="OutputExporterHTTP.export_output" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputExporterHTTP.export_output">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">export_output</span><span class="signature">(
+    self,
+    body: dict,
+    url: str,
+    method: str = &#39;POST&#39;,
+    credentials: google.oauth2.service_account.Credentials = None
+)</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export_output</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+        <span class="n">credentials</span><span class="p">:</span> <span class="n">Credentials</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a request to a given HTTP destination</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): HTTP(s) address for sending the request</span>
+<span class="sd">            method (str, optional): Method to use (GET, POST, PUT, etc). Defaults to &quot;POST&quot;.</span>
+<span class="sd">            body (dict, optional): Body of the request. Defaults to {}.</span>
+<span class="sd">            credentials (Credentials, optional): Credentials to use for an authorized google request. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Sends a request to a given HTTP destination</p>
+
+<p>Args:
+    url (str): HTTP(s) address for sending the request
+    method (str, optional): Method to use (GET, POST, PUT, etc). Defaults to "POST".
+    body (dict, optional): Body of the request. Defaults to {}.
+    credentials (Credentials, optional): Credentials to use for an authorized google request. Defaults to None.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core/premise_output/output_exporter.html#OutputExporter">pipeline_penguin.core.premise_output.output_exporter.OutputExporter</a></dt>
+                                <dd id="OutputExporterHTTP.export_outputs" class="function"><a href="core/premise_output/output_exporter.html#OutputExporter.export_outputs">export_outputs</a></dd>
+
+            </div>
+                                </dl>
                             </div>
                 </section>
     </main>
