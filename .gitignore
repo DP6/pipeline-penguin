@@ -143,3 +143,9 @@ cython_debug/
 
 # vscode config
 .vscode/
+
+# local test
+teste.py
+
+# csv implementation
+pipeline_penguin/premise_output/output_formatter_csv.py

@@ -24,13 +24,19 @@ class OutputFormatterLog(OutputFormatter):
 """
 
 
+from typing import Any
+
+
 class OutputFormatter:
     """Module used for exporting the results of a previously executed validation into a specific
     data format (JSON, csv, xml, etc).
     """
 
     def export_output(
-        self, premise_output: "pipeline_penguin.core.premise_output.PremiseOutput"
-    ):
+        self,
+        premise_output: "pipeline_penguin.core.premise_output.PremiseOutput",
+        *args,
+        **kwargs
+    ) -> Any:
         """Abstract method for transforming the given PremiseOutput into the desired format."""
         pass

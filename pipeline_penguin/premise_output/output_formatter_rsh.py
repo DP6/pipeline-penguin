@@ -1,21 +1,4 @@
-r"""Contains the `OutputFormatterRSH` constructor, used to sent data_premises results to an RSH cloud function.
-
-It sends a request with parameters:
-
-| Parameters                   | Type | Example                               | Description                                             |
-|------------------------------|------|---------------------------------------|---------------------------------------------------------|
-| body.project                 | str  | Project A                             | Name of the project                                     |
-| body.module                  | str  | pipeline-penguin                      | Name of the module                                      |
-| body.spec                    | str  | analytics_to_bigquery                 | Name of the pipeline                                    |
-| body.deploy                  | str  | 0.2                                   | Version of the Pipeline Penguin                         |
-| body.code                    | str  | 00-00                                 | Type of validation code and its status                  |
-| body.description             | str  | Checking if there is null on column X | Description of the validation done                      |
-| body.payload.data_premise    | str  | check_null                            | Name of the DataPremise                                 |
-| body.payload.data_node       | str  | data_a                                | Name of the DataNode                                    |
-| body.payload.column          | str  | product_id                            | Name of the column                                      |
-| body.payload.pass_validation | bool | true                                  | Indicated whether the data passed the validation or not |
-| body.payload.failed_count    | int  | 5                                     | Count of rows that failed the validation                |
-| body.payload.failed_values   | dict |                                       | Dict of examples that failed the validation             |
+r"""Contains the `OutputFormatterRSH` constructor, used to convert a premise_output into the json payload needed for an Raft Suite Hub endpoint.
 
 Location: pipeline_penguin/core/premise_output/
 
@@ -23,7 +6,7 @@ Example usage:
 
 ```python
 formatter = OutputFormatterRSH()
-formatter.export_output(premise_output)
+formatter.format(premise_output)
 ```
 """
 
@@ -36,53 +19,50 @@ import google.auth
 from os import path
 
 
-def make_authorized_post_request(service_url, body, credentials):
-    """
-    make_authorized_get_request makes a GET request to the specified HTTP endpoint
-    in service_url (must be a complete URL) by authenticating with the
-    ID token obtained from the google-auth client library.
-    """
-    auth_sess = google.auth.transport.requests.AuthorizedSession(credentials)
-    resp = auth_sess.post(service_url, json=body)
-    return resp
-
-
 class OutputFormatterRSH(OutputFormatter):
     """Contains the `OutputFormatterRSH` constructor, used to sent data_premises results to an RSH cloud function."""
 
-    def export_output(
+    def format(
         self,
         premise_output: PremiseOutput,
-        url: str,
         project: str,
         spec: str,
         deploy: str,
         code: str,
         description: str,
-        credentials_path: str = "default",
     ) -> str:
-        """Send a request to structure defined by Raft Suite Hub.
+        """Converts a premise_output into the json payload needed for an Raft Suite Hub endpoint.
+
+        List of parameters with data contained by the resulting json::
+
+        | Parameters                   | Type | Example                               | Description                                             |
+        |------------------------------|------|---------------------------------------|---------------------------------------------------------|
+        | body.project                 | str  | Project A                             | Name of the project                                     |
+        | body.module                  | str  | pipeline-penguin                      | Name of the module                                      |
+        | body.spec                    | str  | analytics_to_bigquery                 | Name of the pipeline                                    |
+        | body.deploy                  | str  | 0.2                                   | Version of the Pipeline Penguin                         |
+        | body.code                    | str  | 00-00                                 | Type of validation code and its status                  |
+        | body.description             | str  | Checking if there is null on column X | Description of the validation done                      |
+        | body.payload.data_premise    | str  | check_null                            | Name of the DataPremise                                 |
+        | body.payload.data_node       | str  | data_a                                | Name of the DataNode                                    |
+        | body.payload.column          | str  | product_id                            | Name of the column                                      |
+        | body.payload.pass_validation | bool | true                                  | Indicated whether the data passed the validation or not |
+        | body.payload.failed_count    | int  | 5                                     | Count of rows that failed the validation                |
+        | body.payload.failed_values   | dict |                                       | Dict of examples that failed the validation             |
+
 
         Args:
-            premise_output: PremiseOutput object to be formatted
-            url: URL for the RSH cloud function
-            project: Project name running the validations
-            spec:
-            deploy:
-            code:
-            description:
-            credentials_path: Path to service_account for authentication
+            premise_output (PremiseOutput): PremiseOutput object to be formatted
+            url (str): URL for the RSH cloud function
+            project (str): Project name running the validations
+            spec (str): Name of the pipeline
+            deploy (str): Version of the Pipeline Penguin
+            code (str): Type of validation code and its status
+            description (str): Description of the validation done
         Returns:
-            None
+            str: stringfied json with the premise_output's data.
         """
-
-        if credentials_path == "default":
-            print("Using google.auth.default credentials")
-            credentials, project_id = google.auth.default()
-        elif path.isfile(credentials_path):
-            credentials = Credentials.from_service_account_file(credentials_path)
-
-        body = {
+        payload = {
             "project": project,
             "module": "pipeline-penguin",
             "spec": spec,
@@ -99,4 +79,4 @@ class OutputFormatterRSH(OutputFormatter):
             },
         }
 
-        return make_authorized_post_request(url, body, credentials)
+        return payload
