@@ -46,6 +46,6 @@ class OutputManager:
         Returns:
             None
         """
-        
+
         for data_premise_name, premise_output in self.outputs.items():
             premise_output.export(formatter, exporter, *args, **kwargs)

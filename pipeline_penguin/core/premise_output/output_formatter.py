@@ -33,7 +33,10 @@ class OutputFormatter:
     """
 
     def export_output(
-        self, premise_output: "pipeline_penguin.core.premise_output.PremiseOutput", *args, **kwargs
+        self,
+        premise_output: "pipeline_penguin.core.premise_output.PremiseOutput",
+        *args,
+        **kwargs
     ) -> Any:
         """Abstract method for transforming the given PremiseOutput into the desired format."""
         pass

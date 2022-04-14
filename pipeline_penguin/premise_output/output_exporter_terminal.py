@@ -16,7 +16,7 @@ exporter.export_output(formatter.format(premise_output))
 from pipeline_penguin.core.premise_output.output_exporter import OutputExporter
 
 
-## Formatar e exportar outputs 
+## Formatar e exportar outputs
 class OutputExporterTerminal(OutputExporter):
     """Contains the `OutputExporterTerminal` constructor,used to send send the formatter's results to the console."""
 

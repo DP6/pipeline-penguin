@@ -19,6 +19,7 @@ from pipeline_penguin.core.premise_output.output_exporter import OutputExporter
 from google.oauth2.service_account import Credentials
 import requests
 
+
 class OutputExporterHTTP(OutputExporter):
     """Contains the `OutputExporterHTTP` constructor, used to send data_premises results to an HTTP endpoint"""
 
@@ -26,8 +27,8 @@ class OutputExporterHTTP(OutputExporter):
         self,
         body: dict,
         url: str,
-        method: str="POST",
-        credentials: Credentials=None,
+        method: str = "POST",
+        credentials: Credentials = None,
     ):
         """Sends a request to a given HTTP destination
 

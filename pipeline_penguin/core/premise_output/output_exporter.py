@@ -16,8 +16,7 @@ TODO: Add an example when ready
 
 
 class OutputExporter:
-    """Module used for exporting the results of a previously executed validation to a given destination (Cloud Bucket, FTP, HTTPS endpoint, etc)
-    """
+    """Module used for exporting the results of a previously executed validation to a given destination (Cloud Bucket, FTP, HTTPS endpoint, etc)"""
 
     def export_outputs(self, validation_results, *args, **kwargs):
         """Stub method for sending the given results to the destination.

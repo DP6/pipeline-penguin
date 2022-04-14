@@ -88,7 +88,7 @@ class PremiseOutput:
     ) -> None:
         """Applies a given "OutputFormatter" on the PremiseOutput and exports
         the resulting data using the provided "OutputExporter".
-        
+
         Args:
             formatter (OutputFormatter): Formatter to use on the PremiseOutput
             exporter (OutputExporter): Exporter to use for sending the results
