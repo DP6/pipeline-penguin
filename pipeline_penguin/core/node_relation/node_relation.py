@@ -11,9 +11,8 @@ data_node_b = DataNodeBigQuery()
 NodeRelation(data_node_a, data_node_b)
 ```
 """
-
-
-from pipeline_penguin.core.data_node.data_node import DataNode
+from pipeline_penguin.exceptions import WrongTypeReference
+#from pipeline_penguin.core.data_node.data_node import DataNode
 
 
 class NodeRelation:
@@ -25,42 +24,53 @@ class NodeRelation:
         source: DataNode where the data is read from
         destination: DataNde where the data is written to
     """
-    def __init__(self, source: DataNode, destination: DataNode) -> None:
-        pass
-
-    def sort_relations() -> list(DataNode):
-        """Returns a list with both DataNodes of the relationship "source" as the first element and "destination" as the second
-        Returns: 
-            List[DataNode]: List of DataNodes from the relation
-        """
-        pass
-    
-    def get_source() -> DataNode:
+    def __init__(self, source: "DataNode", destination: "DataNode") -> None:
+        self.source = source
+        self.destination = destination
+        
+   
+    def get_source(self) -> "DataNode":
         """
         Returns:
             DataNode: The source DataNode
         """
-        pass
+        return self.source
     
-    def get_destination() -> DataNode:
+    def get_destination(self) -> "DataNode":
         """
         Returns:
             DataNode: The destination DataNode
         """
-        pass
+        return self.destination
     
-    def set_source(data_node: DataNode) -> None:
+    def set_source(self,data_node: "DataNode") -> None:
         """Updates the value for the source DataNode
 
         Args:
             data_node (DataNode): The DataNode to override the source
         """
-        pass
+
+        if data_node != self.destination:
+            self.source = data_node
+        else:
+            raise WrongTypeReference(
+                "Source should be different of Destination"
+            )
+        
+        return self.source 
+        
     
-    def set_destination(data_node: DataNode) -> None:
+    def set_destination(self,data_node: "DataNode") -> None:
         """Updates the value for the destination DataNode
 
         Args:
             data_node (DataNode): The DataNode to override the destination
         """
-        pass
+        if data_node != self.source:
+            self.destination = data_node
+        else:
+            raise WrongTypeReference(
+                "Destination should be different of Source"
+            )
+
+        return self.destination
