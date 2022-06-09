@@ -30,7 +30,7 @@ from pipeline_penguin.core.connector.connector import Connector
 from pipeline_penguin.core.premise_output.output_manager import OutputManager
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
-from pipeline_penguin.core.node_relation.node_relation import NodeRelation 
+from pipeline_penguin.core.node_relation.node_relation import NodeRelation
 import inspect
 from typing import Dict, Type, Any
 
@@ -150,7 +150,7 @@ class DataNode:
         """
         return {}
 
-    def add_relation(self,relation: "NodeRelation",isDestination:bool) -> None:
+    def add_relation(self, relation: "NodeRelation", isDestination: bool) -> None:
         """Adds a new relation for this DataNode
 
         Raises:
@@ -159,14 +159,12 @@ class DataNode:
             relation (NodeRelation): A NodeRelation object that contains the current DataNode as its source or destination
         """
         if isDestination == True:
-            out = NodeRelation(source=self.name,destination=relation)
+            out = NodeRelation(source=self.name, destination=relation)
         else:
-            out = NodeRelation(source=relation,destination=self.name)
+            out = NodeRelation(source=relation, destination=self.name)
 
         self.relations.append(out)
 
-    
-    def get_relations(self) -> list('NodeRelation'):
-        """Returns all NodeRelation objects that contain the current DataNode
-        """
-        return(self.relations)
+    def get_relations(self) -> list("NodeRelation"):
+        """Returns all NodeRelation objects that contain the current DataNode"""
+        return self.relations
