@@ -25,11 +25,12 @@ class DataNodeBigQuery(DataNode):
         return {}
 ```
 """
+from xmlrpc.client import Boolean
 from pipeline_penguin.core.connector.connector import Connector
 from pipeline_penguin.core.premise_output.output_manager import OutputManager
 from pipeline_penguin.core.data_premise import DataPremise
 from pipeline_penguin.exceptions import WrongTypeReference
-
+from pipeline_penguin.core.node_relation.node_relation import NodeRelation
 import inspect
 from typing import Dict, Type, Any
 
@@ -56,6 +57,7 @@ class DataNode:
         self.premises: Dict[str, Type[DataPremise]] = {}
         self.supported_premise_types = []
         self.connectors = {}
+        self.relations = []
 
     @staticmethod
     def _is_data_premise_subclass(premise_factory: Any) -> bool:
@@ -147,3 +149,22 @@ class DataNode:
             A `dictionary` object containing the DataNode representation.
         """
         return {}
+
+    def add_relation(self, relation: "NodeRelation", isDestination: bool) -> None:
+        """Adds a new relation for this DataNode
+
+        Raises:
+            InvalidNodeRelation: When the provided NodeRelation does not contains the current DataNode as its source or destination.
+        Args:
+            relation (NodeRelation): A NodeRelation object that contains the current DataNode as its source or destination
+        """
+        if isDestination == True:
+            out = NodeRelation(source=self.name, destination=relation)
+        else:
+            out = NodeRelation(source=relation, destination=self.name)
+
+        self.relations.append(out)
+
+    def get_relations(self) -> list("NodeRelation"):
+        """Returns all NodeRelation objects that contain the current DataNode"""
+        return self.relations
