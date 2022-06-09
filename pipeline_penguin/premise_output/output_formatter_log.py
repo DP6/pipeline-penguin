@@ -1,5 +1,4 @@
-r"""Contains the `OutputFormatterLog`constructor, used to print DataPremise results as a terminal
-message.
+r"""Contains the `OutputFormatterLog`constructor, used format the premise results into a human-readable message
 
 Location: pipeline_penguin/core/premise_output/
 
@@ -7,7 +6,7 @@ Example usage:
 
 ```python
 formatter = OutputFormatterLog()
-formatter.export_output(premise_output)
+formatter.format(premise_output)
 ```
 """
 
@@ -35,10 +34,11 @@ class NpEncoder(json.JSONEncoder):
 
 
 class OutputFormatterLog(OutputFormatter):
-    """Contains the `OutputFormatterLog`constructor, used to print DataPremise results as a terminal
-    message."""
+    """Contains the `OutputFormatterLog`constructor, used format the premise results into
+    a human-readable message
+    """
 
-    def export_output(self, premise_output: PremiseOutput) -> str:
+    def format(self, premise_output: PremiseOutput) -> str:
         """Construct a human-readable message based on the results of a premise validation.
 
         Args:

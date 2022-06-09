@@ -28,26 +28,24 @@ class OutputManager:
     """
 
     def __init__(self):
-        """Initialization of the DataPremise."""
         self.outputs = {}
 
-    def format_outputs(
-        self, formatter: "pipeline_penguin.core.premise_output.OutputFormatter"
-    ):
-        """Method for applyting an OutputFormatter over every PremiseOutput.
+    def export(
+        self,
+        formatter: "pipeline_penguin.core.premise_output.OutputFormatter",
+        exporter: "pipeline_penguin.core.premise_output.OutputExporter",
+        *args,
+        **kwargs
+    ) -> None:
+        """Method for sending every validation result to a given destination
 
         Args:
-            formatter: The OutputFormatter instance to be applied on every PremiseOutput.
+            formatter OutputFormatter): Formatter to use on the PremiseOutputs
+            exporter (OutputExporter): Exporter to use for sending the results
+
         Returns:
-            A `dictionary` containing the formatted results.
+            None
         """
-        results = {}
 
-        for node_name, data_node in self.outputs.items():
-            results[node_name] = {}
-            for premise_name, premise_output in data_node.items():
-                results[node_name][premise_name] = formatter.export_output(
-                    premise_output
-                )
-
-        return results
+        for data_premise_name, premise_output in self.outputs.items():
+            premise_output.export(formatter, exporter, *args, **kwargs)

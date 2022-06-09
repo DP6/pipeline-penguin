@@ -39,6 +39,9 @@
                         <li>
                                 <a class="function" href="#PremiseOutput.to_serializeble_dict">to_serializeble_dict</a>
                         </li>
+                        <li>
+                                <a class="function" href="#PremiseOutput.export">export</a>
+                        </li>
                 </ul>
 
             </li>
@@ -163,6 +166,28 @@ results in a specific format.</p>
         <span class="n">results</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;data_node&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_node</span><span class="o">.</span><span class="n">to_serializeble_dict</span><span class="p">()})</span>
 
         <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Applies a given &quot;OutputFormatter&quot; on the PremiseOutput and exports</span>
+<span class="sd">        the resulting data using the provided &quot;OutputExporter&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            formatter (OutputFormatter): Formatter to use on the PremiseOutput</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span><span class="n">formatterResult</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -230,6 +255,28 @@ results in a specific format.</p>
         <span class="n">results</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;data_node&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_node</span><span class="o">.</span><span class="n">to_serializeble_dict</span><span class="p">()})</span>
 
         <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Applies a given &quot;OutputFormatter&quot; on the PremiseOutput and exports</span>
+<span class="sd">        the resulting data using the provided &quot;OutputExporter&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            formatter (OutputFormatter): Formatter to use on the PremiseOutput</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span><span class="n">formatterResult</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -326,6 +373,60 @@ python's built-in data types.</p>
 
 <p>Returns:
     A <code>dictionary</code> object containing the PremiseOutput representation.</p>
+</div>
+
+
+                            </div>
+                            <div id="PremiseOutput.export" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#PremiseOutput.export">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">export</span><span class="signature">(
+    self,
+    formatter: <a href="output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a>,
+    exporter: &#39;<a href="../premise_output.html#OutputExporter">pipeline_penguin.core.premise_output.OutputExporter</a>&#39;,
+    *args,
+    **kwargs
+) -&gt; None</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Applies a given &quot;OutputFormatter&quot; on the PremiseOutput and exports</span>
+<span class="sd">        the resulting data using the provided &quot;OutputExporter&quot;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            formatter (OutputFormatter): Formatter to use on the PremiseOutput</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">formatterResult</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span><span class="n">formatterResult</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>Applies a given "OutputFormatter" on the PremiseOutput and exports
+the resulting data using the provided "OutputExporter".</p>
+
+<p>Args:
+    formatter (OutputFormatter): Formatter to use on the PremiseOutput
+    exporter (OutputExporter): Exporter to use for sending the results</p>
+
+<p>Returns:
+    None</p>
 </div>
 
 

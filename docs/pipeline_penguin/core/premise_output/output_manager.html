@@ -37,7 +37,7 @@
                                 <a class="function" href="#OutputManager.__init__">OutputManager</a>
                         </li>
                         <li>
-                                <a class="function" href="#OutputManager.format_outputs">format_outputs</a>
+                                <a class="function" href="#OutputManager.export">export</a>
                         </li>
                 </ul>
 
@@ -109,29 +109,27 @@ be used to mass format all PremiseOutputs on the same OutputFormatter type.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialization of the DataPremise.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="nf">format_outputs</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method for applyting an OutputFormatter over every PremiseOutput.</span>
+    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Method for sending every validation result to a given destination</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            formatter: The OutputFormatter instance to be applied on every PremiseOutput.</span>
+<span class="sd">            formatter OutputFormatter): Formatter to use on the PremiseOutputs</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            A `dictionary` containing the formatted results.</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">for</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">data_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="n">data_node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="n">premise_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span>
-                    <span class="n">premise_output</span>
-                <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">results</span>
+        <span class="k">for</span> <span class="n">data_premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">premise_output</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="n">exporter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -156,29 +154,27 @@ be used to mass format all PremiseOutputs on the same OutputFormatter type.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialization of the DataPremise.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="nf">format_outputs</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method for applyting an OutputFormatter over every PremiseOutput.</span>
+    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Method for sending every validation result to a given destination</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            formatter: The OutputFormatter instance to be applied on every PremiseOutput.</span>
+<span class="sd">            formatter OutputFormatter): Formatter to use on the PremiseOutputs</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            A `dictionary` containing the formatted results.</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">for</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">data_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="n">data_node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="n">premise_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span>
-                    <span class="n">premise_output</span>
-                <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">results</span>
+        <span class="k">for</span> <span class="n">data_premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">premise_output</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="n">exporter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -200,60 +196,61 @@ be used to mass format all PremiseOutputs on the same OutputFormatter type.</p>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialization of the DataPremise.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Initialization of the DataPremise.</p>
-</div>
-
+    
 
                             </div>
-                            <div id="OutputManager.format_outputs" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#OutputManager.format_outputs">#&nbsp;&nbsp</a>
+                            <div id="OutputManager.export" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#OutputManager.export">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
-            <span class="name">format_outputs</span><span class="signature">(
+            <span class="name">export</span><span class="signature">(
     self,
-    formatter: <a href="output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a>
-)</span>:
+    formatter: <a href="output_formatter.html#OutputFormatter">pipeline_penguin.core.premise_output.output_formatter.OutputFormatter</a>,
+    exporter: &#39;<a href="../premise_output.html#OutputExporter">pipeline_penguin.core.premise_output.OutputExporter</a>&#39;,
+    *args,
+    **kwargs
+) -&gt; None</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">format_outputs</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method for applyting an OutputFormatter over every PremiseOutput.</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">formatter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputFormatter&quot;</span><span class="p">,</span>
+        <span class="n">exporter</span><span class="p">:</span> <span class="s2">&quot;pipeline_penguin.core.premise_output.OutputExporter&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Method for sending every validation result to a given destination</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            formatter: The OutputFormatter instance to be applied on every PremiseOutput.</span>
+<span class="sd">            formatter OutputFormatter): Formatter to use on the PremiseOutputs</span>
+<span class="sd">            exporter (OutputExporter): Exporter to use for sending the results</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            A `dictionary` containing the formatted results.</span>
+<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">for</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">data_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="n">data_node</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">results</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="n">premise_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">export_output</span><span class="p">(</span>
-                    <span class="n">premise_output</span>
-                <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">results</span>
+        <span class="k">for</span> <span class="n">data_premise_name</span><span class="p">,</span> <span class="n">premise_output</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">premise_output</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="n">exporter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
         </details>
 
-            <div class="docstring"><p>Method for applyting an OutputFormatter over every PremiseOutput.</p>
+            <div class="docstring"><p>Method for sending every validation result to a given destination</p>
 
 <p>Args:
-    formatter: The OutputFormatter instance to be applied on every PremiseOutput.
-Returns:
-    A <code>dictionary</code> containing the formatted results.</p>
+    formatter OutputFormatter): Formatter to use on the PremiseOutputs
+    exporter (OutputExporter): Exporter to use for sending the results</p>
+
+<p>Returns:
+    None</p>
 </div>
 
 

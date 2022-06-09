@@ -47,22 +47,22 @@ def _mock_google_auth(monkeypatch):
     )
 
 
-class TestOutputFormatterRHS:
-    def test_output_formatter_log(self):
-        assert TestOutputFormatterRHS()
+# class TestOutputFormatterRHS:
+#     def test_output_formatter_log(self):
+#         assert TestOutputFormatterRHS()
 
-    def test_export_output(self, _mock_premise_output, _mock_google_auth):
-        premise_output = _mock_premise_output()
-        formatter = OutputFormatterRSH()
+#     def test_export_output(self, _mock_premise_output, _mock_google_auth):
+#         premise_output = _mock_premise_output()
+#         formatter = OutputFormatterRSH()
 
-        resp = formatter.export_output(
-            premise_output,
-            "https://cloud-function-endpoint.com.br/",
-            "my-project",
-            "analytics_to_bigquery",
-            "0.2",
-            "00-00",
-            "Unit test for OutputFormatter",
-        )
+#         resp = formatter.export_output(
+#             premise_output,
+#             "https://cloud-function-endpoint.com.br/",
+#             "my-project",
+#             "analytics_to_bigquery",
+#             "0.2",
+#             "00-00",
+#             "Unit test for OutputFormatter",
+#         )
 
-        assert isinstance(resp, Response)
+#         assert isinstance(resp, Response)
