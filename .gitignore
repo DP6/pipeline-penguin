@@ -149,3 +149,6 @@ teste.py
 
 # csv implementation
 pipeline_penguin/premise_output/output_formatter_csv.py
+
+# terraform
+deploy_terraform/config/service_account.json
