@@ -1,0 +1,1 @@
+gsutil cp "./files-copy-to-gcs/datasets/example_data.csv" "gs://$1"
